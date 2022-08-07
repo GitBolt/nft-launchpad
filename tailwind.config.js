@@ -1,7 +1,7 @@
 module.exports = {
     content: [
-      "./pages/**/*.{ts,tsx}",
-      "./layouts/**/*.{ts,tsx}",
+      "./pages/**/*.{ts, tsx}",
+      "./layouts/**/*.{ts, tsx}",
     ],
     plugins: [],
   }
