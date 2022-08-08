@@ -45,9 +45,9 @@ const Index: NextPage = function Index() {
       <PageRoot style={{ padding: '0 1.5rem' }}>
         <div className="flex items-center justify-center gap-6">
           <div className="min-w-[25rem] flex flex-col items-start gap-8 w-1/3">
-            <h1 className="text-5xl text-black">Launch your NFT collection</h1>
-            <p className="text-xl">
-              Go ahead and launch your NFT collection through our No code NFT launchpad.
+            <h1 className="text-5xl text-white font-bold">NFT Launchpad</h1>
+            <p className="text-xl text-[#A5AABC]">
+              Launch NFTs seamlessly and easily through our no code NFT launchpad
             </p>
             <Button
               variant="contained"

@@ -31,7 +31,7 @@ export const Text = styled(TextField)({
 export const PageRoot = styled(Grid)({
   '&': {
     minHeight: '100vh',
-    background: 'white',
+    background: '#080B16',
     overflow: 'auto',
     placeContent: 'center',
     display: 'grid',

@@ -44,11 +44,12 @@ export const Navbar = function Navbar({
       className="w-full h-[6rem] bg-transparent fixed z-10"
     >
       <div
-        className="flex px-[3.75rem] h-[6rem] bg-white items-center justify-between"
+        className="flex px-[3.75rem] h-[6rem] bg-[#0F1327] items-center justify-between"
         style={{
           borderBottom: bottomOutline ? '2px solid #D9D9D9' : '',
         }}
       >
+        <h1 className="text-white text-3xl font-bold">Launchpad</h1>
         <div className="flex items-center gap-8 text-[1rem]">
           <div className="flex flex-col gap-6">
             <div>
