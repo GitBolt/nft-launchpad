@@ -5,10 +5,12 @@ import { connectWallet } from '@/components/wallet';
 import { DefaultHead } from '@/layouts/Head';
 import { PageRoot } from '@/layouts/StyledComponents';
 import { Navbar } from '@/layouts/Navbar';
+import Image from 'next/image';
 import Button from '@material-ui/core/Button';
 import AccountBalanceWallet from '@material-ui/icons/AccountBalanceWallet';
 import { RegisterUser } from '@/layouts/RegisterUser';
 import getWallet from '@/components/whichWallet';
+import Landing from '@/images/Landing.svg';
 
 const Index: NextPage = function Index() {
   const [showModal, setToggleModal] = useState<boolean>(false);
@@ -64,6 +66,7 @@ const Index: NextPage = function Index() {
               {' '}
             </Button>
           </div>
+          <Image src={Landing} height="500" width="500" alt="Landing image" />
         </div>
       </PageRoot>
     </>

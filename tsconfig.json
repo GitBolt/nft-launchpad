@@ -40,6 +40,9 @@
       "@/util/*": [
         "util/*"
       ],
+      "@/images/*": [
+        "images/*"
+      ]
     },
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
