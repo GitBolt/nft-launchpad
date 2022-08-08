@@ -4,12 +4,11 @@ import React, {
 } from 'react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import Button from '@material-ui/core/Button';
-import { SiteData } from '@/types/projectData';
 
 interface Props {
   children?: React.ReactNode,
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void,
-  siteData: SiteData
+  siteData: any
 }
 export const WalletModalButton = function WalletModalButton({
   children,

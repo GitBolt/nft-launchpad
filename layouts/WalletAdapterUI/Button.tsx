@@ -1,6 +1,7 @@
-import React, { FC, MouseEvent, ReactElement } from 'react';
+import React, { FC, MouseEvent, ReactElement, ReactNode } from 'react';
 
 export interface ButtonProps {
+  children?: ReactNode;
   className?: string;
   disabled?: boolean;
   endIcon?: ReactElement;
