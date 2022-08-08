@@ -15,6 +15,16 @@
         "some": [ "nesting", "id"  ]
       }
     }],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ],
     "@next/next/no-img-element": 0,
     "react/require-default-props": 0,
     "jsx-a11y/click-events-have-key-events": 0,
