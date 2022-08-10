@@ -35,7 +35,7 @@ export const Navbar = function Navbar({
     const pubKey = await connectWallet(false, true);
     const res = await fetch(`/api/user/get/${pubKey}`);
     if (res.ok && router.pathname === '/') {
-      router.push(`/project/new/${pubKey}`);
+      router.push(`/new/${pubKey}`);
     }
   };
 
