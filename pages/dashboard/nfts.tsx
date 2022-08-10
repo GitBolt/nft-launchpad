@@ -101,9 +101,9 @@ const Index: NextPage = function Index() {
       />
       )}
       <PageRoot>
-        <div className="w-[75vw]">
+        <div className="w-[100vw]">
           <Sidebar />
-          <PageRoot style={{ marginLeft: '21.5rem', display: 'block' }}>
+          <PageRoot style={{ marginLeft: '20rem', display: 'block' }}>
             <div className="flex justify-between mt-32">
               <h1
                 className="text-3xl font-bold"
@@ -140,7 +140,7 @@ const Index: NextPage = function Index() {
                       borderRadius: '.5rem',
                       padding: '0 2rem',
                       fontSize: '1rem',
-                      background: '#054BD2',
+                      background: '#0E2C97',
                       color: 'white',
                       height: '2.5rem',
                     }}

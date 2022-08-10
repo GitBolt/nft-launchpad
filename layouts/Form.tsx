@@ -78,7 +78,7 @@ export const Form = function Form(props: Props) {
               fullWidth
               variant="contained"
               style={{
-                background: !props.enableSecondButton && props.disableButton ? '#9BB7ED' : '#054BD2',
+                background: !props.enableSecondButton && props.disableButton ? '#9BB7ED' : '#0E2C97',
                 height: '3rem',
                 width: '100%',
                 alignSelf: 'end',
@@ -97,7 +97,7 @@ export const Form = function Form(props: Props) {
               variant="contained"
               color="primary"
               style={{
-                background: props.disableButton ? '#9BB7ED' : '#054BD2',
+                background: props.disableButton ? '#9BB7ED' : '#0E2C97',
                 height: '3rem',
                 width: props.buttonWidth || '100%',
                 marginLeft: !props.secondButton ? 'auto' : '3rem',

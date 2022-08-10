@@ -51,7 +51,7 @@ export const UploadPage = function UploadPage({ setFiles, totalCount, filesSelec
               padding: '.65rem 2rem',
               fontSize: '1rem',
               minWidth: '20rem',
-              background: '#054BD2',
+              background: '#0E2C97',
               color: 'white',
             }}
             endIcon={<PublishRounded />}

@@ -73,7 +73,7 @@ export const UploadCollectionArea = function UploadCollectionArea({
         <>
           <div className="fixed w-full h-full bg-[#000000c5] z-10" style={{ transform: 'translate(-2%, -10%)' }} />
           <div
-            className="bg-white h-[15rem] max-w-[40rem] w-[40vw] fixed self-center flex-col flex items-center justify-center z-10 rounded-2xl"
+            className="bg-[#0F0F16] h-[15rem] max-w-[40rem] w-[40vw] fixed self-center flex-col flex items-center justify-center z-10 rounded-2xl"
             style={{
               transform: 'translate(10%, 50%)',
             }}
@@ -84,7 +84,7 @@ export const UploadCollectionArea = function UploadCollectionArea({
                 borderRadius: '.5rem',
                 padding: '.5rem 2rem',
                 fontSize: '1rem',
-                background: '#054BD2',
+                background: '#0E2C97',
                 color: 'white',
                 alignSelf: 'center',
               }}

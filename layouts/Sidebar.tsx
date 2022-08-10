@@ -22,9 +22,9 @@ const SidebarItem = function SidebarItem({
         `rounded-xl h-14 
         duration-200 font-medium flex
         cursor-not-allowed
-        ${!disabled && 'hover:bg-[#E9EAEF] hover:text-gray-200 cursor-pointer'}
+        ${!disabled && 'hover:bg-[#2D354E] hover:text-white cursor-pointer'}
         ${router.pathname === path
-          ? 'bg-[#F7F7F7] text-primary-main'
+          ? 'bg-[#2D354E] text-white'
           : 'text-[#A2A2A2]'}`
     }
     >
@@ -50,12 +50,12 @@ interface SidebarProps {
 }
 export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
   return (
-    <nav className="fixed flex bg-white w-80 h-full scroll-auto flex-col items-center overflow-auto">
+    <nav className="fixed flex bg-[#11141D] w-80 h-full scroll-auto flex-col items-center overflow-auto">
       <ul className="w-4/5 text-base flex flex-col gap-4 mt-32">
         <SidebarItem disabled={disabled} icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>} label="NFT Collection" path="/dashboard/nfts" />
-        <SidebarItem disabled={disabled} icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />} label="Configure" path="/dashboard/configure" />
+        {/* <SidebarItem disabled={disabled} icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />} label="Configure" path="/dashboard/configure" />
         <SidebarItem disabled={disabled} icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />} label="Site builder" path="/dashboard/sitebuilder" />
-        <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" />
+        <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
       </ul>
     </nav>
   );

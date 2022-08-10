@@ -11,10 +11,10 @@ const theme = {
   palette: {
     mode: 'dark' as PaletteMode,
     primary: {
-      main: '#054BD2',
+      main: '#0E2C97',
     },
     secondary: {
-      main: '#054BD2',
+      main: '#0E2C97',
     },
     error: {
       main: '#FF6262',

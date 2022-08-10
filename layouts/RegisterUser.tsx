@@ -80,7 +80,7 @@ export const RegisterUser = function UserCreationModal({
               fontSize: '1rem',
               minWidth: '10rem',
               width: '15rem',
-              background: '#054BD2',
+              background: '#0E2C97',
               color: 'white',
             }}
           >

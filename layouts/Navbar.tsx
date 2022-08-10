@@ -7,13 +7,12 @@ import { Menu, MenuItem, Button } from '@material-ui/core';
 import getWallet from '@/components/whichWallet';
 
 interface Props {
-  bottomOutline?: boolean
   wallet: any
   setWallet?: any
   setBool?: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const Navbar = function Navbar({
-  bottomOutline, wallet, setWallet, setBool,
+  wallet, setWallet, setBool,
 }: Props) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -44,10 +43,7 @@ export const Navbar = function Navbar({
       className="w-full h-[6rem] bg-transparent fixed z-10"
     >
       <div
-        className="flex px-[3.75rem] h-[6rem] bg-[#0F1327] items-center justify-between"
-        style={{
-          borderBottom: bottomOutline ? '2px solid #D9D9D9' : '',
-        }}
+        className="flex px-[3.75rem] h-[6rem] bg-[#11141D] items-center justify-between"
       >
         <h1 className="text-white text-3xl font-bold">Launchpad</h1>
         <div className="flex items-center gap-8 text-[1rem]">
@@ -56,7 +52,7 @@ export const Navbar = function Navbar({
               <Button
                 style={{
                   borderRadius: '.5rem',
-                  background: '#054BD2',
+                  background: '#0E2C97',
                   color: 'white',
                   height: '2.5rem',
                 }}
