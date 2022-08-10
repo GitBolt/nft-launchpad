@@ -42,6 +42,9 @@
       ],
       "@/images/*": [
         "images/*"
+      ],
+      "@/types/*": [
+        "types/*"
       ]
     },
   },
