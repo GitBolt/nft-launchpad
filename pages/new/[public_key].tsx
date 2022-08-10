@@ -142,7 +142,7 @@ const ProjectNew: NextPage = function Index() {
       <PageRoot>
         <Form
           onSubmit={register}
-          heading="Create your NFT collection"
+          heading="Create project"
           buttonText="Continue"
           width="medium"
           gap="2rem"
@@ -150,14 +150,14 @@ const ProjectNew: NextPage = function Index() {
             || (!!(!bannerUrl && bannerFile))}
         >
           <Text
-            variant="outlined"
+            variant="standard"
             onChange={(e) => setName(e.target.value)}
             label="Name of the project"
             error={!!(error.nameError)}
             helperText={error && error.nameError ? error.nameError : null}
           />
           <Text
-            variant="outlined"
+            variant="standard"
             fullWidth
             onChange={(e) => setTwitterUsername(e.target.value)}
             label="Project's twitter handle"
@@ -166,7 +166,7 @@ const ProjectNew: NextPage = function Index() {
 
           />
           <Text
-            variant="outlined"
+            variant="standard"
             onChange={(e) => setDescription(e.target.value)}
             label="Description of the project"
             minRows={2}
@@ -175,7 +175,7 @@ const ProjectNew: NextPage = function Index() {
           />
           <div className="flex gap-20 items-center relative">
             <div className="flex flex-col items-start">
-              <h1 className="text-[1.25rem]">Upload profile image</h1>
+              <h1 className="text-[1.25rem] text-white">Upload profile image</h1>
               <p className="text-left text-[.9rem] text-[#7D7D7D]">
                 The image should be in 1:1 ratio in dimensions
                 and should be less than 2 MBs in size.
@@ -217,7 +217,7 @@ const ProjectNew: NextPage = function Index() {
 
           <div className="flex gap-20 items-center relative">
             <div className="flex flex-col items-start">
-              <h1 className="text-[1.25rem]">Upload project banner</h1>
+              <h1 className="text-[1.25rem] text-white">Upload project banner</h1>
               <p className="text-left text-[.9rem] text-[#7D7D7D]">
                 The image should be in 16:9 aspect ratio and should
                 be less than 2 MBs in size.

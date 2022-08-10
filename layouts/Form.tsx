@@ -36,7 +36,7 @@ export const Form = function Form(props: Props) {
   return (
     <Container
       style={{
-        background: 'white',
+        background: '#16161F',
         borderRadius: '1rem',
         textAlign: 'center',
         padding: '2rem',
@@ -44,8 +44,7 @@ export const Form = function Form(props: Props) {
         width: containerWidth,
         marginTop: props.topMargin || '6rem',
         marginBottom: '2rem',
-        border: '1px solid #E6E6E6',
-        boxShadow: '0px 0px 30px #F3F3FF',
+        border: '1px solid #1F1F2B',
       }}
     >
       <Box sx={{
@@ -57,7 +56,7 @@ export const Form = function Form(props: Props) {
       >
         {props.image && <Image width="120%" height="120%" src={props.image} alt="Form image"/>}
       </Box>
-      <h1 className="text-3xl font-bold text-black mt-12 mb-8">
+      <h1 className="text-3xl font-bold text-white mt-12 mb-8">
         {props.heading}
       </h1>
       <Box sx={{

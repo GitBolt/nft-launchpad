@@ -10,13 +10,13 @@ export const Text = styled(TextField)({
     color: '#606163',
   },
   input: {
-    color: 'black',
+    color: 'white',
   },
   '& fieldset': {
-    color: 'black',
+    color: 'white',
   },
   '& label.Mui-focused': {
-    color: 'black',
+    color: 'white',
   },
   '& .MuiInput-underline:after': {
     borderBottomColor: '#606163',
