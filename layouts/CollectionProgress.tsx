@@ -32,7 +32,7 @@ export const CollectionProgress = function CollectionProgress({
         sx={{
           padding: '.25rem',
           borderRadius: '1rem',
-          background: '#DDDEE2',
+          background: '#7E838E',
         }}
       />
       <div className="flex mt-2">

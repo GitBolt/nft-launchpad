@@ -24,7 +24,11 @@ export const uploadManifest = async (image: string, manifest: string) => {
     const manifestObject = JSON.parse(manifest);
     if (!manifestObject) return undefined;
     if (manifestObject && manifestObject.properties && manifestObject.image && manifestObject.properties.files) {
-      manifestObject.properties.files[0].uri = image;
+      if (manifestObject.properties.files.uri) {
+        manifestObject.properties.files.uri = image;
+      } else {
+        manifestObject.properties.files[0].uri = image;
+      }
       manifestObject.image = image;
     } else {
       return;

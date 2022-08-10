@@ -24,7 +24,7 @@ export const UploadStateHandler = function UploadStateHandler({
   totalCount,
 }: Props) {
   return (
-    <div className="flex gap-4 items-end p-5 rounded-2xl" style={{ border: '1px solid #E0E0E0' }}>
+    <div className="flex gap-4 items-end p-5 rounded-2xl" style={{ border: '1px solid #1F1F2B' }}>
       {queue && (progress !== 100) && (
         <div
           className="cursor-pointer hover:bg-blue-100 rounded-3xl p-1 mb-4 duration-100"

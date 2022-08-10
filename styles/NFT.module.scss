@@ -1,0 +1,25 @@
+.nft {
+    display: flex;
+    border-radius: 50%;
+    position: relative;
+}
+
+.img {
+    width: 20rem;
+    height: 20rem;
+    border-radius: .5rem;
+}
+.nft:hover > .details {
+    display: flex;
+}
+.details {
+    position: absolute;
+    display: none;
+    width: 100%;
+    z-index: 10;
+    padding: 5px;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 1px 1px 20px #010b253f;
+}

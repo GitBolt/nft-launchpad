@@ -145,7 +145,7 @@ export const UploadCollectionArea = function UploadCollectionArea({
       ) : null}
       {(!progress && resumeCount)
         ? (
-          <p className="text-left text-bold relative bottom-5 mt-2">
+          <p className="text-left text-bold relative text-gray-200 bottom-5 mt-2">
             If more NFTs are to be uploaded in this collection,
             then please select the entire selection at one go.
             The upload will auto-resume from the next file.

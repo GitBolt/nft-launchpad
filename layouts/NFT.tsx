@@ -21,7 +21,7 @@ export const NFT = function NFT({
     >
       <img src={link} alt="nft" className={styles.img} />
       <div className={styles.details}>
-        <p className="text-[.9rem] bg-[#0F0F16] rounded-2xl px-2">{name}</p>
+        <p className="text-[1rem] bg-[#0F0F16] rounded-2xl px-2">{name}</p>
         {!isDeployed && (
         <div
           className="flex cursor-pointer gap-1"

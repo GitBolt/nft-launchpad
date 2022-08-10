@@ -46,12 +46,12 @@ const SignIn = function SignIn() {
     <>
       <Navbar wallet={wallet} />
       <PageRoot>
-        <div className="flex flex-col gap-4 w-[45rem] items-center bg-white rounded-2xl p-5 border-gray-600 border-2">
+        <div className="flex flex-col gap-4 w-[45rem] items-center bg-[#1F1F2B] rounded-2xl p-5">
           <h1 className="text-xl text-center text-red-600">
             The project&apos;s twitter username did not
             match with the authorized twitter account&apos;s username
           </h1>
-          <p>Update your project&apos;s twitter username and signin in again</p>
+          <p className='text-white'>Update your project&apos;s twitter username and signin in again</p>
           <Text
             onChange={(e) => setNewTwitterUsername(e.target.value)}
             defaultValue={newTwitterUsername || ''}
