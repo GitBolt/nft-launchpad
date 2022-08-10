@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Settings from '@material-ui/icons/Settings';
 import Image from '@material-ui/icons/Image';
-import PieChart from '@material-ui/icons/PieChart';
-import DesktopWindows from '@material-ui/icons/DesktopWindows';
+// import PieChart from '@material-ui/icons/PieChart';
+// import DesktopWindows from '@material-ui/icons/DesktopWindows';
+// import Settings from '@material-ui/icons/Settings';
 
 type Props = {
   icon: any,

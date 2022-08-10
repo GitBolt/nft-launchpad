@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Art from '@/images/Art.svg';
+import Upload from '@/images/upload.png';
 import Button from '@material-ui/core/Button';
 import PublishRounded from '@material-ui/icons/PublishRounded';
 import toast from 'react-hot-toast';
@@ -13,10 +13,10 @@ interface Props {
 }
 export const UploadPage = function UploadPage({ setFiles, totalCount, filesSelected }: Props) {
   return (
-    <div className="mt-[1rem] bg-[#E5F2FF] flex flex-col items-center justify-center gap-6 h-[40rem] px-5">
-      <Image src={Art} height="200" width="200" alt="Art"/>
-      <h1 className="text-[#2160DB] font-bold text-3xl text-center max-w-[30rem]">Get started with uploading your art collection</h1>
-      <p className="text-[#232323] text-center max-w-[30rem]">Please select both PNG and JSON files to get started. We recommend that you select the entire collection at one go. You can pause the upload whenever desired.</p>
+    <div className="mt-[1rem] flex flex-col items-center justify-center gap-6 h-[40rem] px-5">
+      <Image src={Upload} height="200" width="200" alt="Art"/>
+      <h1 className="text-[#CDCDCD] font-bold text-3xl text-center max-w-[30rem]">Get started with uploading your collection</h1>
+      <p className="text-[#828282] text-center max-w-[30rem]">Please select both PNG and JSON files to get started. We recommend that you select the entire collection at one go. You can pause the upload whenever desired.</p>
       <FileUploader
         multiple
         handleChange={async (getFiles: FileList) => {

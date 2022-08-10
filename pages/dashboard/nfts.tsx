@@ -91,7 +91,7 @@ const Index: NextPage = function Index() {
   return (
     <>
       <DefaultHead />
-      <Navbar bottomOutline wallet={wallet} />
+      <Navbar wallet={wallet} />
       {showDeleteModal && (
       <DeleteNFTModal
         setShowDeleteModal={setShowDeleteModal}
@@ -103,10 +103,10 @@ const Index: NextPage = function Index() {
       <PageRoot>
         <div className="w-[100vw]">
           <Sidebar />
-          <PageRoot style={{ marginLeft: '20rem', display: 'block' }}>
+          <PageRoot style={{ marginLeft: '21rem', display: 'block' }}>
             <div className="flex justify-between mt-32">
               <h1
-                className="text-3xl font-bold"
+                className="text-3xl font-bold text-white"
               >
                 NFT collection
               </h1>
