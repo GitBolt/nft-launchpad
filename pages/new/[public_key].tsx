@@ -10,11 +10,11 @@ import { useRouter } from 'next/router';
 import { Form } from '@/layouts/Form';
 import { Text, PageRoot } from '@/layouts/StyledComponents';
 import { uploadFile } from '@/components/uploadToStorage';
-import { isAlphaNumeric } from '@/util/validation';
 import { Navbar } from '@/layouts/Navbar';
 import PublishRounded from '@material-ui/icons/PublishRounded';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
 import getWallet from '@/components/whichWallet';
+import { isAlphaNumeric } from '@/util/validation';
 
 interface Errors {
   nameError: string | null,
