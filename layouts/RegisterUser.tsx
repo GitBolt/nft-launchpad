@@ -65,9 +65,9 @@ export const RegisterUser = function UserCreationModal({
         zIndex: '10',
       }}
     >
-      <div className="bg-white flex flex-col items-center rounded-2xl gap-8 py-8 px-16">
-        <h1 className="text-[2rem]">Welcome to No Code NFT Launchpad</h1>
-        <p className="text-[1rem] text-[#1E1E1E] w-96 text-center">
+      <div className="bg-[#1F2337] flex flex-col items-center rounded-2xl gap-8 py-8 px-16">
+        <h1 className="text-[2rem] text-white">Welcome to No Code NFT Launchpad</h1>
+        <p className="text-[1rem] text-[#A5AABC] w-96 text-center">
           You do not have any projects created. Create your NFT project now.
         </p>
         <div className="flex flex-col gap-4">
@@ -95,7 +95,7 @@ export const RegisterUser = function UserCreationModal({
               fontSize: '1rem',
               minWidth: '10rem',
               width: '15rem',
-              color: '#054BD2',
+              color: 'white',
             }}
           >
             Disconnect wallet
