@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int       @id @default(autoincrement())
+  public_key String
+  nonce      String
+  projects   Project[]
+}
+
+model Project {
+  id               Int       @id @default(autoincrement())
+  name             String
+  slug             String
+  description      String
+  logo             String?
+  banner           String?
+  twitter_username String?
+  discord_invite   String?
+  owner            User?     @relation(fields: [owner_id], references: [id])
+  owner_id         Int
+  cache            Cache?
+  site             Site?
+  sales            Sales[]
+  traffic          Traffic[]
+  active           Boolean   @default(false)
+}
+
+model Cache {
+  id             Int     @id @default(autoincrement())
+  uuid           String?
+  candy_machine  String?
+  whitelist_mint String?
+  items          Item[]
+  project        Project @relation(fields: [project_id], references: [id])
+  project_id     Int     @unique
+  network        String?
+}
+
+model Item {
+  id         Int     @id @default(autoincrement())
+  name       String
+  link       String
+  assetUri   String
+  on_chain   Boolean
+  verify_run Boolean
+  cache      Cache?  @relation(fields: [cache_id], references: [id])
+  cache_id   Int
+}
+
+model Site {
+  id                 Int     @id @default(autoincrement())
+  bgColor            String  @default("#FFFFFF")
+  primaryFontColor   String  @default("#1A1A1A")
+  secondaryFontColor String  @default("#666666")
+  buttonBgColor      String  @default("#054BD2")
+  buttonFontColor    String  @default("#FFFFFF")
+  fontFamily         String  @default("Varela")
+  align              String  @default("center")
+  header             String?
+  sections           String? 
+  faqSection         String?
+  tabs               String?
+  project            Project @relation(fields: [project_id], references: [id])
+  project_id         Int     @unique
+}
+
+model Sales {
+  id             Int      @id @default(autoincrement())
+  mint_signature String
+  price          Float
+  project        Project  @relation(fields: [project_id], references: [id])
+  project_id     Int
+  created_at     DateTime @default(now())
+  presale        Boolean
+}
+
+model Traffic {
+  id         Int      @id @default(autoincrement())
+  project    Project  @relation(fields: [project_id], references: [id])
+  project_id Int
+  created_at DateTime @default(now())
+  presale    Boolean
+}
