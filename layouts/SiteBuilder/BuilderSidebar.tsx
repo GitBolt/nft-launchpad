@@ -8,6 +8,7 @@ import Remove from '@material-ui/icons/Remove';
 import { Button } from '@material-ui/core';
 import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import ArrowForward from '@material-ui/icons/ArrowForward';
 
 interface Props {
   fullPreview: boolean,
@@ -104,13 +105,13 @@ export const BuilderSidebar = function BuilderSidebar({
                 <span>FAQs</span>
                 <span className="text-gray-300">{siteData.faqSection ? 'Remove' : 'Add'}</span>
               </div>
-              {/* <div
+              <div
                 className="flex justify-between cursor-pointer"
                 onClick={() => setSectionPage(true)}
               >
                 <span>Sections</span>
                 <span className="text-gray-300"><ArrowForward /></span>
-              </div> */}
+              </div>
             </BuilderSection>
 
           </>

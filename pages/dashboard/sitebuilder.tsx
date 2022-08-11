@@ -54,7 +54,7 @@ const defaultSiteData: SiteData = {
       title: 'Roadmap',
       content: 'Your roadmap',
       align: 'right',
-      image: 'https://media.discordapp.net/attachments/865444983762452520/978948281776365579/Rectangle_1522.png',
+      image: 'https://media.discordapp.net/attachments/865444983762452520/978948282040586270/Rectangle_1521.png',
       imageAlign: 'right',
       bgColor: '#000a22',
       fontColor: '#ffffff',
@@ -64,7 +64,7 @@ const defaultSiteData: SiteData = {
       title: 'Team',
       content: 'Your team',
       align: 'left',
-      image: 'https://media.discordapp.net/attachments/865444983762452520/978948281419833354/Rectangle_1523.png',
+      image: 'https://media.discordapp.net/attachments/865444983762452520/978948282040586270/Rectangle_1521.png',
       imageAlign: 'left',
       bgColor: '#000000',
       fontColor: '#ffffff',
@@ -139,11 +139,9 @@ const Index: NextPage = function Index() {
           const elements = document.querySelectorAll<HTMLElement>('[id^="picker"]');
           const elements2 = document.querySelectorAll<HTMLElement>('[id^="cross"]');
           elements.forEach((element) => {
-            // eslint-disable-next-line no-param-reassign
             element.style.display = 'none';
           });
           elements2.forEach((element) => {
-            // eslint-disable-next-line no-param-reassign
             element.style.display = 'none';
           });
         }}

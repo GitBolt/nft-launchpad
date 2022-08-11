@@ -16,6 +16,7 @@ export const Sections = function Sections({ sections }: Props) {
             justifyContent: section.align,
             background: section.bgColor,
           }}
+          key={index}
         >
           <div
             className="flex rounded-[2rem] relative p-[1rem] m-[0] w-[100%] m-[2rem]"

@@ -69,7 +69,6 @@ model Site {
   header             String?
   sections           String? 
   faqSection         String?
-  tabs               String?
   project            Project @relation(fields: [project_id], references: [id])
   project_id         Int     @unique
 }
