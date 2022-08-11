@@ -27,6 +27,8 @@
     "@solana/wallet-adapter-react-ui": "^0.9.12",
     "@solana/wallet-adapter-wallets": "^0.17.2",
     "@solana/web3.js": "^1.50.1",
+    "@strata-foundation/marketplace-sdk": "^3.10.2",
+    "@strata-foundation/spl-token-bonding": "^3.10.2",
     "@supercharge/promise-pool": "^2.3.2",
     "autoprefixer": "^10.4.8",
     "date-fns": "^2.29.1",

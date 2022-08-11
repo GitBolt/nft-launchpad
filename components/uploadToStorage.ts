@@ -1,7 +1,7 @@
 import { NFTStorage } from 'nft.storage';
 
 export const uploadFile = async (image: File, index: number) => {
-  const token = process.env.NEXT_PUBLIC_STORAGE_KEY as string;
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk3NmI0N0ZlQUNlRDEzOTIyMTZBMzkwZmE4Yjg0RWI0MzYxN2M1NzAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NjY2NTgzNjM1MiwibmFtZSI6InNvbHJhenIifQ.EjhbOlg-qsVQvSH-l8544IUpQZS1QWaqA64jj7xR0lM';
   const client = new NFTStorage({ token });
   console.log(`Uploading image: ${image.name} with index ${index}`);
   const metadata = await client.store({
@@ -19,7 +19,7 @@ export const uploadFile = async (image: File, index: number) => {
 export const uploadManifest = async (image: string, manifest: string) => {
   try {
     console.log('Uploading manifest...');
-    const token = process.env.NEXT_PUBLIC_STORAGE_KEY as string;
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDk3NmI0N0ZlQUNlRDEzOTIyMTZBMzkwZmE4Yjg0RWI0MzYxN2M1NzAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NjY2NTgzNjM1MiwibmFtZSI6InNvbHJhenIifQ.EjhbOlg-qsVQvSH-l8544IUpQZS1QWaqA64jj7xR0lM';
     const client = new NFTStorage({ token });
     const manifestObject = JSON.parse(manifest);
     if (!manifestObject) return undefined;
