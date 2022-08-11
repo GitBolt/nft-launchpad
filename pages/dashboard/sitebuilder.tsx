@@ -104,7 +104,6 @@ const Index: NextPage = function Index() {
         faqSection: JSON.parse(site.faqSection),
         header: JSON.parse(site.header),
         sections: JSON.parse(site.sections),
-        tabs: JSON.parse(site.tabs),
       });
     };
     fetchData();

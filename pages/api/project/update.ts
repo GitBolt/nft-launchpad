@@ -83,7 +83,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         header: siteData.header || site.header,
         sections: siteData.sections || site.sections,
         faqSection: siteData.faqSection || site.faqSection,
-        tabs: siteData.tabs || site.tabs,
       },
     });
     res.status(200).json({ success: 'Successfully updated' });

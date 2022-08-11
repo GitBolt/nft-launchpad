@@ -98,26 +98,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const data = JSON.stringify([
       {
-        id: 1, name: 'About', title: '', content: '', images: [],
+        title: 'About us',
+        content: 'Your team details',
+        align: 'left',
+        image: 'https://media.discordapp.net/attachments/865444983762452520/978948282040586270/Rectangle_1521.png',
+        imageAlign: 'left',
+        bgColor: 'black',
+        fontColor: 'white',
+        wideImage: true,
       },
       {
-        id: 2, name: 'Team', title: '', content: '', images: [],
+        title: 'Roadmap',
+        content: 'Your roadmap',
+        align: 'right',
+        image: 'https://media.discordapp.net/attachments/865444983762452520/978948282040586270/Rectangle_1521.png',
+        imageAlign: 'right',
+        bgColor: '#000a22',
+        fontColor: '#ffffff',
+        wideImage: false,
       },
       {
-        id: 3, name: 'Roadmap', title: '', content: '', images: [],
-      },
-      {
-        id: 4, name: 'Details', title: '', content: '', images: [],
-      },
-      {
-        id: 5, name: 'Backers', title: '', content: '', images: [],
+        title: 'Team',
+        content: 'Your team',
+        align: 'left',
+        image: 'https://media.discordapp.net/attachments/865444983762452520/978948282040586270/Rectangle_1521.png',
+        imageAlign: 'left',
+        bgColor: '#000000',
+        fontColor: '#ffffff',
+        wideImage: true,
       },
     ]);
 
     await prisma.site.update({
       where: { id: site.id },
       data: {
-        tabs: data,
+        sections: data,
       },
     });
 
