@@ -1,0 +1,87 @@
+
+.section {
+    display: flex;
+    border-radius: 2rem;
+    position: relative;
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+    margin: 2rem;
+    &:hover {
+        outline: 1px solid #60A5FA; //tailwind blue-400
+    }}
+
+.tooltip {
+    height: 100%;
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    transform: translate(-50%);
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    bottom: 1rem;
+    border-radius: .75rem;
+    height: 4rem;
+    box-shadow: 1px 1px 20px #a9a0ff75;
+    padding: 1rem 1rem;
+    display: none;
+    z-index: 10;
+}
+
+.image, .image2 {
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    margin: 0 2rem;
+    height: 25rem;
+    width: 25rem;
+    border-radius: 1rem;
+}
+
+
+.image2 {
+    height: 20rem;
+    width: 60rem;
+}
+.section:hover > .tooltip {
+    display: flex
+}
+
+@media screen and (max-width: 1600px) {
+    .image2 {
+        width: 50rem;
+        height: 16.6rem;
+    }
+    .tooltip {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 1350px) {
+    .image2 {
+        width: 42rem;
+        height: 14rem;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .image2 {
+        width: 35rem;
+        height: 11.6rem;
+    }
+    .tooltip {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .image2 {
+        width: 28rem;
+        height: 9.3rem;
+    }
+}

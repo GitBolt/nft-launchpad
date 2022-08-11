@@ -34,14 +34,6 @@ export interface Header {
   spacing: string,
 }
 
-export type TabSection = {
-  id: number,
-  name: string,
-  title: string,
-  content: string
-  images: string[]
-};
-
 export interface Section {
   title: string,
   content: string,
@@ -65,7 +57,6 @@ export interface SiteData {
   sections: null | Section[],
   faqSection: null | FaqData,
   align: string
-  tabs: TabSection[]
 }
 
 export interface Project {

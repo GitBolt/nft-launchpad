@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Image from '@material-ui/icons/Image';
 // import PieChart from '@material-ui/icons/PieChart';
-// import DesktopWindows from '@material-ui/icons/DesktopWindows';
+import DesktopWindows from '@material-ui/icons/DesktopWindows';
 import Settings from '@material-ui/icons/Settings';
 
 type Props = {
@@ -54,8 +54,8 @@ export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
       <ul className="w-4/5 text-base flex flex-col gap-4 mt-32">
         <SidebarItem disabled={disabled} icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>} label="NFT Collection" path="/dashboard/nfts" />
         <SidebarItem disabled={disabled} icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />} label="Configure" path="/dashboard/configure" />
-        {/* <SidebarItem disabled={disabled} icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />} label="Site builder" path="/dashboard/sitebuilder" />
-        <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
+        <SidebarItem disabled={disabled} icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />} label="Site builder" path="/dashboard/sitebuilder" />
+        {/* <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
       </ul>
     </nav>
   );
