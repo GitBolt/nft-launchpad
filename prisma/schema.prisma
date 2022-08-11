@@ -59,8 +59,8 @@ model Item {
 
 model Site {
   id                 Int     @id @default(autoincrement())
-  bgColor            String  @default("#FFFFFF")
-  primaryFontColor   String  @default("#1A1A1A")
+  bgColor            String  @default("#000000")
+  primaryFontColor   String  @default("#FFFFFF")
   secondaryFontColor String  @default("#666666")
   buttonBgColor      String  @default("#0E2C97")
   buttonFontColor    String  @default("#FFFFFF")

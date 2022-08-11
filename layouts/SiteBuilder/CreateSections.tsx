@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SiteData } from '@/types/projectData';
 import TextareaAutosize from 'react-textarea-autosize';
 import styles from '@/styles/Section.module.scss';
@@ -20,6 +20,12 @@ type Img = {
 };
 
 export const CreateSections = function CreateSections({ siteData, setSiteData } : Props) {
+  const [previewImages, setPreviewImages] = useState<any>();
+
+  useEffect(() => {
+    setPreviewImages(localStorage.getItem('previewImages'));
+  }, []);
+
   return (
     <div className="w-full mt-24">
       {siteData.sections && siteData.sections.map((section, index) => (
@@ -97,7 +103,7 @@ export const CreateSections = function CreateSections({ siteData, setSiteData } 
                   success: 'Successfully uploaded image',
                   error: 'Error uploading image',
                 }).then((imageUrl) => {
-                  let newImages: Img = localStorage.getItem('previewImages') || {};
+                  let newImages: Img = previewImages || {};
                   if (typeof (newImages) === 'string') { newImages = JSON.parse(newImages); }
                   newImages[index] = '';
                   newImages[index] = URL.createObjectURL(e);
@@ -114,21 +120,21 @@ export const CreateSections = function CreateSections({ siteData, setSiteData } 
               <div
                 className={section.wideImage ? styles.image2 : styles.image}
                 style={{
-                  border: JSON.parse(localStorage.getItem('previewImages') || '0')[index]
+                  border: JSON.parse(previewImages || '0')[index]
                   || (siteData.sections && siteData.sections[index].image) ? 'none'
                     : '2px dashed #C4C4C4',
                   backgroundPosition: 'center',
                   backgroundSize: 'cover',
                   backgroundRepeat: 'no-repeat',
-                  background: `url(${(localStorage.getItem('previewImages')
+                  background: `url(${(previewImages
                   // @ts-ignore
-                    && JSON.parse(localStorage.getItem('previewImages'))[index])
+                    && JSON.parse(previewImages)[index])
                     || (siteData.sections && siteData.sections[index].image) || ''})`,
                 }}
               >
-                {(!((localStorage.getItem('previewImages')
+                {(!((previewImages
                 // @ts-ignore
-                && JSON.parse(localStorage.getItem('previewImages'))[index])
+                && JSON.parse(previewImages)[index])
                 || (siteData.sections && siteData.sections[index].image))) && (
                   <Image src={DefaultImage} height="100%" width="100" color="red" />
                 ) }
