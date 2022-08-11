@@ -55,7 +55,7 @@ export const ColourPicker = function ColourPicker({
         <Close style={{ color: 'white' }} />
       </div>
       <div className="flex gap-2">
-        <p className="text-gray-300 text-[10px] uppercase">{config[value as keyof SiteData]}</p>
+        <p className="text-gray-300 text-[10px] uppercase">{config[value as keyof SiteData] as string}</p>
         <div
           className="w-6 h-6 cursor-pointer rounded-[0.5rem] border-[1px] border-gray-600"
           style={{
