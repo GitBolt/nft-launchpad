@@ -189,18 +189,18 @@ const Index: NextPage = function Index() {
                   </h2>
                   <div className="flex items-center w-full justify-end gap-2">
                     <Button
-                      className="bg-[#E7E7E8] px-4 py-2 rounded-1xl text-[#6B7280]"
                       onClick={() => { setItems(null); setOffset(0); }}
                       disabled={!items || offset === 0}
+                      style={{ color: 'white' }}
                     >
                       First
                     </Button>
                     <Button
-                      className="bg-[#E7E7E8] px-4 py-[7px] rounded-1xl text-[#6B7280]"
                       onClick={() => { setItems(null); setOffset(offset - 1); }}
                       disabled={!items || offset === offset - 1 || offset === 0}
+                      style={{ color: 'white' }}
                     >
-                      <ArrowBackIos />
+                      <ArrowBackIos color="primary"/>
                     </Button>
                     <p className="text-[#6B7280] gap-6">
                       Page
@@ -216,13 +216,15 @@ const Index: NextPage = function Index() {
                       onClick={() => { setItems(null); setOffset(offset + 1); }}
                       disabled={!items || offset === offset + 1
                         || (Math.floor(totalCount / 30) + 1 === offset + 1)}
+                        style={{ color: 'white' }}
                     >
-                      <ArrowForwardIos />
+                      <ArrowForwardIos color="primary" />
                     </Button>
                     <Button
                       className="bg-[#E7E7E8] px-4 py-2 rounded-1xl text-[#6B7280]"
                       disabled={!items || offset === Math.floor(totalCount / 30)}
                       onClick={() => { setItems(null); setOffset(Math.floor(totalCount / 30)); }}
+                      style={{ color: 'white' }}
                     >
                       Last
                     </Button>

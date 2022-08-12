@@ -7,23 +7,23 @@ import { styled } from '@mui/material/styles';
   
 export const Text = styled(TextField)({
   label: {
-    color: '#606163',
+    color: '#343d60',
   },
   input: {
     color: 'white',
   },
   '& fieldset': {
-    color: 'white',
+    color: '#343d60',
   },
   '& label.Mui-focused': {
-    color: 'white',
+    color: '#343d60',
   },
   '& .MuiInput-underline:after': {
-    borderBottomColor: '#606163',
+    borderBottomColor: '#343d60',
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: 'none',
+      borderColor: '#343d60',
     },
   },
 });

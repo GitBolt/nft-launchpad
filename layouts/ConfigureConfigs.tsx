@@ -186,7 +186,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           <h1 className="text-white text-2xl">Step 1/2: Project and mint settings</h1>
         </div>
         <Text
-          variant="standard"
+          variant="outlined"
           style={{ width: '70%' }}
           onChange={(e) => {
             setConfig({
@@ -209,7 +209,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           }}
         />
         <Text
-          variant="standard"
+          variant="outlined"
           style={{ width: '70%' }}
           onChange={(e) => setConfig({
             ...config,
@@ -256,7 +256,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
               className="cursor-pointer w-[34%] h-56 rounded-2xl p-4 flex flex-col justify-between"
               onClick={() => { setMintEndType('amount'); setError({ ...error, endDateError: null }); }}
               style={{
-                border: error.amountNullError && mintEndType === 'amount' ? '1px solid red' : '1px solid #CCCCCC',
+                border: error.amountNullError && mintEndType === 'amount' ? '1px solid red' : '1px solid #343d60',
                 boxShadow: mintEndType === 'amount' ? '1px 1px 10px black' : 'none',
               }}
             >
@@ -306,7 +306,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
               className="cursor-pointer border-[1px] border-gray-600 w-[34%] h-56 rounded-2xl p-4 flex flex-col justify-between"
               onClick={() => { setMintEndType('date'); setError({ ...error, amountNullError: null }); }}
               style={{
-                border: error.endDateError && mintEndType === 'date' ? '1px solid red' : '1px solid #CCCCCC',
+                border: error.endDateError && mintEndType === 'date' ? '1px solid red' : '1px solid #343d60',
                 boxShadow: mintEndType === 'date' ? '1px 1px 10px black' : 'none',
               }}
             >
@@ -315,7 +315,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                   <div
                     className="rounded-full w-5 h-5 border-blue-700 border-2 flex items-center justify-center"
                     style={{
-                      border: mintEndType === 'date' ? '2px solid #054BD2' : '2px solid #8F8F8F',
+                      border: mintEndType === 'date' ? '2px solid #343d60' : '2px solid #8F8F8F',
                     }}
                   >
                     <div
@@ -434,7 +434,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                     });
                   }}
                   style={{
-                    border: '1px solid #CCCCCC',
+                    border: '1px solid #343d60',
                     boxShadow: !burn ? '1px 1px 10px black' : 'none',
                   }}
                 >
@@ -473,7 +473,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                     });
                   }}
                   style={{
-                    border: '1px solid #CCCCCC',
+                    border: '1px solid #343d60',
                     boxShadow: burn ? '1px 1px 10px black' : 'none',
                   }}
                 >
