@@ -43,7 +43,8 @@ export const Navbar = function Navbar({
       className="w-full h-[6rem] bg-transparent fixed z-10"
     >
       <div
-        className="flex px-[3.75rem] h-[6rem] bg-[#11141D] items-center justify-between"
+        className="flex px-[3.75rem] h-[6rem] bg-[#0F0921] items-center justify-between"
+        style={{ backdropFilter: 'blur(5px)' }}
       >
         <h1 className="text-white text-3xl font-bold">Launchpad</h1>
         <div className="flex items-center gap-8 text-[1rem]">
@@ -52,7 +53,7 @@ export const Navbar = function Navbar({
               <Button
                 style={{
                   borderRadius: '.5rem',
-                  background: '#0E2C97',
+                  background: 'linear-gradient(270deg, #A526C5 0%, #5022B1 101.88%)',
                   color: 'white',
                   height: '2.5rem',
                 }}

@@ -56,7 +56,7 @@ const Index: NextPage = function Index() {
                 padding: '.65rem 2rem',
                 fontSize: '1rem',
                 minWidth: '20rem',
-                background: '#0E2C97',
+                background: 'linear-gradient(270deg, #A526C5 0%, #5022B1 101.88%);',
                 color: 'white',
               }}
               startIcon={<AccountBalanceWallet style={{ width: '1.3rem', height: '1.3rem' }} />}
