@@ -11,7 +11,7 @@ export const createLiquidityBootstrapper = async (
   dynamicMintConfig: DynamicMintConfig,
 ) => {
   const connection = new web3.Connection('https://api.devnet.solana.com');
-  const provider = new anchor.AnchorProvider(connection, wallet!, {});
+  const provider: any = new anchor.Provider(connection, wallet!, {});
 
   const marketplace = await MarketplaceSdk.init(provider);
   const {

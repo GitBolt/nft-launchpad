@@ -143,6 +143,7 @@ const Index: NextPage = function Index() {
                       background: '#0E2C97',
                       color: 'white',
                       height: '2.5rem',
+                      marginRight: '4rem',
                     }}
                     endIcon={<PublishRounded />}
                   >
@@ -187,7 +188,7 @@ const Index: NextPage = function Index() {
                     {' '}
                     NFTs found
                   </h2>
-                  <div className="flex items-center w-full justify-end gap-2">
+                  <div className="flex items-center w-full justify-end gap-2 mr-16">
                     <Button
                       onClick={() => { setItems(null); setOffset(0); }}
                       disabled={!items || offset === 0}
