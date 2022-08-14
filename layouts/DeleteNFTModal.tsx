@@ -47,7 +47,7 @@ export const DeleteNFTModal = function WhitelistMintErrorModal({
       }}
     >
       <div className="w-[30rem] h-[20rem] bg-[#0F0F16] rounded-2xl flex flex-col items-center justify-center gap-8">
-        <div><Image src={Delete} /></div>
+        <div><Image src={Delete} alt="Delete"/></div>
         <p className="text-2xl text-center text-white">
           Are you sure you want to delete
           {' '}

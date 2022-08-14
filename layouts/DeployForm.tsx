@@ -107,7 +107,7 @@ export const DeployForm = function DeployForm({
       );
       if (!anchorProgram) return;
       const candyMachine = new PublicKey(stateData?.candyMachine);
-      const candyMachineObj = await anchorProgram.account.candyMachine.fetch(
+      const candyMachineObj: any = await anchorProgram.account.candyMachine.fetch(
         candyMachine,
       );
       const authorityPubKey = new PublicKey(candyMachineObj.authority);
@@ -126,9 +126,9 @@ export const DeployForm = function DeployForm({
   }, [config.itemsAvailable, depAmount]);
   return (
     <div
-      className="flex flex-col relative gap-6 bg-[#16161F] rounded-2xl p-[2rem] w-[98%] mt-[1rem] mb-[2rem]"
+      className="flex flex-col relative gap-6 bg-[#02041a9c] rounded-2xl p-[2rem] w-[98%] mt-[1rem] mb-[2rem]"
       style={{
-        boxShadow: '0px 0px 20px black',
+        boxShadow: '#480b39a3 0px 0px 20px',
       }}
     >
 
@@ -146,7 +146,7 @@ export const DeployForm = function DeployForm({
       <div className="flex items-center justify-between">
         <div className="flex gap-8 justify-between">
           <div className="w-[2.5rem] h-[2.5rem] shrink-0">
-            <Image src={(step > 1 && Confirmed) || (step === 1 ? Current : Unconfirmed)} width="100%" height="100%" />
+            <Image src={(step > 1 && Confirmed) || (step === 1 ? Current : Unconfirmed)} width="100%" height="100%" alt="Status" />
           </div>
           <div>
             <p className="text-[#054BD2] font-medium text-[1.2rem]">Deposit SOL</p>
@@ -196,7 +196,7 @@ export const DeployForm = function DeployForm({
       <div className="flex items-center justify-between">
         <div className="flex gap-8">
           <div className="w-[2.5rem] h-[2.5rem] shrink-0">
-            <Image src={(step > 2 && Confirmed) || (step < 2 ? Unconfirmed : Current)} width="100%" height="100%" />
+            <Image src={(step > 2 && Confirmed) || (step < 2 ? Unconfirmed : Current)} width="100%" height="100%" alt="Status" />
           </div>
           <div>
             <p className="text-[#054BD2] font-medium text-[1.2rem]">Create Whitelist Token</p>
@@ -269,7 +269,7 @@ export const DeployForm = function DeployForm({
       <div className="flex items-center justify-between">
         <div className="flex gap-8">
           <div className="w-[2.5rem] h-[2.5rem] shrink-0">
-            <Image src={(step > 3 && Confirmed) || (step === 3 ? Current : Unconfirmed)} width="100%" height="100%" />
+            <Image src={(step > 3 && Confirmed) || (step === 3 ? Current : Unconfirmed)} width="100%" height="100%" alt="Status" />
           </div>
           <div>
             <p className="text-[#054BD2] font-medium text-[1.2rem]">Deploy Candy Machine</p>
@@ -314,7 +314,7 @@ export const DeployForm = function DeployForm({
       <div className="flex items-center justify-between">
         <div className="flex gap-8">
           <div className="w-[2.5rem] h-[2.5rem] shrink-0">
-            <Image src={(step > 4 && Confirmed) || (step === 4 ? Current : Unconfirmed)} width="100%" height="100%" />
+            <Image src={(step > 4 && Confirmed) || (step === 4 ? Current : Unconfirmed)} width="100%" height="100%" alt="Status" />
           </div>
           <div>
             <p className="text-[#054BD2] font-medium text-[1.2rem]">Update Authority</p>
@@ -356,7 +356,7 @@ export const DeployForm = function DeployForm({
       <div className="flex items-center justify-between">
         <div className="flex gap-8">
           <div className="w-[2.5rem] h-[2.5rem] shrink-0">
-            <Image src={(step > 5 && Confirmed) || (step === 5 ? Current : Unconfirmed)} width="100%" height="100%" />
+            <Image src={(step > 5 && Confirmed) || (step === 5 ? Current : Unconfirmed)} width="100%" height="100%" alt="Status" />
           </div>
           <div>
             <p className="text-[#054BD2] font-medium text-[1.2rem]">Write Indices</p>
