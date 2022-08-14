@@ -49,7 +49,7 @@ export const WhitelistMintModal = function WhitelistMintModal({
       }}
     >
       <div className="w-[35rem] h-[20rem] bg-white rounded-2xl flex items-center flex-col justify-center px-4 gap-4">
-        <Image src={Whitelisted} />
+        <Image src={Whitelisted} alt="Whitelisted"/>
         <p className="text-gray-300 text-xl text-center w-[80%] my-5">
           You are whitelisted! Mint for
           {' '}
@@ -115,7 +115,7 @@ export const WhitelistMintErrorModal = function WhitelistMintErrorModal({
       }}
     >
       <div className="w-[35rem] h-[20rem] bg-white rounded-2xl flex items-center flex-col justify-center px-4 gap-4">
-        <Image src={NotWhitelisted} />
+        <Image src={NotWhitelisted} alt="Not whitelisted"/>
         <p className="text-gray-300 text-xl text-center w-[80%] my-5">
           You are not whitelisted
         </p>

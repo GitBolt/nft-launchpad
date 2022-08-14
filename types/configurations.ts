@@ -22,3 +22,9 @@ export interface Configurations {
   whitelistMintSettings: whiteListMintSettings | null,
   endSettings: endSettings | null
 }
+
+export interface DynamicMintConfig {
+  startPrice: number,
+  minPrice: number, 
+  interval: number,
+}

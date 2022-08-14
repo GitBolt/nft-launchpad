@@ -134,7 +134,7 @@ export async function loadCandyProgramV2(
     signAllTransactions: wallet.signAllTransactions,
     publicKey: new PublicKey(publicKey.toBase58()),
   };
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new anchor.AnchorProvider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(
@@ -175,7 +175,7 @@ export async function loadCandyProgramV2Raw(
     signAllTransactions: (txs: Transaction[]) => txs.map((tx) => tx.sign(walletKeyPair)),
     publicKey: walletKeyPair.publicKey,
   };
-  const provider = new anchor.Provider(solConnection, walletWrapper, {
+  const provider = new anchor.AnchorProvider(solConnection, walletWrapper, {
     preflightCommitment: 'recent',
   });
   const idl = await anchor.Program.fetchIdl(
@@ -362,7 +362,7 @@ export const updateCandyMachine = async (
 
   const candyMachine = new PublicKey(cacheContent.candy_machine);
 
-  const candyMachineObj = await anchorProgram?.account.candyMachine.fetch(
+  const candyMachineObj: any = await anchorProgram.account.candyMachine.fetch(
     candyMachine,
   );
 

@@ -5,7 +5,15 @@ import { Text } from '@/layouts/StyledComponents';
 import { Configurations } from '@/types/configurations';
 import { PublicKey } from '@solana/web3.js';
 import { updateCandyMachine } from '@/components/candymachine';
+import { createLiquidityBootstrapper } from '@/components/dynamicmint';
 import toast from 'react-hot-toast';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import { DynamicMint } from './DynamicMint';
+import { connectWallet } from '@/components/wallet';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { Wallet } from '@project-serum/anchor';
+import { DynamicMintConfig } from '@/types/configurations';
 
 // Image imports
 import Save from '@material-ui/icons/Save';
@@ -45,6 +53,8 @@ interface Errors {
   wlPriceNullError: string | null
 }
 
+
+
 export const ConfigureConfigs = function ConfigureConfigs({
   isDeployed,
   defaultNetwork,
@@ -54,9 +64,13 @@ export const ConfigureConfigs = function ConfigureConfigs({
   defaultMintEnd,
   defaultBurn,
 }: Props) {
+
+  const wallet = useWallet();
   const [network, setNetwork] = useState<string>(defaultNetwork);
   const [mintEndType, setMintEndType] = useState<string | null>(defaultMintEnd);
   const [burn, setBurn] = useState<boolean>(defaultBurn);
+  const [showDynamicMint, setShowDynamicMint] = useState<boolean>(false);
+  const [dynamicMintConfig, setDynamicMintConfig] = useState<DynamicMintConfig | null>(null);
   const [error, setError] = useState<Errors>({
     priceError: null,
     solAccountError: null,
@@ -75,6 +89,11 @@ export const ConfigureConfigs = function ConfigureConfigs({
       localStorage.setItem('cluster', 'https://api.mainnet-beta.solana.com');
       setNetwork('mainnet');
     }
+  };
+
+  const handleDynamicMintChange = () => {
+    setShowDynamicMint(!showDynamicMint);
+    setConfig({ ...config, price: 1.0 });
   };
 
   const handleSubmit = () => {
@@ -144,7 +163,23 @@ export const ConfigureConfigs = function ConfigureConfigs({
     if (!(isDeployed && network === defaultNetwork)) {
       setDeployForm(true);
     } else {
-      const promise = updateCandyMachine(config);
+      const doUpdate = async () => {
+        await updateCandyMachine(config);
+        if (showDynamicMint) {
+          if (!wallet || !wallet.publicKey || !wallet.signAllTransactions || !wallet.signTransaction) {
+            return;
+          }
+          await createLiquidityBootstrapper({ 
+            publicKey: wallet.publicKey, 
+            signAllTransactions: wallet.signAllTransactions,
+            signTransaction: wallet.signTransaction,
+          } as Wallet, 
+          await connectWallet(),
+          dynamicMintConfig as DynamicMintConfig,
+          );
+        }
+      };
+      const promise = doUpdate();
       toast.promise(promise, {
         success: 'Successfully updated candy machine',
         loading: 'Updating candy machine',
@@ -185,7 +220,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           <Image src={Settings} alt="Settings" />
           <h1 className="text-white text-2xl">Step 1/2: Project and mint settings</h1>
         </div>
-        <Text
+        {!showDynamicMint && <Text
           variant="outlined"
           style={{ width: '70%' }}
           onChange={(e) => {
@@ -207,7 +242,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
               </InputAdornment>
             ),
           }}
-        />
+        />}
         <Text
           variant="outlined"
           style={{ width: '70%' }}
@@ -414,7 +449,6 @@ export const ConfigureConfigs = function ConfigureConfigs({
           />
           <div>
             <div className="flex items-center gap-3 mb-2">
-              <Image src={BurnMode} alt="Burn"/>
               <h1 className="text-gray-200">Burn mode for whitelist users</h1>
             </div>
             <div>
@@ -502,6 +536,32 @@ export const ConfigureConfigs = function ConfigureConfigs({
               </div>
             </div>
           </div>
+
+          {isDeployed && <div>
+            <div className="flex items-center gap-3 mb-2">
+              <Image src={BurnMode} alt="Burn"/>
+              <h1 className="text-gray-200 text-2xl">Strata dynamic mint pricing</h1>
+
+            </div>
+             <FormControlLabel
+            control={(
+              <Checkbox
+                size="medium"
+                onChange={handleDynamicMintChange}
+                style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
+              />
+            )}
+            label="Enable Strata's dynamic mint pricing"
+            sx={{ color: '#929292', fontSize: '1.5rem', marginLeft: '5px' }}
+          />
+          {showDynamicMint && (
+          <DynamicMint
+            setDynamicMintConfig={setDynamicMintConfig}
+            dynamicMintConfig={dynamicMintConfig}
+          />
+          ) }
+          </div>
+          }
         </div>
         <Button
           style={{
