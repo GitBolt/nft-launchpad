@@ -23,16 +23,15 @@ export const uploadManifest = async (image: string, manifest: string) => {
     const client = new NFTStorage({ token });
     const manifestObject = JSON.parse(manifest);
     if (!manifestObject) return undefined;
-    if (manifestObject && manifestObject.properties && manifestObject.image && manifestObject.properties.files) {
-      if (manifestObject.properties.files.uri) {
-        manifestObject.properties.files.uri = image;
-      } else {
-        manifestObject.properties.files[0].uri = image;
-      }
-      manifestObject.image = image;
+
+    if (manifestObject.properties?.files) {
+      manifestObject.properties.files.uri = image;
+    } else if (typeof(manifestObject.properties?.files) === 'object') {
+      manifestObject.properties.files[0].uri = image;
     } else {
-      return;
+      manifestObject.image = image;
     }
+    
     const manifestBuffer = Buffer.from(JSON.stringify(manifestObject));
     const cid = await client.storeBlob(new Blob([manifestBuffer]));
     const link = `https://${cid}.ipfs.dweb.link`;
