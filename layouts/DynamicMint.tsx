@@ -114,6 +114,31 @@ export const DynamicMint = function DynamicMint({
           />
         </div>
       </Item>
+      <Item
+        heading="Number of tokens"
+        subheading="The number of items that will be sold in the dynamic pricing mint. This should not exceed the number of items remaining in the candymachine at the time dynamic pricing begins. Note that, depending on the above parameters this may not mint out"
+      >
+        <div className="flex align-start items-center w-1/2 flex-col">
+          <Text
+            variant="outlined"
+            fullWidth
+            onChange={(e) => {
+              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
+                setError('Amount can only be numeric and greater than 0');
+              } else {
+                // @ts-ignore
+                setDynamicMintConfig({ ...dynamicMintConfig, maxSupply: Number(e.target.value) });
+              }
+            }}
+            style={{
+              width: '100%',
+              marginTop: '2rem',
+            }}
+            error={!!error}
+            helperText={error && error}
+          />
+        </div>
+      </Item>
     </>
   );
 };

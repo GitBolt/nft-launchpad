@@ -351,6 +351,8 @@ export const writeIndices = async ({
 
 export const updateCandyMachine = async (
   config: Configurations,
+  walletAccount?: PublicKey | null,
+  splToken?: PublicKey | null,
 ) => {
   const userPublicKey = await connectWallet(true, false);
   const anchorProgram = await loadCandyProgramV2(
@@ -421,9 +423,13 @@ export const updateCandyMachine = async (
     accounts: {
       candyMachine,
       authority: userPublicKey,
-      wallet: userPublicKey.toString(),
+      wallet: walletAccount || userPublicKey,
     },
-    remainingAccounts: undefined,
+    remainingAccounts: splToken ? [{
+      pubkey: new PublicKey(splToken),
+      isSigner: false,
+      isWritable: false,
+    }] : undefined,
   });
 };
 

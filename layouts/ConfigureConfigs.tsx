@@ -188,19 +188,23 @@ export const ConfigureConfigs = function ConfigureConfigs({
       if (!dynamicMintConfig) {
         promise = updateCandyMachine(config);
       } else {
+        let graveyardacc: PublicKey | null = null;
+        let graveyardToken: PublicKey | null = null;
         promise = addDynamicPriceMint().then((result) => {
+          graveyardacc = result?.graveyardAta || null;
+          graveyardToken = result?.targetMint || null;
           setConfig({
             ...config,
             splToken: result?.targetMint || null,
             splTokenAccount: result?.graveyardAta || null,
             price: 1.0,
           });
-        }).then(() => updateCandyMachine(config));
+        }).then(() => updateCandyMachine(config, new PublicKey(graveyardacc as PublicKey), graveyardToken));
       }
       toast.promise(promise, {
         success: 'Successfully updated candy machine',
         loading: 'Updating candy machine',
-        error: 'Error updating candy machine',
+        error: (err) => err.toString(),
       });
     }
   };

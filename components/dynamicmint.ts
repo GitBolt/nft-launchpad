@@ -11,6 +11,8 @@ export const createLiquidityBootstrapper = async (
   publicKey: web3.PublicKey,
   dynamicMintConfig: DynamicMintConfig,
 ) => {
+
+  const targetMintKeypair = web3.Keypair.generate();
   const connection = new web3.Connection(getRPC());
   const provider: any = new anchor.Provider(connection, wallet!, {});
 
@@ -21,6 +23,8 @@ export const createLiquidityBootstrapper = async (
     signers,
   } = 
   await marketplace.createLiquidityBootstrapperInstructions({
+    targetMintKeypair,
+    authority: publicKey,
     metadata: {
       // Max name len 32
       name: 'Candymachine Mint Token',
@@ -35,7 +39,7 @@ export const createLiquidityBootstrapper = async (
     startPrice: dynamicMintConfig.startPrice,
     minPrice: dynamicMintConfig.minPrice, 
     interval: dynamicMintConfig.interval,
-    maxSupply: 100, // How many tokens will be sold using the LBC
+    maxSupply: dynamicMintConfig.maxSupply, // How many tokens will be sold using the LBC
     bondingArgs: {
       targetMintDecimals: 0,
       goLiveDate: new Date(),
@@ -44,7 +48,6 @@ export const createLiquidityBootstrapper = async (
   });
   console.log('Target mint: ', targetMint.toBase58());
   console.log('Token bonding: ', tokenBonding.toBase58());
-
   const graveyard = new web3.PublicKey(
     'gravk12G8FF5eaXaXSe4VEC8BhkxQ7ig5AHdeVdPmDF',
   );

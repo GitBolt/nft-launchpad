@@ -30,4 +30,5 @@ export interface DynamicMintConfig {
   startPrice: number,
   minPrice: number, 
   interval: number,
+  maxSupply: number,
 }

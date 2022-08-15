@@ -33,6 +33,9 @@ const Index: NextPage = function Index() {
     price: 0,
     solTreasuryAccount: '',
     splTreasuryAccount: '',
+    splToken: '',
+    splTokenAccount: '',
+    royalty: 5,
     goLiveDate: null,
     endSettings: null,
     whitelistMintSettings: {

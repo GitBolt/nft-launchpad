@@ -49,6 +49,7 @@ export const deployCandyMachine = async (
     config.goLiveDate!.toUTCString().split(', ')[1],
     config.price ? config.price * LAMPORTS_PER_SOL : 0,
     whitelistMintSettings,
+    config.royalty,
     endSettings,
   );
   const candyMachine = cmRes?.candyMachine;
