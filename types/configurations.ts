@@ -16,6 +16,7 @@ type endSettings = {
 export interface Configurations {
   itemsAvailable: number;
   price: number;
+  royalty: number;
   solTreasuryAccount: PublicKey | string;
   splTreasuryAccount: PublicKey | string;
   splToken: PublicKey | string | null;

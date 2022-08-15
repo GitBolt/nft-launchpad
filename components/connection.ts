@@ -174,10 +174,7 @@ async function simulateTransaction(
   // @ts-ignore
   const res = await connection.simulateTransaction(args);
   console.log('TTT', res);
-  if (res.error) {
-    throw new Error(`failed to simulate transaction: ${res.error.message}`);
-  }
-  return res.result;
+  return res;
 }
   
 export async function sendSignedTransaction({

@@ -197,6 +197,7 @@ export const initCandyMachine = async (
   goLiveDate: string,
   price: number,
   whitelistMintSettings: any,
+  royalty: number,
   endSettings: any,
 ) => {
   console.log('Trying to initialize CandyMachine V2');
@@ -217,8 +218,8 @@ export const initCandyMachine = async (
       {
         itemsAvailable: new BN(filesAmount),
         uuid: null,
-        symbol: 'TEST',
-        sellerFeeBasisPoints: 500,
+        symbol: 'MINT',
+        sellerFeeBasisPoints: royalty * 100,
         isMutable: true,
         maxSupply: new BN(filesAmount),
         retainAuthority: true,

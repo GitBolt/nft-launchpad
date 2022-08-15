@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import { Text } from '@/layouts/StyledComponents';
-import { Configurations } from '@/types/configurations';
+import { Configurations, DynamicMintConfig } from '@/types/configurations';
 import { PublicKey } from '@solana/web3.js';
 import { updateCandyMachine } from '@/components/candymachine';
 import { createLiquidityBootstrapper } from '@/components/dynamicmint';
@@ -13,7 +13,6 @@ import { DynamicMint } from './DynamicMint';
 import { connectWallet } from '@/components/wallet';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Wallet } from '@project-serum/anchor';
-import { DynamicMintConfig } from '@/types/configurations';
 
 // Image imports
 import Save from '@material-ui/icons/Save';
@@ -46,6 +45,7 @@ type Props = {
 interface Errors {
   solAccountError: string | null,
   priceError: string | null,
+  royaltyError: string | null,
   dateError: string | null,
   amountNullError: string | null
   endDateError: string | null
@@ -73,6 +73,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
   const [dynamicMintConfig, setDynamicMintConfig] = useState<DynamicMintConfig | null>(null);
   const [error, setError] = useState<Errors>({
     priceError: null,
+    royaltyError: null,
     solAccountError: null,
     dateError: null,
     amountNullError: null,
@@ -94,6 +95,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
   const handleSubmit = () => {
     setError({
       solAccountError: null,
+      royaltyError: null,
       priceError: null,
       dateError: null,
       amountNullError: null,
@@ -103,6 +105,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
     });
     let solAcc: PublicKey | null = null;
     let priceValid: boolean = true;
+    let royaltyValid: boolean = true;
     let dateValid: boolean = true;
     let endSettingsValid: boolean = true;
     let wlAmountValid: boolean = true;
@@ -110,6 +113,10 @@ export const ConfigureConfigs = function ConfigureConfigs({
     if (!config.price || Number.isNaN(config.price) || (config.price > 0 === false)) {
       setError((prevState) => ({ ...prevState, priceError: 'Price must be positive number' }));
       priceValid = false;
+    }
+    if (!config.royalty || Number.isNaN(config.royalty) || (config.royalty > 0 === false)) {
+      setError((prevState) => ({ ...prevState, royaltyError: 'Royalty must be positive number' }));
+      royaltyValid = false;
     }
     if (!config.goLiveDate) {
       setError((prevState) => ({ ...prevState, dateError: 'Go live date must be set' }));
@@ -129,8 +136,8 @@ export const ConfigureConfigs = function ConfigureConfigs({
       endSettingsValid = false;
     }
     if (config.endSettings?.endSettingType.date
-       && config.goLiveDate && config.endSettings.number
-       && config.endSettings.number < +config.goLiveDate) {
+      && config.goLiveDate && config.endSettings.number
+      && config.endSettings.number < +config.goLiveDate) {
       setError((prevState) => ({ ...prevState, endDateError: 'End date must be greater than go live date' }));
       endSettingsValid = false;
     }
@@ -146,6 +153,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
     setConfig({
       ...config,
       price: Number(config.price),
+      royalty: Number(config.royalty),
       whitelistMintSettings: {
         mode: config.whitelistMintSettings!.mode,
         presale: config.whitelistMintSettings!.presale,
@@ -154,21 +162,21 @@ export const ConfigureConfigs = function ConfigureConfigs({
       },
     });
     if (!priceValid || !dateValid || !solAcc || !endSettingsValid
-      || !wlPriceValid || !wlAmountValid) return;
+      || !wlPriceValid || !wlAmountValid || !royaltyValid) return;
     if (!(isDeployed && network === defaultNetwork)) {
       setDeployForm(true);
     } else {
-  
+
       const addDynamicPriceMint = async () => {
         if (showDynamicMint) {
           if (!wallet || !wallet.publicKey || !wallet.signAllTransactions || !wallet.signTransaction) {
             return;
           }
-          const res = await createLiquidityBootstrapper({ 
-            publicKey: wallet.publicKey, 
+          const res = await createLiquidityBootstrapper({
+            publicKey: wallet.publicKey,
             signAllTransactions: wallet.signAllTransactions,
             signTransaction: wallet.signTransaction,
-          } as Wallet, 
+          } as Wallet,
           await connectWallet(),
           dynamicMintConfig as DynamicMintConfig,
           );
@@ -267,7 +275,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Image src={TreasuryAccount} alt="Acc"/>
+                <Image src={TreasuryAccount} alt="Acc" />
               </InputAdornment>
             ),
           }}
@@ -286,12 +294,33 @@ export const ConfigureConfigs = function ConfigureConfigs({
             <Text
               {...params}
               helperText={
-              ((error && error.dateError) || !config.goLiveDate)
-                ? error.dateError : null
-                }
+                ((error && error.dateError) || !config.goLiveDate)
+                  ? error.dateError : null
+              }
               sx={{ width: '70%' }}
             />
           )}
+        />
+        <Text
+          variant="outlined"
+          style={{ width: '70%' }}
+          onChange={(e) => setConfig({
+            ...config,
+            // @ts-ignore
+            royalty: e.target.value,
+          })}
+          value={config.royalty || ''}
+          label="Royalty percentage for creators"
+          defaultValue={config.royalty || ''}
+          error={!!error?.royaltyError}
+          helperText={(error && error.royaltyError) ? error.royaltyError : null}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Image src={TreasuryAccount} alt="Acc" />
+              </InputAdornment>
+            ),
+          }}
         />
         <div>
           <h1 className="text-gray-200">Mint-End condition</h1>
@@ -402,32 +431,32 @@ export const ConfigureConfigs = function ConfigureConfigs({
         </div>
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
-            <Image src={WhitelistSection} alt="Whitelist"/>
+            <Image src={WhitelistSection} alt="Whitelist" />
             <h1 className="text-gray-200 text-2xl">Whitelist settings</h1>
           </div>
           {(!isDeployed
-          || (isDeployed && !config.whitelistMintSettings?.mint)) && (
-          <Text
-            label="Number of whitelist tokens to mint"
-            style={{ width: '34%' }}
-            placeholder="One token will WL for one mint"
-            onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
-                localStorage.removeItem('whitelistLen');
-              } else {
-                localStorage.setItem('whitelistLen', JSON.stringify(Number(e.target.value)));
-              }
-            }}
-            helperText={error && error.wlAmountNullError}
-            error={!!(error && error.wlAmountNullError)}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <FormatListBulleted />
-                </InputAdornment>
-              ),
-            }}
-          />
+            || (isDeployed && !config.whitelistMintSettings?.mint)) && (
+              <Text
+                label="Number of whitelist tokens to mint"
+                style={{ width: '34%' }}
+                placeholder="One token will WL for one mint"
+                onChange={(e) => {
+                  if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
+                    localStorage.removeItem('whitelistLen');
+                  } else {
+                    localStorage.setItem('whitelistLen', JSON.stringify(Number(e.target.value)));
+                  }
+                }}
+                helperText={error && error.wlAmountNullError}
+                error={!!(error && error.wlAmountNullError)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FormatListBulleted />
+                    </InputAdornment>
+                  ),
+                }}
+              />
           )}
           <Text
             label="Pre-sale Mint-price"
@@ -548,27 +577,27 @@ export const ConfigureConfigs = function ConfigureConfigs({
 
           {isDeployed && <div>
             <div className="flex items-center gap-3 mb-2">
-              <Image src={BurnMode} alt="Burn"/>
+              <Image src={BurnMode} alt="Burn" />
               <h1 className="text-gray-200 text-2xl">Strata dynamic mint pricing</h1>
 
             </div>
-             <FormControlLabel
-            control={(
-              <Checkbox
-                size="medium"
-                onChange={() => setShowDynamicMint(!showDynamicMint)}
-                style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
+            <FormControlLabel
+              control={(
+                <Checkbox
+                  size="medium"
+                  onChange={() => setShowDynamicMint(!showDynamicMint)}
+                  style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
+                />
+              )}
+              label="Enable Strata's dynamic mint pricing"
+              sx={{ color: '#929292', fontSize: '1.5rem', marginLeft: '5px' }}
+            />
+            {showDynamicMint && (
+              <DynamicMint
+                setDynamicMintConfig={setDynamicMintConfig}
+                dynamicMintConfig={dynamicMintConfig}
               />
             )}
-            label="Enable Strata's dynamic mint pricing"
-            sx={{ color: '#929292', fontSize: '1.5rem', marginLeft: '5px' }}
-          />
-          {showDynamicMint && (
-          <DynamicMint
-            setDynamicMintConfig={setDynamicMintConfig}
-            dynamicMintConfig={dynamicMintConfig}
-          />
-          ) }
           </div>
           }
         </div>
@@ -586,7 +615,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           endIcon={(isDeployed && network === defaultNetwork) ? <Save /> : null}
           onClick={handleSubmit}
         >
-          {isDeployed && network === defaultNetwork ? 'Update configs' : `Deploy on ${network}` }
+          {isDeployed && network === defaultNetwork ? 'Update configs' : `Deploy on ${network}`}
         </Button>
       </div>
     </LocalizationProvider>
