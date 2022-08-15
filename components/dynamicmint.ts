@@ -4,18 +4,19 @@ import * as web3 from '@solana/web3.js';
 import { Token, ASSOCIATED_TOKEN_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { sendMultipleInstructions } from '@strata-foundation/spl-utils';
 import { DynamicMintConfig } from '@/types/configurations';
+import { getRPC } from './wallet';
 
 export const createLiquidityBootstrapper = async (
   wallet: anchor.Wallet | null, 
   publicKey: web3.PublicKey,
   dynamicMintConfig: DynamicMintConfig,
 ) => {
-  const connection = new web3.Connection('https://api.devnet.solana.com');
+  const connection = new web3.Connection(getRPC());
   const provider: any = new anchor.Provider(connection, wallet!, {});
 
   const marketplace = await MarketplaceSdk.init(provider);
   const {
-    output: { targetMint },
+    output: { targetMint, tokenBonding },
     instructions,
     signers,
   } = 
@@ -41,15 +42,17 @@ export const createLiquidityBootstrapper = async (
       sellFrozen: true,
     },
   });
+  console.log('Target mint: ', targetMint.toBase58());
+  console.log('Token bonding: ', tokenBonding.toBase58());
 
-  const incinerator = new web3.PublicKey(
+  const graveyard = new web3.PublicKey(
     'gravk12G8FF5eaXaXSe4VEC8BhkxQ7ig5AHdeVdPmDF',
   );
-  const incineratorAta = await Token.getAssociatedTokenAddress(
+  const graveyardAta = await Token.getAssociatedTokenAddress(
     ASSOCIATED_TOKEN_PROGRAM_ID,
     TOKEN_PROGRAM_ID,
     targetMint,
-    incinerator,
+    graveyard,
     true,
   );
   const lastInstrs = instructions[instructions.length - 1];
@@ -58,16 +61,22 @@ export const createLiquidityBootstrapper = async (
       ASSOCIATED_TOKEN_PROGRAM_ID,
       TOKEN_PROGRAM_ID,
       targetMint,
-      incineratorAta,
-      incinerator,
+      graveyardAta,
+      graveyard,
       publicKey,
     ),
   );
-  const data = await sendMultipleInstructions(
+
+  console.log('Graveyard ATA: ', graveyardAta.toBase58());
+  await sendMultipleInstructions(
     new Map(),
     provider,
     instructions,
     signers,
   );
-  console.log(data);
+  return {
+    targetMint,
+    tokenBonding,
+    graveyardAta,
+  };
 };

@@ -160,9 +160,8 @@ async function simulateTransaction(
 ): Promise<RpcResponseAndContext<SimulatedTransactionResponse>> {
   // @ts-ignore
   // eslint-disable-next-line no-param-reassign
-  transaction.recentBlockhash = await connection._recentBlockhash(
-    // @ts-ignore
-    connection._disableBlockhashCaching,
+  transaction.recentBlockhash = await connection.getLatestBlockhash(
+    connection,
   );
   
   const signData = transaction.serializeMessage();
@@ -173,7 +172,8 @@ async function simulateTransaction(
   const args = [encodedTransaction, config];
   
   // @ts-ignore
-  const res = await connection._rpcRequest('simulateTransaction', args);
+  const res = await connection.simulateTransaction(args);
+  console.log('TTT', res);
   if (res.error) {
     throw new Error(`failed to simulate transaction: ${res.error.message}`);
   }
@@ -279,7 +279,7 @@ export const sendTransactionWithRetry = async (
   let transaction = new Transaction();
   instructions.forEach((instruction) => transaction.add(instruction));
   transaction.recentBlockhash = (
-    block || (await connection.getRecentBlockhash(commitment))
+    block || (await connection.getLatestBlockhash(commitment))
   ).blockhash;
   
   if (includesFeePayer) {
@@ -514,7 +514,7 @@ export const sendTransaction = async (
     transaction = new Transaction();
     instructions.forEach((instruction) => transaction.add(instruction));
     transaction.recentBlockhash = (
-      block || (await connection.getRecentBlockhash(commitment))
+      block || (await connection.getLatestBlockhash(commitment))
     ).blockhash;
   
     if (includesFeePayer) {

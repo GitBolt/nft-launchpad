@@ -91,11 +91,6 @@ export const ConfigureConfigs = function ConfigureConfigs({
     }
   };
 
-  const handleDynamicMintChange = () => {
-    setShowDynamicMint(!showDynamicMint);
-    setConfig({ ...config, price: 1.0 });
-  };
-
   const handleSubmit = () => {
     setError({
       solAccountError: null,
@@ -163,13 +158,13 @@ export const ConfigureConfigs = function ConfigureConfigs({
     if (!(isDeployed && network === defaultNetwork)) {
       setDeployForm(true);
     } else {
-      const doUpdate = async () => {
-        await updateCandyMachine(config);
+  
+      const addDynamicPriceMint = async () => {
         if (showDynamicMint) {
           if (!wallet || !wallet.publicKey || !wallet.signAllTransactions || !wallet.signTransaction) {
             return;
           }
-          await createLiquidityBootstrapper({ 
+          const res = await createLiquidityBootstrapper({ 
             publicKey: wallet.publicKey, 
             signAllTransactions: wallet.signAllTransactions,
             signTransaction: wallet.signTransaction,
@@ -177,9 +172,23 @@ export const ConfigureConfigs = function ConfigureConfigs({
           await connectWallet(),
           dynamicMintConfig as DynamicMintConfig,
           );
+          return res;
         }
       };
-      const promise = doUpdate();
+
+      let promise;
+      if (!dynamicMintConfig) {
+        promise = updateCandyMachine(config);
+      } else {
+        promise = addDynamicPriceMint().then((result) => {
+          setConfig({
+            ...config,
+            splToken: result?.targetMint || null,
+            splTokenAccount: result?.graveyardAta || null,
+            price: 1.0,
+          });
+        }).then(() => updateCandyMachine(config));
+      }
       toast.promise(promise, {
         success: 'Successfully updated candy machine',
         loading: 'Updating candy machine',
@@ -547,7 +556,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
             control={(
               <Checkbox
                 size="medium"
-                onChange={handleDynamicMintChange}
+                onChange={() => setShowDynamicMint(!showDynamicMint)}
                 style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
               />
             )}

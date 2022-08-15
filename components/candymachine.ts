@@ -393,6 +393,8 @@ export const updateCandyMachine = async (
     };
   }
   const newSettings = {
+    splToken: new PublicKey(config.splToken as string),
+    splTokenAccount: new PublicKey(config.splToken as string),
     itemsAvailable: candyMachineObj.data.itemsAvailable,
     uuid: candyMachineObj.data.uuid,
     symbol: candyMachineObj.data.symbol,

@@ -18,6 +18,8 @@ export interface Configurations {
   price: number;
   solTreasuryAccount: PublicKey | string;
   splTreasuryAccount: PublicKey | string;
+  splToken: PublicKey | string | null;
+  splTokenAccount: PublicKey | string | null;
   goLiveDate: Date | null;
   whitelistMintSettings: whiteListMintSettings | null,
   endSettings: endSettings | null
