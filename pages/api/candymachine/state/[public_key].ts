@@ -58,6 +58,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       itemCount: totalCount, 
       network: cache?.network || null,
       whitelist_mint: cache?.whitelist_mint,
+      dynamicMint: cache?.dynamicMint,
+      dmConfigs: cache?.dmConfigs,
     });
   } catch (error) {
     console.error('Request error', error);

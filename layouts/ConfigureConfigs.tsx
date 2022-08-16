@@ -1,5 +1,5 @@
 // Component imports
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import { Text } from '@/layouts/StyledComponents';
 import { Configurations, DynamicMintConfig } from '@/types/configurations';
@@ -13,6 +13,8 @@ import { DynamicMint } from './DynamicMint';
 import { connectWallet } from '@/components/wallet';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { Wallet } from '@project-serum/anchor';
+import { postNetworkRequest } from '@/util/functions';
+import { signNonce } from '@/components/wallet';
 
 // Image imports
 import Save from '@material-ui/icons/Save';
@@ -40,6 +42,8 @@ type Props = {
   setDeployForm: React.Dispatch<React.SetStateAction<boolean>>
   defaultMintEnd: string
   defaultBurn: boolean
+  dynamicMint: boolean
+  dmConfigs: string
 };
 
 interface Errors {
@@ -63,14 +67,16 @@ export const ConfigureConfigs = function ConfigureConfigs({
   setDeployForm,
   defaultMintEnd,
   defaultBurn,
+  dynamicMint,
+  dmConfigs,
 }: Props) {
 
   const wallet = useWallet();
   const [network, setNetwork] = useState<string>(defaultNetwork);
   const [mintEndType, setMintEndType] = useState<string | null>(defaultMintEnd);
   const [burn, setBurn] = useState<boolean>(defaultBurn);
-  const [showDynamicMint, setShowDynamicMint] = useState<boolean>(false);
-  const [dynamicMintConfig, setDynamicMintConfig] = useState<DynamicMintConfig | null>(null);
+  const [showDynamicMint, setShowDynamicMint] = useState<boolean>(dynamicMint);
+  const [dynamicMintConfig, setDynamicMintConfig] = useState<DynamicMintConfig | null>(dmConfigs ? JSON.parse(dmConfigs) : null);
   const [error, setError] = useState<Errors>({
     priceError: null,
     royaltyError: null,
@@ -91,7 +97,12 @@ export const ConfigureConfigs = function ConfigureConfigs({
       setNetwork('mainnet');
     }
   };
-
+  useEffect(() => {
+    setShowDynamicMint(dynamicMint);
+    if (dmConfigs) {
+      setDynamicMintConfig(JSON.parse(dmConfigs));
+    }
+  }, [dynamicMint, dmConfigs]);
   const handleSubmit = () => {
     setError({
       solAccountError: null,
@@ -202,13 +213,31 @@ export const ConfigureConfigs = function ConfigureConfigs({
             splTokenAccount: result?.graveyardAta || null,
             price: 1.0,
           });
-        }).then(() => updateCandyMachine(config, new PublicKey(graveyardacc as PublicKey), graveyardToken));
+        })
+          .then(() => updateCandyMachine(config, new PublicKey(graveyardacc as PublicKey), graveyardToken))
+          .then(async () => {
+            const public_key = await connectWallet(true, true);
+            if (!public_key) return;
+            const signature = await signNonce();
+            if (!signature) return;
+            await postNetworkRequest({
+              public_key,
+              signature,
+              dynamicMint: true,
+              dmConfigs: JSON.stringify({
+                minPrice: dynamicMintConfig.minPrice,
+                maxSupply: dynamicMintConfig.maxSupply,
+                startPrice: dynamicMintConfig.startPrice,
+                interval: dynamicMintConfig.interval,
+              }),
+            }, '/api/cache/update');
+          });
       }
       toast.promise(promise, {
         success: 'Successfully updated candy machine',
         loading: 'Updating candy machine',
         error: (err) => err.toString(),
-      });
+      }, { id: 'no-dup' });
     }
   };
   return (
@@ -594,6 +623,8 @@ export const ConfigureConfigs = function ConfigureConfigs({
                   size="medium"
                   onChange={() => setShowDynamicMint(!showDynamicMint)}
                   style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
+                  defaultChecked={ showDynamicMint}
+                  checked={showDynamicMint}
                 />
               )}
               label="Enable Strata's dynamic mint pricing"

@@ -27,6 +27,8 @@ const Index: NextPage = function Index() {
   const [deployForm, setDeployForm] = useState<boolean>(false);
   const [initializing, setInitialzing] = useState<boolean>(true);
   const [progressing, setProgressing] = useState<boolean>(false);
+  const [dMint, setDynamicMint] = useState<boolean>(false);
+  const [dConfigs, setDmConfigs] = useState<string>('');
   const [cm, setCandyMachine] = useState<string>('');
 
   const [config, setConfig] = useState<Configurations>({
@@ -56,9 +58,11 @@ const Index: NextPage = function Index() {
         },
       });
       const {
-        deployed, candyMachine, itemCount, network,
+        deployed, candyMachine, itemCount, network, dynamicMint, dmConfigs,
       } = await statusRes.json();
       setCandyMachine(candyMachine);
+      setDynamicMint(dynamicMint);
+      setDmConfigs(dmConfigs);
       localStorage.setItem('cluster', network === 'mainnet'
         ? 'https://api.mainnet-beta.solana.com'
         : 'https://api.devnet.solana.com');
@@ -149,6 +153,8 @@ const Index: NextPage = function Index() {
                 setDeployForm={setDeployForm}
                 defaultMintEnd={config.endSettings?.endSettingType.date ? 'date' : 'amount'}
                 defaultBurn={config.whitelistMintSettings?.mode.burnEveryTime || false}
+                dynamicMint={dMint}
+                dmConfigs={dConfigs}
               />
               )}
               {!((!deployForm && !partiallyDeployed) || !deployForm) && !initializing

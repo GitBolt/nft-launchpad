@@ -50,6 +50,7 @@ export const DynamicMint = function DynamicMint({
           <Text
             variant="outlined"
             fullWidth
+            value={dynamicMintConfig?.startPrice || ''}
             onChange={(e) => {
               if (Number.isNaN(Number(e.target.value))) {
                 setStartingPriceError('Amount can only be numeric and greater than 0');
@@ -74,6 +75,7 @@ export const DynamicMint = function DynamicMint({
       >
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
+            value={dynamicMintConfig?.minPrice || ''}
             variant="outlined"
             fullWidth
             onChange={(e) => {
@@ -100,6 +102,7 @@ export const DynamicMint = function DynamicMint({
       >
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
+            value={dynamicMintConfig?.interval || ''}
             variant="outlined"
             fullWidth
             placeholder='Enter seconds'
@@ -127,6 +130,7 @@ export const DynamicMint = function DynamicMint({
       >
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
+            value={dynamicMintConfig?.maxSupply || ''}
             variant="outlined"
             fullWidth
             onChange={(e) => {

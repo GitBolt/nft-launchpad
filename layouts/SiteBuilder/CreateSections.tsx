@@ -136,7 +136,7 @@ export const CreateSections = function CreateSections({ siteData, setSiteData } 
                 // @ts-ignore
                 && JSON.parse(previewImages)[index])
                 || (siteData.sections && siteData.sections[index].image))) && (
-                  <Image src={DefaultImage} height="100%" width="100" color="red" />
+                  <Image src={DefaultImage} height="100%" width="100" color="red" alt="Default" />
                 ) }
               </div>
             </FileUploader>

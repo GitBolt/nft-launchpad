@@ -24,6 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       public_key,
       whitelist_mint,
       network,
+      dynamicMint,
+      dmConfigs,
     } = JSON.parse(req.body);
 
     if (!signature?.signature.data) return;
@@ -66,6 +68,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         uuid: uuid || cache_exists.uuid,
         network: network || cache_exists.network,
         whitelist_mint: whitelist_mint || cache_exists.whitelist_mint,
+        dynamicMint: dynamicMint || cache_exists.dynamicMint,
+        dmConfigs: dmConfigs || cache_exists.dmConfigs,
       },
     });
     res.status(200).json({ success: 'Cache updated', cache: updated });

@@ -44,6 +44,8 @@ model Cache {
   project        Project @relation(fields: [project_id], references: [id])
   project_id     Int     @unique
   network        String?
+  dynamicMint    Boolean   @default(false)
+  dmConfigs      String?
 }
 
 model Item {
