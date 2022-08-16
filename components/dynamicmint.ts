@@ -36,10 +36,10 @@ export const createLiquidityBootstrapper = async (
       uses: null,
     },
     baseMint: new web3.PublicKey('So11111111111111111111111111111111111111112'),
-    startPrice: dynamicMintConfig.startPrice,
-    minPrice: dynamicMintConfig.minPrice, 
-    interval: dynamicMintConfig.interval,
-    maxSupply: dynamicMintConfig.maxSupply, // How many tokens will be sold using the LBC
+    startPrice: Number(dynamicMintConfig.startPrice),
+    minPrice: Number(dynamicMintConfig.minPrice), 
+    interval: Number(dynamicMintConfig.interval),
+    maxSupply: Number(dynamicMintConfig.maxSupply), // How many tokens will be sold using the LBC
     bondingArgs: {
       targetMintDecimals: 0,
       goLiveDate: new Date(),

@@ -152,7 +152,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
       setError((prevState) => ({ ...prevState, endDateError: 'End date must be greater than go live date' }));
       endSettingsValid = false;
     }
-    if (!localStorage.getItem('whitelistLen')) {
+    if (!isDeployed && !localStorage.getItem('whitelistLen')) {
       setError((prevState) => ({ ...prevState, wlAmountNullError: 'You need to enter whitelist amount' }));
       wlAmountValid = false;
     }

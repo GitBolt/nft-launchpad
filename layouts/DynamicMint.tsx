@@ -51,13 +51,14 @@ export const DynamicMint = function DynamicMint({
             variant="outlined"
             fullWidth
             value={dynamicMintConfig?.startPrice || ''}
+            defaultValue={dynamicMintConfig?.startPrice || ''}
             onChange={(e) => {
               if (Number.isNaN(Number(e.target.value))) {
                 setStartingPriceError('Amount can only be numeric and greater than 0');
               } else {
                 setStartingPriceError(null);
                 // @ts-ignore
-                setDynamicMintConfig({ ...dynamicMintConfig, startPrice: Number(e.target.value) });
+                setDynamicMintConfig({ ...dynamicMintConfig, startPrice: e.target.value });
               }
             }}
             style={{
@@ -76,6 +77,7 @@ export const DynamicMint = function DynamicMint({
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
             value={dynamicMintConfig?.minPrice || ''}
+            defaultValue={dynamicMintConfig?.minPrice || ''}
             variant="outlined"
             fullWidth
             onChange={(e) => {
@@ -84,7 +86,7 @@ export const DynamicMint = function DynamicMint({
               } else {
                 setMinPriceError(null);
                 // @ts-ignore
-                setDynamicMintConfig({ ...dynamicMintConfig, minPrice: Number(e.target.value) });
+                setDynamicMintConfig({ ...dynamicMintConfig, minPrice: e.target.value });
               }
             }}
             style={{
@@ -103,6 +105,7 @@ export const DynamicMint = function DynamicMint({
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
             value={dynamicMintConfig?.interval || ''}
+            defaultValue={dynamicMintConfig?.interval || ''}
             variant="outlined"
             fullWidth
             placeholder='Enter seconds'
@@ -112,7 +115,7 @@ export const DynamicMint = function DynamicMint({
               } else {
                 setIntervalError(null);
                 // @ts-ignore
-                setDynamicMintConfig({ ...dynamicMintConfig, interval: Number(e.target.value) });
+                setDynamicMintConfig({ ...dynamicMintConfig, interval: e.target.value });
               }
             }}
             style={{
@@ -131,15 +134,16 @@ export const DynamicMint = function DynamicMint({
         <div className="flex align-start items-center w-1/2 flex-col">
           <Text
             value={dynamicMintConfig?.maxSupply || ''}
+            defaultValue={dynamicMintConfig?.maxSupply || ''}
             variant="outlined"
             fullWidth
             onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value))) {
+              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) < 0) {
                 setTokensError('Token count can only be numeric and greater than 0');
               } else {
                 setTokensError(null);
                 // @ts-ignore
-                setDynamicMintConfig({ ...dynamicMintConfig, maxSupply: Number(e.target.value) });
+                setDynamicMintConfig({ ...dynamicMintConfig, maxSupply: e.target.value });
               }
             }}
             style={{
