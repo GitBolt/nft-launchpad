@@ -27,6 +27,7 @@ const Index: NextPage = function Index() {
   const [deployForm, setDeployForm] = useState<boolean>(false);
   const [initializing, setInitialzing] = useState<boolean>(true);
   const [progressing, setProgressing] = useState<boolean>(false);
+  const [cm, setCandyMachine] = useState<string>('');
 
   const [config, setConfig] = useState<Configurations>({
     itemsAvailable: 0,
@@ -57,7 +58,7 @@ const Index: NextPage = function Index() {
       const {
         deployed, candyMachine, itemCount, network,
       } = await statusRes.json();
-
+      setCandyMachine(candyMachine);
       localStorage.setItem('cluster', network === 'mainnet'
         ? 'https://api.mainnet-beta.solana.com'
         : 'https://api.devnet.solana.com');
@@ -138,6 +139,7 @@ const Index: NextPage = function Index() {
             )}
             <div className="h-full relative mt-36 ml-[1.25rem]">
               <h1 className="text-3xl font-bold text-white">Configure</h1>
+              <p className='text-gray-300'>Your candy machine ID: {cm}</p>
               {((!deployForm && !partiallyDeployed) || !deployForm) && (
               <ConfigureConfigs
                 isDeployed={isDeployed}

@@ -162,7 +162,10 @@ export const ConfigureConfigs = function ConfigureConfigs({
       },
     });
     if (!priceValid || !dateValid || !solAcc || !endSettingsValid
-      || !wlPriceValid || !wlAmountValid || !royaltyValid) return;
+      || !wlPriceValid || !wlAmountValid || !royaltyValid) {
+      window.scrollTo(0, 100);
+      return;
+    }
     if (!(isDeployed && network === defaultNetwork)) {
       setDeployForm(true);
     } else {
@@ -177,7 +180,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
             signAllTransactions: wallet.signAllTransactions,
             signTransaction: wallet.signTransaction,
           } as Wallet,
-          await connectWallet(),
+          await connectWallet(true, false),
           dynamicMintConfig as DynamicMintConfig,
           );
           return res;

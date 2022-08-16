@@ -35,7 +35,10 @@ export const DynamicMint = function DynamicMint({
   setDynamicMintConfig,
   dynamicMintConfig,
 }: whitelistProps) {
-  const [error, setError] = useState<string | null>(null);
+  const [startingPriceError, setStartingPriceError] = useState<string | null>(null);
+  const [minPriceError, setMinPriceError] = useState<string | null>(null);
+  const [intervalError, setIntervalError] = useState<string | null>(null);
+  const [tokensError, setTokensError] = useState<string | null>(null);
 
   return (
     <>
@@ -48,9 +51,10 @@ export const DynamicMint = function DynamicMint({
             variant="outlined"
             fullWidth
             onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
-                setError('Amount can only be numeric and greater than 0');
+              if (Number.isNaN(Number(e.target.value))) {
+                setStartingPriceError('Amount can only be numeric and greater than 0');
               } else {
+                setStartingPriceError(null);
                 // @ts-ignore
                 setDynamicMintConfig({ ...dynamicMintConfig, startPrice: Number(e.target.value) });
               }
@@ -59,8 +63,8 @@ export const DynamicMint = function DynamicMint({
               width: '100%',
               marginTop: '2rem',
             }}
-            error={!!error}
-            helperText={error && error}
+            error={!!startingPriceError}
+            helperText={startingPriceError && startingPriceError}
           />
         </div>
       </Item>
@@ -73,9 +77,10 @@ export const DynamicMint = function DynamicMint({
             variant="outlined"
             fullWidth
             onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
-                setError('Amount can only be numeric and greater than 0');
+              if (Number.isNaN(Number(e.target.value))) {
+                setMinPriceError('Amount can only be numeric and greater than 0');
               } else {
+                setMinPriceError(null);
                 // @ts-ignore
                 setDynamicMintConfig({ ...dynamicMintConfig, minPrice: Number(e.target.value) });
               }
@@ -84,8 +89,8 @@ export const DynamicMint = function DynamicMint({
               width: '100%',
               marginTop: '2rem',
             }}
-            error={!!error}
-            helperText={error && error}
+            error={!!minPriceError}
+            helperText={minPriceError && minPriceError}
           />
         </div>
       </Item>
@@ -97,10 +102,12 @@ export const DynamicMint = function DynamicMint({
           <Text
             variant="outlined"
             fullWidth
+            placeholder='Enter seconds'
             onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
-                setError('Amount can only be numeric and greater than 0');
+              if (Number.isNaN(Number(e.target.value))) {
+                setIntervalError('Amount can only be numeric and greater than 0');
               } else {
+                setIntervalError(null);
                 // @ts-ignore
                 setDynamicMintConfig({ ...dynamicMintConfig, interval: Number(e.target.value) });
               }
@@ -109,8 +116,8 @@ export const DynamicMint = function DynamicMint({
               width: '100%',
               marginTop: '2rem',
             }}
-            error={!!error}
-            helperText={error && error}
+            error={!!intervalError}
+            helperText={intervalError && intervalError}
           />
         </div>
       </Item>
@@ -123,9 +130,10 @@ export const DynamicMint = function DynamicMint({
             variant="outlined"
             fullWidth
             onChange={(e) => {
-              if (Number.isNaN(Number(e.target.value)) || Number(e.target.value) === 0) {
-                setError('Amount can only be numeric and greater than 0');
+              if (Number.isNaN(Number(e.target.value))) {
+                setTokensError('Token count can only be numeric and greater than 0');
               } else {
+                setTokensError(null);
                 // @ts-ignore
                 setDynamicMintConfig({ ...dynamicMintConfig, maxSupply: Number(e.target.value) });
               }
@@ -134,8 +142,8 @@ export const DynamicMint = function DynamicMint({
               width: '100%',
               marginTop: '2rem',
             }}
-            error={!!error}
-            helperText={error && error}
+            error={!!tokensError}
+            helperText={tokensError && tokensError}
           />
         </div>
       </Item>
