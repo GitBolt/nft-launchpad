@@ -6,11 +6,11 @@ import { postNetworkRequest } from '@/util/functions';
 import { SiteData, ProjectData } from '@/types/projectData';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import FileCopy from '@material-ui/icons/FileCopy';
-import { useRouter } from 'next/router';
 
 interface Props {
   siteData: SiteData,
   projectData: ProjectData,
+  setTemplateChosen: React.Dispatch<React.SetStateAction<boolean>>
   setFullPreview: React.Dispatch<React.SetStateAction<boolean>>
   fullPreview: boolean
 }
@@ -18,10 +18,10 @@ interface Props {
 export const BuilderNavbar = function BuilderNavbar({
   siteData,
   projectData,
+  setTemplateChosen,
   setFullPreview,
   fullPreview,
 }: Props) {
-  const router = useRouter();
   const handlePublish = () => {
     const post = async () => {
       const public_key = await connectWallet(true, true);
@@ -85,7 +85,7 @@ export const BuilderNavbar = function BuilderNavbar({
         <div className="flex items-center gap-8 text-md">
           <Button
             startIcon={<ArrowBackIos />}
-            onClick={() => { router.push('/dashboard/configure'); }}
+            onClick={() => { setTemplateChosen(false); localStorage.removeItem('previewImages'); }}
             className="text-primary-main text-2xl"
             style={{ color: 'black' }}
           >

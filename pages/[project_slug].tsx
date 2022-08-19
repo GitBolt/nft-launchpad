@@ -21,7 +21,7 @@ import { MintArea } from '@/layouts/MintArea';
 import { WhitelistMintModal, WhitelistMintErrorModal } from '@/layouts/WhitelistMintModal';
 import type { Project } from '@/types/projectData';
 import { MintUpperSection, MintUpperSectionError } from '@/layouts/MintUpperSection';
-import { WalletModalButton } from '@/layouts/WalletAdapterUI/WalletModalButton';
+import { ConnectWallet } from '@/layouts/Wallet';
 import { DefaultHead } from '@/layouts/Head';
 import { postNetworkRequest } from '@/util/functions';
 import { FaqSection } from '@/layouts/FaqSection';
@@ -304,39 +304,52 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
             {(!isActive
               && !candyMachine.state.isSoldOut
               && candyMachine.state.goLiveDate.toNumber() > new Date().getTime() / 1000) ? (
-                <div className="w-full mt-8">
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={async () => {
-                      await handleWhitelistUser(
-                        candyMachine,
-                        anchorWallet!.publicKey,
-                        globalConnection,
-                        setIsWhitelistUser,
-                        setModalType,
-                      );
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '3.5rem',
-                      backgroundImage: 'linear-gradient(120deg, #84C0FF , #5768FF)',
-                      color: 'white',
-                      borderRadius: '3rem',
-                      fontSize: '1rem',
-                      fontWeight: '600',
-                      textTransform: 'none',
-                    }}
-                  >
-                    Check your Whitelist status
-                  </Button>
-                </div>
+              <div className="w-full mt-8">
+                <Button
+                  color="primary"
+                  variant="contained"
+                  onClick={async () => {
+                    await handleWhitelistUser(
+                      candyMachine,
+                      anchorWallet!.publicKey,
+                      globalConnection,
+                      setIsWhitelistUser,
+                      setModalType,
+                    );
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '3.5rem',
+                    backgroundImage: 'linear-gradient(120deg, #84C0FF , #5768FF)',
+                    color: 'white',
+                    borderRadius: '3rem',
+                    fontSize: '1rem',
+                    fontWeight: '600',
+                    textTransform: 'none',
+                  }}
+                >
+                  Check your Whitelist status
+                </Button>
+              </div>
               ) : null}
           </div>
         )}
 
         {!wallet.connected && (
-          <div className="w-1/4"><WalletModalButton siteData={siteData}>Connect wallet</WalletModalButton></div>
+          <div className="w-1/4"><ConnectWallet><button style={{
+            background: siteData.buttonBgColor || 'black',
+            color: siteData.buttonFontColor || 'white',
+            borderRadius: '3rem',
+            height: '3.5rem',
+            width: '100%',
+            marginTop: '2rem',
+            transition: '0ms',
+            marginBottom: '2rem',
+            fontSize: '1rem',
+            fontWeight: '600',
+            textTransform: 'none',
+          }}>
+            Connect wallet</button></ConnectWallet></div>
         )}
         {modalType === 'success' && (
           <WhitelistMintModal
@@ -361,24 +374,24 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
         {isActive && candyMachine && !candyMachine.state.isSoldOut
           && candyMachine.state.goLiveDate.toNumber() < new Date().getTime() / 1000
           && wallet.connected ? (
-            <MintArea
-              candyMachine={candyMachine}
-              wallet={wallet}
-              setIsUserMinting={setIsUserMinting}
-              rpcUrl={rpcUrl}
-              connection={globalConnection}
-              isUserMinting={isUserMinting}
-              onMint={onMint}
-              isActive={isActive}
-              isWhitelistUser={isWhitelistUser}
-              isPresale={isPresale}
-              siteData={siteData}
-            />
+          <MintArea
+            candyMachine={candyMachine}
+            wallet={wallet}
+            setIsUserMinting={setIsUserMinting}
+            rpcUrl={rpcUrl}
+            connection={globalConnection}
+            isUserMinting={isUserMinting}
+            onMint={onMint}
+            isActive={isActive}
+            isWhitelistUser={isWhitelistUser}
+            isPresale={isPresale}
+            siteData={siteData}
+          />
           ) : <h1 className="text-3xl text-gray-200 font-bold">Mint not active</h1>}
         {(siteData.sections) && (
-        <Sections
-          sections={siteData.sections}
-        />
+          <Sections
+            sections={siteData.sections}
+          />
         )}
         {(siteData.faqSection) && (
           <FaqSection

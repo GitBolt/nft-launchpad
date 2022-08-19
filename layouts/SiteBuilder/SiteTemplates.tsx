@@ -12,7 +12,7 @@ type TemplateProps = {
   triggerFetch?: boolean
 };
 
-const defaultStyling = 'flex flex-col gap-5 w-[30rem] h-[21.7rem] p-5 bg-black rounded-2xl duration-200 cursor-pointer';
+const defaultStyling = 'flex flex-col gap-5 w-[30rem] h-[21rem] p-5 bg-[#0c323e66] rounded-2xl duration-200 cursor-pointer';
 export const Template = function Template({
   setSiteData,
   siteData,
@@ -46,7 +46,7 @@ export const Template = function Template({
         }}
       />
       <div className="flex justify-between">
-        <p className="font-bold">{title}</p>
+        <p className="font-bold text-white">{title}</p>
         <CallMade />
       </div>
     </div>

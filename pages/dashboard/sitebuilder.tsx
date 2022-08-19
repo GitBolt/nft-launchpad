@@ -12,11 +12,18 @@ import { EditUpperSection } from '@/layouts/SiteBuilder/EditUpperSection';
 import toast from 'react-hot-toast';
 import { CreateFaqSection } from '@/layouts/SiteBuilder/CreateFaqSection';
 import { FaqSection } from '@/layouts/FaqSection';
+import {
+  Light, Dark, Custom, BasicBlue,
+} from '@/layouts/SiteBuilder/SiteTemplates';
+import { Sidebar } from '@/layouts/Sidebar';
+import { PageRoot } from '@/layouts/StyledComponents';
 import { BuilderNavbar } from '@/layouts/SiteBuilder/BuilderNavbar';
 import { CreateHeader } from '@/layouts/SiteBuilder/CreateHeader';
 import { HeaderSection } from '@/layouts/HeaderSection';
 import { CreateSections } from '@/layouts/SiteBuilder/CreateSections';
 import { Sections } from '@/layouts/Sections';
+import { Navbar } from '@/layouts/Navbar';
+import getWallet from '@/components/whichWallet';
 
 export interface Section {
   title: string,
@@ -74,6 +81,8 @@ const defaultSiteData: SiteData = {
 };
 
 const Index: NextPage = function Index() {
+  const [isDeployed, setIsDeployed] = useState<boolean>(true);
+  const [templateChosen, setTemplateChosen] = useState<boolean>(false);
   const [siteData, setSiteData] = useState<SiteData>(defaultSiteData);
 
   const [projectData, setProjectData] = useState<ProjectData>({
@@ -88,6 +97,8 @@ const Index: NextPage = function Index() {
   });
 
   const [fullPreview, setFullPreview] = useState<boolean>(false);
+  const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
+  const wallet = getWallet();
   useEffect(() => {
     const fetchData = async () => {
       localStorage.removeItem('previewImages');
@@ -105,9 +116,76 @@ const Index: NextPage = function Index() {
         header: JSON.parse(site.header),
         sections: JSON.parse(site.sections),
       });
+      const statusRes = await fetch(`/api/candymachine/state/${publicKey}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
+      const { deployed } = await statusRes.json();
+      if (!deployed) {
+        setIsDeployed(false);
+      } else {
+        setIsDeployed(true);
+      }
     };
     fetchData();
-  }, []);
+  }, [triggerFetch]);
+
+  if (!templateChosen) {
+    return (
+      <>
+        <DefaultHead />
+        <Navbar wallet={wallet} />
+        <PageRoot>
+          <div className="w-[100vw]">
+            <Sidebar />
+            <PageRoot style={{
+              marginLeft: '21rem',
+              placeContent: 'start',
+              display: 'block',
+            }}
+            >
+              <div className="w-full h-full">
+                <div className="w-full h-full relative mt-32">
+                  <h1 className="text-3xl font-bold">Website builder</h1>
+                  {!isDeployed && <p className="mt-2 text-xl">Choose a template from below and get started with your website</p>}
+                  <div className="flex gap-12 mt-6 flex-wrap">
+                    <Custom
+                      setTemplateChosen={setTemplateChosen}
+                      setTriggerFetch={setTriggerFetch}
+                      triggerFetch={triggerFetch}
+                      projectName={projectData.name}
+                      savedText={
+                        siteData.bgColor.toUpperCase() !== defaultSiteData.bgColor
+                        || siteData.header !== defaultSiteData.header
+                        || siteData.primaryFontColor.toUpperCase()
+                        !== defaultSiteData.primaryFontColor
+                        || siteData.buttonFontColor.toUpperCase()
+                        !== defaultSiteData.buttonFontColor
+                        || siteData.faqSection !== defaultSiteData.faqSection
+                      }
+                    />
+                    <Light
+                      setSiteData={setSiteData}
+                      setTemplateChosen={setTemplateChosen}
+                    />
+                    <Dark
+                      setSiteData={setSiteData}
+                      setTemplateChosen={setTemplateChosen}
+                    />
+                    <BasicBlue
+                      setSiteData={setSiteData}
+                      setTemplateChosen={setTemplateChosen}
+                    />
+                  </div>
+                </div>
+              </div>
+            </PageRoot>
+          </div>
+        </PageRoot>
+      </>
+    );
+  }
 
   return (
     <>
@@ -117,6 +195,7 @@ const Index: NextPage = function Index() {
         projectData={projectData}
         setFullPreview={setFullPreview}
         fullPreview={fullPreview}
+        setTemplateChosen={setTemplateChosen}
       />
       <BuilderSidebar
         fullPreview={fullPreview}
@@ -146,15 +225,15 @@ const Index: NextPage = function Index() {
         }}
       >
         {(siteData.header && !fullPreview) && (
-        <CreateHeader
-          siteData={siteData}
-          setSiteData={setSiteData}
-        />
+          <CreateHeader
+            siteData={siteData}
+            setSiteData={setSiteData}
+          />
         )}
         {(siteData.header && fullPreview) && (
-        <HeaderSection
-          header={siteData.header}
-        />
+          <HeaderSection
+            header={siteData.header}
+          />
         )}
         {projectData && siteData && !fullPreview && (
           <EditUpperSection
@@ -184,7 +263,7 @@ const Index: NextPage = function Index() {
           isPresale={false}
           candyMachine={undefined}
           connection={undefined}
-          setIsUserMinting={() => {}}
+          setIsUserMinting={() => { }}
           siteData={siteData}
         />
 
@@ -201,10 +280,10 @@ const Index: NextPage = function Index() {
         )}
 
         {(siteData.faqSection && !fullPreview) && (
-        <CreateFaqSection
-          siteData={siteData}
-          setSiteData={setSiteData}
-        />
+          <CreateFaqSection
+            siteData={siteData}
+            setSiteData={setSiteData}
+          />
         )}
         {(siteData.faqSection && fullPreview) && (
           <FaqSection

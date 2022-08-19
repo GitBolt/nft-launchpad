@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import type { AppProps } from 'next/app';
 import { SessionProvider } from 'next-auth/react';
 import { Wallet } from '@/layouts/Wallet';
+import { StrataProviders } from '@strata-foundation/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
@@ -24,19 +25,23 @@ const theme = {
 
 const darkModeTheme = createTheme(theme);
 
+
+
 const Launchpad = function Launchpad({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <SessionProvider session={pageProps.session}>
-      <Wallet>
-        <Toaster />
-        <ThemeProvider theme={darkModeTheme}>
-          <Component {...pageProps} />
-        </ThemeProvider>
-      </Wallet>
-    </SessionProvider>
+    <Wallet>
+      <SessionProvider session={pageProps.session}>
+        <StrataProviders>
+          <Toaster />
+          <ThemeProvider theme={darkModeTheme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </StrataProviders>
+      </SessionProvider>
+    </Wallet>
   );
 };
 
