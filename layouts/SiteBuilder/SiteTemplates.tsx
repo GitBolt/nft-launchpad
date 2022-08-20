@@ -138,16 +138,16 @@ export const BasicBlue = function BassicBlue({ setSiteData, setTemplateChosen }:
     <Template
       setSiteData={setSiteData}
       siteData={{
-        bgColor: '#020918',
-        primaryFontColor: '#079aff',
-        secondaryFontColor: '#91bcec',
-        buttonBgColor: '#054BD2',
+        bgColor: '#001d46',
+        primaryFontColor: '#4995ff',
+        secondaryFontColor: '#9ba7ff',
+        buttonBgColor: '#0081ff',
         buttonFontColor: '#FFFFFF',
         fontFamily: 'Varela',
         header: {
           title: '',
-          bgColor: '#020918',
-          fontColor: 'FFFFFF',
+          bgColor: '#001d46',
+          fontColor: '#FFFFFF',
           spacing: 'space-between',
           items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
         },
@@ -156,69 +156,69 @@ export const BasicBlue = function BassicBlue({ setSiteData, setTemplateChosen }:
         align: 'center',
       }}
       setTemplateChosen={setTemplateChosen}
-      imageSrc="/images/basicblue.png"
+      imageSrc="/images/basicBlue.png"
       title="Basic Blue theme"
     />
 
   );
 };
 
-
-export const BasicRed = function BasicRed({ setSiteData, setTemplateChosen }: any) {
-  return (
-    <Template
-      setSiteData={setSiteData}
-      siteData={{
-        bgColor: '#190006',
-        primaryFontColor: '#ffffff',
-        secondaryFontColor: '#bfbfbf',
-        buttonBgColor: '#ff0000',
-        buttonFontColor: '#ffffff',
-        fontFamily: 'Varela',
-        header: {
-          title: '',
-          bgColor: '#020918',
-          fontColor: 'FFFFFF',
-          spacing: 'space-between',
-          items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
-        },
-        sections: null,
-        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Basic Blue theme.' }] },
-        align: 'center',
-      }}
-      setTemplateChosen={setTemplateChosen}
-      imageSrc="/images/basicRed.png"
-      title="Basic Blue theme"
-    />
-
-  );
-};
 
 export const BasicGreen = function BasicGreen({ setSiteData, setTemplateChosen }: any) {
   return (
     <Template
       setSiteData={setSiteData}
       siteData={{
-        bgColor: '#0c2d00',
-        primaryFontColor: '#ffffff',
-        secondaryFontColor: '#bfbfbf',
-        buttonBgColor: '#0a9800',
+        bgColor: '#001f05',
+        primaryFontColor: '#00f264',
+        secondaryFontColor: '#9cffb6',
+        buttonBgColor: '#007314',
         buttonFontColor: '#ffffff',
         fontFamily: 'Varela',
         header: {
           title: '',
-          bgColor: '#020918',
-          fontColor: 'FFFFFF',
+          bgColor: '#001f05',
+          fontColor: '#FFFFFF',
           spacing: 'space-between',
           items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
         },
         sections: null,
-        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Basic Blue theme.' }] },
+        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Basic Green theme.' }] },
         align: 'center',
       }}
       setTemplateChosen={setTemplateChosen}
       imageSrc="/images/basicGreen.png"
-      title="Basic Blue theme"
+      title="Basic Green theme"
+    />
+
+  );
+};
+
+export const Vaporwave = function Vaporwave({ setSiteData, setTemplateChosen }: any) {
+  return (
+    <Template
+      setSiteData={setSiteData}
+      siteData={{
+        bgColor: '#47026f',
+        primaryFontColor: '#07cfff',
+        secondaryFontColor: '#9ba7ff',
+        buttonBgColor: '#ff00db',
+        buttonFontColor: '#ffffff',
+        fontFamily: 'Varela',
+        header: {
+          title: '',
+          bgColor: '#47026f',
+          fontColor: '#FFFFFF',
+          spacing: 'space-between',
+          items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
+        },
+        sections: null,
+        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Vaporwave theme.' }] },
+        align: 'center',
+      }}
+      setTemplateChosen={setTemplateChosen}
+      imageSrc="/images/vaporwave.png"
+      title="Vaporwave theme"
     />
 
   );

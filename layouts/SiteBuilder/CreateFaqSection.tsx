@@ -11,7 +11,7 @@ interface Props {
 }
 export const CreateFaqSection = function CreateFaqSection({ siteData, setSiteData } : Props) {
   return (
-    <div className="mt-24 flex flex-col">
+    <div className="mt-24 flex flex-col" style={{ background:siteData.bgColor }}>
       <input
         className="text-5xl duration-200 mb-4 bg-transparent text-left outline-1 outline-blue-400 focus:outline-none hover:outline"
         defaultValue={siteData.faqSection?.title || 'FAQs'}
