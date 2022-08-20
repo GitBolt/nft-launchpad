@@ -27,6 +27,7 @@ import { postNetworkRequest } from '@/util/functions';
 import { FaqSection } from '@/layouts/FaqSection';
 import { HeaderSection } from '@/layouts/HeaderSection';
 import { Sections } from '@/layouts/Sections';
+import { DynamicPricingCM } from '@/layouts/DynamicMintCM';
 
 const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, network }: Project) {
   const [isUserMinting, setIsUserMinting] = useState(false);
@@ -399,6 +400,7 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
             siteData={siteData}
           />
         )}
+        {candyMachine && <DynamicPricingCM candyMachine={candyMachine} />}
       </Grid>
     </>
   );
