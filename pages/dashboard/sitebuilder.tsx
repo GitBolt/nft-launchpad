@@ -13,7 +13,7 @@ import toast from 'react-hot-toast';
 import { CreateFaqSection } from '@/layouts/SiteBuilder/CreateFaqSection';
 import { FaqSection } from '@/layouts/FaqSection';
 import {
-  Light, Dark, Custom, BasicBlue,
+  Light, Dark, Custom, BasicBlue, BasicRed, BasicGreen,
 } from '@/layouts/SiteBuilder/SiteTemplates';
 import { Sidebar } from '@/layouts/Sidebar';
 import { PageRoot } from '@/layouts/StyledComponents';
@@ -141,6 +141,7 @@ const Index: NextPage = function Index() {
             <Sidebar />
             <PageRoot style={{
               marginLeft: '21rem',
+              marginBottom: '3rem',
               placeContent: 'start',
               display: 'block',
             }}
@@ -174,6 +175,14 @@ const Index: NextPage = function Index() {
                       setTemplateChosen={setTemplateChosen}
                     />
                     <BasicBlue
+                      setSiteData={setSiteData}
+                      setTemplateChosen={setTemplateChosen}
+                    />
+                    <BasicGreen
+                      setSiteData={setSiteData}
+                      setTemplateChosen={setTemplateChosen}
+                    />
+                    <BasicRed
                       setSiteData={setSiteData}
                       setTemplateChosen={setTemplateChosen}
                     />

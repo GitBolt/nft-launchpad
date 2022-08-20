@@ -162,3 +162,65 @@ export const BasicBlue = function BassicBlue({ setSiteData, setTemplateChosen }:
 
   );
 };
+
+
+export const BasicRed = function BasicRed({ setSiteData, setTemplateChosen }: any) {
+  return (
+    <Template
+      setSiteData={setSiteData}
+      siteData={{
+        bgColor: '#190006',
+        primaryFontColor: '#ffffff',
+        secondaryFontColor: '#bfbfbf',
+        buttonBgColor: '#ff0000',
+        buttonFontColor: '#ffffff',
+        fontFamily: 'Varela',
+        header: {
+          title: '',
+          bgColor: '#020918',
+          fontColor: 'FFFFFF',
+          spacing: 'space-between',
+          items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
+        },
+        sections: null,
+        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Basic Blue theme.' }] },
+        align: 'center',
+      }}
+      setTemplateChosen={setTemplateChosen}
+      imageSrc="/images/basicRed.png"
+      title="Basic Blue theme"
+    />
+
+  );
+};
+
+export const BasicGreen = function BasicGreen({ setSiteData, setTemplateChosen }: any) {
+  return (
+    <Template
+      setSiteData={setSiteData}
+      siteData={{
+        bgColor: '#0c2d00',
+        primaryFontColor: '#ffffff',
+        secondaryFontColor: '#bfbfbf',
+        buttonBgColor: '#0a9800',
+        buttonFontColor: '#ffffff',
+        fontFamily: 'Varela',
+        header: {
+          title: '',
+          bgColor: '#020918',
+          fontColor: 'FFFFFF',
+          spacing: 'space-between',
+          items: [{ text: 'Contact', link: 'https://example.com' }, { text: 'About', link: 'https://example.com' }],
+        },
+        sections: null,
+        faqSection: { title: 'FAQs', rows: [{ title: 'What theme is this?', content: 'This is Basic Blue theme.' }] },
+        align: 'center',
+      }}
+      setTemplateChosen={setTemplateChosen}
+      imageSrc="/images/basicGreen.png"
+      title="Basic Blue theme"
+    />
+
+  );
+};
+
