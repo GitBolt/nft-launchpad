@@ -1,7 +1,6 @@
-import prisma from '@/lib/prisma';
 import toast from 'react-hot-toast';
 import React, { useState } from 'react';
-import type { NextPage, GetServerSideProps } from 'next';
+import type { NextPage } from 'next';
 import { Box } from '@mui/material';
 import { DefaultHead } from '@/layouts/Head';
 import { connectWallet, signNonce } from '@/components/wallet';
@@ -263,27 +262,3 @@ const ProjectNew: NextPage = function Index() {
 };
 
 export default ProjectNew;
-
-export const getServerSideProps: GetServerSideProps = async (
-  context,
-) => {
-  const { public_key } = context.query;
-  if (!public_key) return { props: {} };
-  const project_exists = await prisma.project.findFirst({
-    where: {
-      owner: {
-        public_key: public_key as string,
-      },
-    },
-  });
-  if (project_exists) {
-    return {
-      props: {},
-      redirect: {
-        destination: '/dashboard/nfts',
-        permanent: false,
-      },
-    };
-  }
-  return { props: {} };
-};

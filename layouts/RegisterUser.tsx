@@ -21,7 +21,7 @@ export const RegisterUser = function UserCreationModal({
     const public_key = await connectWallet(true, true);
     const check = await fetch(`/api/user/get/${public_key}`);
     if (check.ok) {
-      router.push(`/new/${public_key}`);
+      router.push('/new/');
       return;
     }
     const sendData = async () => {
@@ -49,7 +49,7 @@ export const RegisterUser = function UserCreationModal({
       if (err.toString() === 'Error: User already exists') {
         toast('Redirecting...');
       }
-    }).then(() => router.push(`/new/${public_key}`));
+    }).then(() => router.push('/new/'));
   };
 
   const disconnect = async () => {

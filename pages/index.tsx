@@ -23,7 +23,7 @@ const Index: NextPage = function Index() {
     const public_key = await connectWallet(false, true);
     const res = await fetch(`/api/project/get/public_key/${public_key}`);
     if (res.ok) {
-      router.push('/dashboard/nfts');
+      router.push('/dashboard');
       return;
     }
     if (res.status === 400) {

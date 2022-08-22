@@ -18,6 +18,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { FileUploader } from 'react-drag-drop-files';
 import toast from 'react-hot-toast';
 import getWallet from '@/components/whichWallet';
+import { useRouter } from 'next/router';
 
 export interface Item {
   id: number,
@@ -27,6 +28,9 @@ export interface Item {
 }
 
 const Index: NextPage = function Index() {
+
+  const router = useRouter();
+  const { project } = router.query;
   const [items, setItems] = useState<Item[] | null>(null);
   const [files, setFiles] = useState<FileList | null>(null);
   const [publicKey, setPublicKey] = useState<string>('');
@@ -53,7 +57,8 @@ const Index: NextPage = function Index() {
         pubKey = await connectWallet(false, false, true);
         setPublicKey(pubKey);
       }
-      const res = await fetch(`/api/items/get/${pubKey}?offset=${offset}`, {
+      console.log('sending request', project);
+      const res = await fetch(`/api/items/get/${pubKey}?project_id=${project}&&offset=${offset}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -87,7 +92,7 @@ const Index: NextPage = function Index() {
       }
     };
     fetchData();
-  }, [publicKey, uploadPage, firstTime, refresh, offset, uploadedFileCount]);
+  }, [publicKey, uploadPage, firstTime, refresh, offset, uploadedFileCount, project]);
   return (
     <>
       <DefaultHead />

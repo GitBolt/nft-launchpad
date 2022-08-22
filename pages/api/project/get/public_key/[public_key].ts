@@ -8,7 +8,7 @@ import { verifyMethod } from '@/lib/server';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const methodIsAllowed = verifyMethod(req, res, 'GET');
   if (!methodIsAllowed) return;
-  const { public_key } = req.query;
+  const { public_key, id, all } = req.query;
   if (!public_key) return;
   try {
     const user = await prisma.user.findFirst({
@@ -18,9 +18,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(400).json({ error: 'User not found' });
       return;
     }
+
+    if (all) {
+      const projects = await prisma.project.findMany({
+        where: {
+          owner_id: user.id,
+        },
+      });
+      if (!projects) {
+        res.status(400).json({
+          error: 'Projects do not exist',
+        });
+        return;
+      }
+      res.status(200).json({
+        projects,
+      });
+      return;
+    }
     const project = await prisma.project.findFirst({
       where: {
         owner_id: user.id,
+        id: Number(id),
       },
     });
     if (!project) {

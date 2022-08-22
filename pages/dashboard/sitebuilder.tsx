@@ -257,6 +257,7 @@ const Index: NextPage = function Index() {
             projectData={projectData}
             siteData={siteData}
             headerSpace={!!siteData.header}
+            livePrice={undefined}
           />
         )}
         <div className="w-[42rem]">

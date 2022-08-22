@@ -43,7 +43,7 @@ export default NextAuth({
       return updated.twitter_username === project.twitter_username;
     },
     redirect() {
-      return `${process.env.API_URL}/dashboard/nfts`;
+      return `${process.env.API_URL}/dashboard`;
     },
   },
   pages: {

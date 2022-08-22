@@ -43,17 +43,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const slug = slugify(name).toLowerCase();
     const twitter = twitter_username.replace('@', '');
 
-    const projectExists = await prisma.project.findFirst({
-      where: {
-        owner_id: user.id,
-      },
-    });
-
-    if (projectExists) {
-      res.status(400).json({ error: 'Project already exists' });
-      return;
-    }
-
     const nameTaken = await prisma.project.findFirst({
       where: {
         slug,
