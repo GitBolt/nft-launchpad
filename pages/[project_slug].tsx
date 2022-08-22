@@ -28,6 +28,8 @@ import { FaqSection } from '@/layouts/FaqSection';
 import { HeaderSection } from '@/layouts/HeaderSection';
 import { Sections } from '@/layouts/Sections';
 import { DynamicPricingCM } from '@/layouts/DynamicMintCM';
+import { useLivePrice } from '@/components/useLivePrice';
+
 
 const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, network }: Project) {
   const [isUserMinting, setIsUserMinting] = useState(false);
@@ -46,7 +48,7 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
 
   const txTimeout = 30000;
   const wallet = useWallet();
-
+  const livePrice = useLivePrice();
   const anchorWallet = useMemo(() => {
     if (
       !wallet
@@ -280,6 +282,7 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
           siteData={siteData}
           itemsRemaining={itemsRemaining}
           headerSpace={!!siteData.header}
+          livePrice={livePrice}
         />
         {candyMachine && (
           <div className="w-[42rem] flex items-center flex-col">

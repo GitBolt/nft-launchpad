@@ -8,7 +8,8 @@ type Props = {
   candyMachine?: CandyMachineAccount | undefined,
   siteData: SiteData,
   itemsRemaining?: number,
-  headerSpace?: boolean
+  headerSpace?: boolean,
+  livePrice: number | undefined,
 };
 export const MintUpperSection = function MintUpperSection({
   projectData,
@@ -16,6 +17,7 @@ export const MintUpperSection = function MintUpperSection({
   siteData,
   itemsRemaining,
   headerSpace,
+  livePrice,
 }: Props) {
   return (
     <>
@@ -50,9 +52,9 @@ export const MintUpperSection = function MintUpperSection({
         className="-translate-y-1/2 w-[42rem] flex justify-between rounded-xl px-6 items-center bg-bg-light brightness-[80%] contrast-[95%]"
       >
         <div className="w-1/2 text-center">
-          <p className="text-gray-400">Base price</p>
+          <p className="text-gray-400">Price</p>
           <p className="text-3xl font-bold">
-            {candyMachine
+            {livePrice ? Math.round(livePrice * 10000) / 10000 : candyMachine
               ? candyMachine.state.price.toNumber() / LAMPORTS_PER_SOL : '...'}
             {' '}
             {candyMachine ? 'SOL' : ''}
