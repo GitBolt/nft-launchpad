@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const allowed = verifyMethod(req, res, 'POST');
   if (!allowed) return;
   try {
-    const requiredKeys = ['signature', 'public_key'];
+    const requiredKeys = ['signature', 'public_key', 'project_id'];
     const allKeysPresent = verifyKeys(req, res, requiredKeys);
     if (!allKeysPresent) return;
 
@@ -26,6 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       network,
       dynamicMint,
       dmConfigs,
+      project_id,
     } = JSON.parse(req.body);
 
     if (!signature?.signature.data) return;
@@ -42,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const cache_exists = await prisma.cache.findFirst({
       where: {
         project: {
-          owner_id: user.id,
+          id: Number(project_id),
         },
       },
     });

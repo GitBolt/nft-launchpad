@@ -365,7 +365,6 @@ export const updateCandyMachine = async (
   if (!anchorProgram) return;
   const request = await fetch(`/api/cache/get/project_id/${project_id}`);
   const cacheContent = await request.json();
-
   const candyMachine = new PublicKey(cacheContent.candy_machine);
 
   const candyMachineObj: any = await anchorProgram.account.candyMachine.fetch(
@@ -398,6 +397,7 @@ export const updateCandyMachine = async (
       discountPrice: new BN(Number(config.whitelistMintSettings?.discountPrice) * LAMPORTS_PER_SOL),
     };
   }
+  console.log('Good so far', config);
   const newSettings = {
     splToken: new PublicKey(config.splToken as string),
     splTokenAccount: new PublicKey(config.splToken as string),
@@ -465,9 +465,9 @@ export const updateAuthority = async (
 export const updateAuthorityRaw = async (
   userKeyPair: Keypair,
   newAuthority: PublicKey,
-  fetchFrom: PublicKey,
+  project_id: Number,
 ) => {
-  const request = await fetch(`/api/cache/get/pk/${fetchFrom.toString()}`);
+  const request = await fetch(`/api/cache/get/project_id/${project_id}`);
   const cacheContent = await request.json();
 
   const candyMachine = new PublicKey(cacheContent.candy_machine);

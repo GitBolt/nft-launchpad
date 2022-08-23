@@ -45,11 +45,12 @@ export const DeployForm = function DeployForm({
   // const requiredInMainWallet = ((config.itemsAvailable * 0.0016804)
   //                             + whitelistTokenCost
   //                             + depAmount);
+  
   useEffect(() => {
     const init = async () => {
       setDepositAmount(depAmount);
       const publicKey = await connectWallet(true, false);
-      const projectRes = await fetch(`/api/project/get/public_key/${publicKey.toString()}`, {
+      const projectRes = await fetch(`/api/project/get/public_key/${publicKey.toString()}?project_id=${project_id}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -68,7 +69,7 @@ export const DeployForm = function DeployForm({
       if (!walletKp) { return; }
 
       const connection = new web3.Connection(getRPC());
-      const stateRes = await fetch(`/api/candymachine/state/${publicKey.toString()}`, {
+      const stateRes = await fetch(`/api/candymachine/state/${project_id}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -282,7 +283,7 @@ export const DeployForm = function DeployForm({
             onClick={async () => {
               setLoadingStep(3);
               setProgressing(true);
-              const promise = deployCandyMachine(config);
+              const promise = deployCandyMachine(config, project_id);
               toast.promise(promise, {
                 loading: 'Deploying candy machine',
                 success: 'Successfully deployed',
@@ -327,17 +328,13 @@ export const DeployForm = function DeployForm({
             onClick={async () => {
               setLoadingStep(4);
               setProgressing(true);
-              const promise = transferAuthority(await connectWallet(true, true), project_id);
-              toast.promise(promise, {
-                loading: 'Updating authority',
-                success: 'Sucessfully updated authority',
-                error: (err) => err.toString(),
-              }).then((kp) => {
-                setWalletKeypair(kp);
-                setStep(5);
-                setLoadingStep(null);
-                setProgressing(false);
-              }).catch(() => { setLoadingStep(null); setProgressing(false); });
+              await transferAuthority(await connectWallet(true, true), project_id)
+                .then((kp) => {
+                  setWalletKeypair(kp);
+                  setStep(5);
+                  setLoadingStep(null);
+                  setProgressing(false);
+                }).catch(() => { setLoadingStep(null); setProgressing(false); });
             }}
             disabled={step !== 4 || loadingStep === 4}
             size="large"
@@ -392,7 +389,7 @@ export const DeployForm = function DeployForm({
                 await updateAuthorityRaw(
                   walletKeypair!,
                   await connectWallet(true, false),
-                  await connectWallet(true, false),
+                  project_id,
                 ).then(() => {
                   setLoadingStep(null);
                   toast.dismiss(toastid);

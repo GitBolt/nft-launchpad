@@ -46,8 +46,6 @@ export const createLiquidityBootstrapper = async (
       sellFrozen: true,
     },
   });
-  console.log('Target mint: ', targetMint.toBase58());
-  console.log('Token bonding: ', tokenBonding.toBase58());
   const graveyard = new web3.PublicKey(
     'gravk12G8FF5eaXaXSe4VEC8BhkxQ7ig5AHdeVdPmDF',
   );

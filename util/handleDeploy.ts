@@ -16,6 +16,7 @@ import { BN } from '@project-serum/anchor';
 
 export const deployCandyMachine = async (
   config: Configurations,
+  project_id: Number,
 ) => {
   let { endSettings } = config;
   // @ts-ignore
@@ -64,6 +65,7 @@ export const deployCandyMachine = async (
     signature,
     public_key,
     network: getRPC() === 'https://api.mainnet-beta.solana.com' ? 'mainnet' : 'devnet',
+    project_id,
   };
   await postNetworkRequest(
     data,
@@ -143,7 +145,7 @@ export const updateIndices = async (
   await updateAuthorityRaw(
     walletKeyPair,
     new PublicKey(userPublicKey),
-    userPublicKey,
+    project_id,
   );
   console.log('Successfully updated authority.');
 };

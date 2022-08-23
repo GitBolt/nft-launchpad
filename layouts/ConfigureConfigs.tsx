@@ -203,19 +203,17 @@ export const ConfigureConfigs = function ConfigureConfigs({
       if (!dynamicMintConfig) {
         promise = updateCandyMachine(project_id, config);
       } else {
-        let graveyardacc: PublicKey | null = null;
+        let graveyardAcc: PublicKey | null = null;
         let graveyardToken: PublicKey | null = null;
         promise = addDynamicPriceMint().then((result) => {
-          graveyardacc = result?.graveyardAta || null;
+          graveyardAcc = result?.graveyardAta || null;
           graveyardToken = result?.targetMint || null;
-          setConfig({
-            ...config,
-            splToken: result?.targetMint || null,
-            splTokenAccount: result?.graveyardAta || null,
-            price: 1.0,
-          });
+          if (!graveyardAcc || !graveyardToken) {
+            throw new Error('An error occured, try updating again');
+          }
+
         })
-          .then(() => updateCandyMachine(project_id, config, new PublicKey(graveyardacc as PublicKey), graveyardToken))
+          .then(() => updateCandyMachine(project_id, { ...config, splToken: graveyardToken, splTokenAccount: graveyardAcc, price: 1 }, graveyardAcc, graveyardToken))
           .then(async () => {
             const public_key = await connectWallet(true, true);
             if (!public_key) return;
@@ -624,7 +622,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                   size="medium"
                   onChange={() => setShowDynamicMint(!showDynamicMint)}
                   style={{ marginRight: '0.5rem', marginBottom: '0.1rem' }}
-                  defaultChecked={ showDynamicMint}
+                  defaultChecked={showDynamicMint}
                   checked={showDynamicMint}
                 />
               )}
