@@ -419,7 +419,7 @@ export async function getServerSideProps(context: any) {
       'Cache-Control': 'no-cache',
     },
   });
-  const cacheRes = await fetch(`${API_URL}/api/cache/get/${project_slug}`, {
+  const cacheRes = await fetch(`${API_URL}/api/cache/get/project_id/${project_slug}`, {
     headers: {
       'Cache-Control': 'no-cache',
     },

@@ -87,7 +87,7 @@ export const createTempWallet = async () => {
 };
 
 export const transferAuthority = async (
-  userPublicKey: PublicKey,
+  userPublicKey: PublicKey, project_id:number,
 ) => {
   let localKeyPair = localStorage.getItem('tempKeyPair');
   if (!localKeyPair) {
@@ -103,7 +103,7 @@ export const transferAuthority = async (
   await updateAuthority(
     new PublicKey(userPublicKey),
     walletKeyPair.publicKey,
-    userPublicKey,
+    project_id,
   );
   console.log('Authority transferred successfully');
 

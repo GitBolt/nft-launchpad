@@ -60,19 +60,19 @@ export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
           // eslint-disable-next-line jsx-a11y/alt-text
           icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>}
           label="NFT Collection"
-          path={`/dashboard/nfts?project_id=${router.query.project}`} />
+          path={`/dashboard/nfts?project=${router.query.project}`} />
         <SidebarItem
           router={router}
           disabled={disabled}
           icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />}
           label="Configure"
-          path="/dashboard/configure" />
+          path={`/dashboard/configure?project=${router.query.project}`} />
         <SidebarItem
           router={router}
           disabled={disabled}
           icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />}
           label="Site builder"
-          path="/dashboard/sitebuilder" />
+          path={`/dashboard/sitebuilder?project=${router.query.project}`} />
         {/* <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
       </ul>
     </nav>

@@ -8,7 +8,7 @@ import { verifyMethod } from '@/lib/server';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const methodIsAllowed = verifyMethod(req, res, 'GET');
   if (!methodIsAllowed) return;
-  const { public_key, id, all } = req.query;
+  const { public_key, project_id, all } = req.query;
   if (!public_key) return;
   try {
     const user = await prisma.user.findFirst({
@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const project = await prisma.project.findFirst({
       where: {
         owner_id: user.id,
-        id: Number(id),
+        id: Number(project_id),
       },
     });
     if (!project) {

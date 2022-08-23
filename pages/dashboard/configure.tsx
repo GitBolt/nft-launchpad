@@ -55,12 +55,12 @@ const Index: NextPage = function Index() {
   });
   const wallet = getWallet();
   useEffect(() => {
-    const { project } = router.query;
-    if (!project) return;
-    setProjectId(Number(project));
+    const projectId = router.query.project;
+    if (!projectId) return;
+    setProjectId(Number(projectId));
     const fetchData = async () => {
       const pubKey = await connectWallet(true, false);
-      const statusRes = await fetch(`/api/candymachine/state/${project}`, {
+      const statusRes = await fetch(`/api/candymachine/state/${projectId}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -129,7 +129,7 @@ const Index: NextPage = function Index() {
       error: 'Error initializing configs, try reloading',
     }).then(() => setInitialzing(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router.query.project]);
   return (
     <>
       <DefaultHead />
@@ -173,6 +173,7 @@ const Index: NextPage = function Index() {
                 config={config}
                 setConfig={setConfig}
                 setDeployForm={setDeployForm}
+                project_id={project_id}
               />
               )}
             </div>

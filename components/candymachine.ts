@@ -263,7 +263,7 @@ export const writeIndices = async ({
   const public_key = await connectWallet(true, true);
   if (!public_key) return;
   console.log('Trying to write indices...');
-  const request = await fetch(`/api/cache/get/${project_id}`);
+  const request = await fetch(`/api/cache/get/project_id/${project_id}`);
 
   const cacheContent = await request.json();
   let uploadSuccessful = true;
@@ -363,7 +363,7 @@ export const updateCandyMachine = async (
     getRPC(),
   );
   if (!anchorProgram) return;
-  const request = await fetch(`/api/cache/get/${project_id}`);
+  const request = await fetch(`/api/cache/get/project_id/${project_id}`);
   const cacheContent = await request.json();
 
   const candyMachine = new PublicKey(cacheContent.candy_machine);
@@ -441,7 +441,7 @@ export const updateAuthority = async (
   newAuthority: PublicKey,
   project_id: Number,
 ) => {
-  const request = await fetch(`/api/cache/get/${project_id}`);
+  const request = await fetch(`/api/cache/get/project_id/${project_id}`);
   const cacheContent = await request.json();
 
   const candyMachine = new PublicKey(cacheContent.candy_machine);

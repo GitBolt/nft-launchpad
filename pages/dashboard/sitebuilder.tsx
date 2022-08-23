@@ -105,16 +105,17 @@ const Index: NextPage = function Index() {
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
   const wallet = getWallet();
   useEffect(() => {
-    const project_id = router.query.project;
-    if (!project_id) return;
+    const projectId = router.query.project;
+    if (!projectId) return;
     const fetchData = async () => {
       localStorage.removeItem('previewImages');
       const publicKey = await connectWallet(true, true);
-      const res = await fetch(`/api/project/get/public_key/${publicKey}?project_id=${project_id}`, {
+      const res = await fetch(`/api/project/get/public_key/${publicKey}?project_id=${projectId}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
       });
+      console.log(`/api/project/get/public_key/${publicKey}?project_id=${projectId}`);
       const { project, site } = await res.json();
       setProjectData(project);
       setSiteData({

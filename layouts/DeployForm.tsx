@@ -17,13 +17,13 @@ import Confirmed from '@/images/Confirmed.svg';
 import Unconfirmed from '@/images/Unconfirmed.svg';
 import Current from '@/images/Current.svg';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 
 type Props = {
   setConfig: React.Dispatch<React.SetStateAction<Configurations>>,
   setDeployForm: React.Dispatch<React.SetStateAction<boolean>>,
   config: Configurations,
-  setProgressing: React.Dispatch<React.SetStateAction<boolean>>
+  setProgressing: React.Dispatch<React.SetStateAction<boolean>>,
+  project_id: number,
 };
 
 export const DeployForm = function DeployForm({
@@ -31,6 +31,7 @@ export const DeployForm = function DeployForm({
   setDeployForm,
   setConfig,
   setProgressing,
+  project_id,
 }: Props) {
   const [walletKeypair, setWalletKeypair] = useState<Keypair | null>(null);
   const [candy_machine, setCandyMachine] = useState<PublicKey>();
@@ -39,8 +40,6 @@ export const DeployForm = function DeployForm({
   const [projectSlug, setProjectSlug] = useState<string | null>(null);
   const [initializing, setInitialzing] = useState<boolean>(true);
   const [loadingStep, setLoadingStep] = useState<number | null>(null);
-  const router = useRouter();
-  const project_id = router.query.project;
   const whitelistTokenCost = 0.01;
   const depAmount = ((config.itemsAvailable / 8) * 0.001) + whitelistTokenCost;
   // const requiredInMainWallet = ((config.itemsAvailable * 0.0016804)
@@ -328,7 +327,7 @@ export const DeployForm = function DeployForm({
             onClick={async () => {
               setLoadingStep(4);
               setProgressing(true);
-              const promise = transferAuthority(await connectWallet(true, true));
+              const promise = transferAuthority(await connectWallet(true, true), project_id);
               toast.promise(promise, {
                 loading: 'Updating authority',
                 success: 'Sucessfully updated authority',
