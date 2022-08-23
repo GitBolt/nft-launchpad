@@ -30,6 +30,7 @@ export const updateCache = async (
   name: string,
   assetUri: string,
   publicKey: string,
+  project_id: number,
 ) => {
   const signature = await signNonce();
   if (!signature) return;
@@ -38,6 +39,7 @@ export const updateCache = async (
     public_key: publicKey,
     item_link,
     assetUri,
+    project_id,
   };
   const response = await postNetworkRequest(
     {

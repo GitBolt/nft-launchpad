@@ -19,6 +19,7 @@ type Props = {
   publicKey: string
   hideUploadArea?: boolean
   totalCount: number,
+  project_id: number,
 };
 
 export const UploadCollectionArea = function UploadCollectionArea({
@@ -33,6 +34,7 @@ export const UploadCollectionArea = function UploadCollectionArea({
   publicKey,
   hideUploadArea,
   totalCount,
+  project_id,
 }: Props) {
   const [progress, setProgress] = useState<number>(0);
   const [filesLength, setFilesLength] = useState<number>(0);
@@ -118,6 +120,7 @@ export const UploadCollectionArea = function UploadCollectionArea({
                   publicKey,
                   setQueue,
                   setUploadPage,
+                  project_id,
                 );
                 if (uploadQueue) {
                   setQueue(uploadQueue);

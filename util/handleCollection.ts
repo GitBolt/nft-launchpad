@@ -15,6 +15,7 @@ export const uploadAssets = (
   publicKey: string,
   setQueue: any,
   setUploadPage: any,
+  project_id: number,
 
 ) => {
   const JSONFiles = Array.from(files).filter((file: File) => file.name.endsWith('.json')).sort(
@@ -54,6 +55,7 @@ export const uploadAssets = (
         name.match(/\d/g).join(''),
         uploadedImage,
         publicKey,
+        project_id,
       );
       setUploadedFileCount((prevState) => prevState + 1);
       const prog = Math.round(((uploadedFileCount + index + 1) / allPNGs.length) * 100);

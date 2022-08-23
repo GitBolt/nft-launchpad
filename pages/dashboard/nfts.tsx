@@ -45,10 +45,12 @@ const Index: NextPage = function Index() {
   const [refresh, updateRefresh] = useState<number>(0);
   const [missingIndexes, setMissingIndexes] = useState<string[]>([]);
   const [resumeIndex, setResumeIndex] = useState<number>(0);
+  const [project_id, setProjectId] = useState<number>(0);
 
   useEffect(() => {
     const { project } = router.query;
     if (!project) return;
+    setProjectId(Number(project));
     const fetchData = async () => {
       let pubKey = publicKey;
       if (!publicKey) {
@@ -176,6 +178,7 @@ const Index: NextPage = function Index() {
               resumeCount={resumeIndex}
               publicKey={publicKey}
               hideUploadArea
+              project_id={project_id}
             />
             )}
             {!totalCount && (uploadedFileCount ? !totalCount : false) && !files

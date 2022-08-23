@@ -13,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const allowed = verifyMethod(req, res, 'POST');
   if (!allowed) return;
   try {
-    const requiredKeys = ['name', 'signature', 'public_key', 'item_link', 'assetUri'];
+    const requiredKeys = ['name', 'signature', 'public_key', 'item_link', 'assetUri', 'project_id'];
     const allKeysPresent = verifyKeys(req, res, requiredKeys);
     if (!allKeysPresent) return;
 
@@ -23,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       item_link,
       name,
       assetUri,
+      project_id,
     } = JSON.parse(req.body);
 
     if (!signature?.signature.data) return;
@@ -35,9 +36,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
+
     const project = await prisma.project.findFirst({
       where: {
-        owner_id: user.id,
+        id: project_id,
       },
     });
 
@@ -57,9 +59,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const existing_cache = await prisma.cache.findFirst({
       where: {
-        project: {
-          owner_id: user.id,
-        },
+        project_id: project.id,
       },
     });
 
