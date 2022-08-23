@@ -85,7 +85,6 @@ const defaultSiteData: SiteData = {
 const Index: NextPage = function Index() {
 
   const router = useRouter();
-  const project_id = router.query.project;
 
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [templateChosen, setTemplateChosen] = useState<boolean>(false);
@@ -106,6 +105,8 @@ const Index: NextPage = function Index() {
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
   const wallet = getWallet();
   useEffect(() => {
+    const project_id = router.query.project;
+    if (!project_id) return;
     const fetchData = async () => {
       localStorage.removeItem('previewImages');
       const publicKey = await connectWallet(true, true);
@@ -135,7 +136,7 @@ const Index: NextPage = function Index() {
       }
     };
     fetchData();
-  }, [project_id, triggerFetch]);
+  }, [router.query.project, triggerFetch]);
 
   if (!templateChosen) {
     return (

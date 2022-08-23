@@ -44,6 +44,7 @@ type Props = {
   defaultBurn: boolean
   dynamicMint: boolean
   dmConfigs: string
+  project_id: number
 };
 
 interface Errors {
@@ -69,6 +70,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
   defaultBurn,
   dynamicMint,
   dmConfigs,
+  project_id,
 }: Props) {
 
   const wallet = useWallet();
@@ -200,7 +202,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
 
       let promise;
       if (!dynamicMintConfig) {
-        promise = updateCandyMachine(config);
+        promise = updateCandyMachine(project_id, config);
       } else {
         let graveyardacc: PublicKey | null = null;
         let graveyardToken: PublicKey | null = null;
@@ -214,7 +216,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
             price: 1.0,
           });
         })
-          .then(() => updateCandyMachine(config, new PublicKey(graveyardacc as PublicKey), graveyardToken))
+          .then(() => updateCandyMachine(project_id, config, new PublicKey(graveyardacc as PublicKey), graveyardToken))
           .then(async () => {
             const public_key = await connectWallet(true, true);
             if (!public_key) return;

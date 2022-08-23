@@ -17,6 +17,7 @@ import Confirmed from '@/images/Confirmed.svg';
 import Unconfirmed from '@/images/Unconfirmed.svg';
 import Current from '@/images/Current.svg';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 type Props = {
   setConfig: React.Dispatch<React.SetStateAction<Configurations>>,
@@ -38,7 +39,8 @@ export const DeployForm = function DeployForm({
   const [projectSlug, setProjectSlug] = useState<string | null>(null);
   const [initializing, setInitialzing] = useState<boolean>(true);
   const [loadingStep, setLoadingStep] = useState<number | null>(null);
-
+  const router = useRouter();
+  const project_id = router.query.project;
   const whitelistTokenCost = 0.01;
   const depAmount = ((config.itemsAvailable / 8) * 0.001) + whitelistTokenCost;
   // const requiredInMainWallet = ((config.itemsAvailable * 0.0016804)
@@ -375,6 +377,7 @@ export const DeployForm = function DeployForm({
                 await connectWallet(true, true),
                 walletKeypair!,
                 new PublicKey(candy_machine),
+                Number(project_id),
               );
               toast.promise(promise, {
                 loading: 'Writing indices',

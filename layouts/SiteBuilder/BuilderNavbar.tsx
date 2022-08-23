@@ -6,6 +6,7 @@ import { postNetworkRequest } from '@/util/functions';
 import { SiteData, ProjectData } from '@/types/projectData';
 import ArrowBackIos from '@material-ui/icons/ArrowBackIos';
 import FileCopy from '@material-ui/icons/FileCopy';
+import { useRouter } from 'next/router';
 
 interface Props {
   siteData: SiteData,
@@ -22,6 +23,8 @@ export const BuilderNavbar = function BuilderNavbar({
   setFullPreview,
   fullPreview,
 }: Props) {
+  const router = useRouter();
+  const project_id = router.query.project;
   const handlePublish = () => {
     const post = async () => {
       const public_key = await connectWallet(true, true);
@@ -38,6 +41,7 @@ export const BuilderNavbar = function BuilderNavbar({
         projectData,
         signature,
         public_key,
+        id: project_id,
       };
       console.log(data);
       await postNetworkRequest(

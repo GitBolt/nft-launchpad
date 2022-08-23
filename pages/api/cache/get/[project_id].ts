@@ -8,15 +8,13 @@ import { verifyMethod } from '@/lib/server';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const methodIsAllowed = verifyMethod(req, res, 'GET');
   if (!methodIsAllowed) return;
-  const { public_key, ignoreItems } = req.query;
-  if (!public_key) return;
+  const { project_id, ignoreItems } = req.query;
+  if (!project_id) return;
   try {
     const cache = await prisma.cache.findFirst({
       where: {
         project: {
-          owner: {
-            public_key: public_key as string,
-          },
+          id: Number(project_id),
         },
       },
     });
@@ -40,9 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         cache: {
           // @ts-ignore
           project: {
-            owner: {
-              public_key,
-            },
+            id: Number(project_id),
           },
         },
       },

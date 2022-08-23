@@ -7,12 +7,15 @@ import { connectWallet, signNonce } from '@/components/wallet';
 import toast from 'react-hot-toast';
 import { postNetworkRequest } from '@/util/functions';
 import getWallet from '@/components/whichWallet';
+import { useRouter } from 'next/router';
 
 const SignIn = function SignIn() {
   const [newTwitterUsername, setNewTwitterUsername] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [updated, setUpdated] = useState<boolean>(false);
   const wallet = getWallet();
+  const router = useRouter();
+  const project_id = router.query.project;
 
   const updateTwitterUsername = () => {
     setError(false);
@@ -26,6 +29,7 @@ const SignIn = function SignIn() {
         siteData: { null: 'null' },
         signature,
         public_key,
+        id: project_id,
       };
       await postNetworkRequest(
         data,

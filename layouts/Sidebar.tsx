@@ -57,7 +57,8 @@ export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
         <SidebarItem
           router={router}
           disabled={disabled}
-          icon={<Image style={{ width: '1.3rem', height: '1.3rem' }} alt="urmom"/>}
+          // eslint-disable-next-line jsx-a11y/alt-text
+          icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>}
           label="NFT Collection"
           path={`/dashboard/nfts?project_id=${router.query.project}`} />
         <SidebarItem

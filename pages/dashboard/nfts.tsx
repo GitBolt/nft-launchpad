@@ -28,9 +28,7 @@ export interface Item {
 }
 
 const Index: NextPage = function Index() {
-
   const router = useRouter();
-  const { project } = router.query;
   const [items, setItems] = useState<Item[] | null>(null);
   const [files, setFiles] = useState<FileList | null>(null);
   const [publicKey, setPublicKey] = useState<string>('');
@@ -51,6 +49,8 @@ const Index: NextPage = function Index() {
   const wallet = getWallet();
 
   useEffect(() => {
+    const { project } = router.query;
+    if (!project) return;
     const fetchData = async () => {
       let pubKey = publicKey;
       if (!publicKey) {
@@ -79,7 +79,7 @@ const Index: NextPage = function Index() {
       }
       console.log('Missing files', missing);
       setMissingIndexes(missing);
-      const stateRes = await fetch(`/api/candymachine/state/${pubKey}`);
+      const stateRes = await fetch(`/api/candymachine/state/${project}`);
       const { deployed, itemCount } = await stateRes.json();
       setTotalCount(itemCount);
       if (deployed) {
@@ -92,7 +92,7 @@ const Index: NextPage = function Index() {
       }
     };
     fetchData();
-  }, [publicKey, uploadPage, firstTime, refresh, offset, uploadedFileCount, project]);
+  }, [publicKey, uploadPage, firstTime, refresh, offset, uploadedFileCount, router.query]);
   return (
     <>
       <DefaultHead />

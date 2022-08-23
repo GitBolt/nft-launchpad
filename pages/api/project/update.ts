@@ -14,12 +14,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (!allowed) return;
   try {
     const { onlyProject } = req.query;
-    const requiredKeys = ['signature', 'public_key'];
+    const requiredKeys = ['signature', 'public_key', 'id'];
     const allKeysPresent = verifyKeys(req, res, requiredKeys);
     if (!allKeysPresent) return;
 
     const {
-      projectData, siteData, signature, public_key,
+      projectData, siteData, signature, public_key, id,
     } = JSON.parse(req.body);
     if (!signature?.signature.data) return;
 
@@ -33,6 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const project = await prisma.project.findFirst({
       where: {
+        id: Number(id),
         owner_id: user.id,
       },
     });

@@ -123,6 +123,7 @@ export const updateIndices = async (
   userPublicKey: PublicKey,
   walletKeyPair: Keypair,
   candyMachine: PublicKey,
+  project_id: number,
 ) => {
   const rateLimit = 1;
   const anchorProgram = await loadCandyProgramV2Raw(
@@ -135,6 +136,7 @@ export const updateIndices = async (
     candyMachine,
     walletKeyPair,
     rateLimit,
+    project_id,
   });
   if (!res) throw new Error('Error writing indices');
   console.log('Updating authority back to original wallet...');

@@ -23,7 +23,6 @@ import { useRouter } from 'next/router';
 const Index: NextPage = function Index() {
 
   const router = useRouter();
-  const { project } = router.query;
 
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [partiallyDeployed, setPartiallyDeployed] = useState<boolean>(false);
@@ -35,6 +34,7 @@ const Index: NextPage = function Index() {
   const [dMint, setDynamicMint] = useState<boolean>(false);
   const [dConfigs, setDmConfigs] = useState<string>('');
   const [cm, setCandyMachine] = useState<string>('');
+  const [project_id, setProjectId] = useState<number>(0);
 
   const [config, setConfig] = useState<Configurations>({
     itemsAvailable: 0,
@@ -55,6 +55,9 @@ const Index: NextPage = function Index() {
   });
   const wallet = getWallet();
   useEffect(() => {
+    const { project } = router.query;
+    if (!project) return;
+    setProjectId(Number(project));
     const fetchData = async () => {
       const pubKey = await connectWallet(true, false);
       const statusRes = await fetch(`/api/candymachine/state/${project}`, {
@@ -160,6 +163,7 @@ const Index: NextPage = function Index() {
                 defaultBurn={config.whitelistMintSettings?.mode.burnEveryTime || false}
                 dynamicMint={dMint}
                 dmConfigs={dConfigs}
+                project_id={project_id}
               />
               )}
               {!((!deployForm && !partiallyDeployed) || !deployForm) && !initializing
