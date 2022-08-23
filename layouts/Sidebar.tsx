@@ -11,21 +11,22 @@ type Props = {
   label: string,
   path: string,
   disabled?: boolean,
+  router: any,
 };
 
 const SidebarItem = function SidebarItem({
   icon, label, path, disabled,
+  router,
 }: Props) {
-  const router = useRouter();
   return (
     <div className={
-        `rounded-xl h-14 
+      `rounded-xl h-14 
         duration-200 font-medium flex
         cursor-not-allowed
         ${!disabled && 'hover:bg-[#1B2E60] hover:text-white cursor-pointer'}
         ${router.pathname === path
-          ? 'bg-[#192B59] text-white'
-          : 'text-[#A2A2A2]'}`
+        ? 'bg-[#192B59] text-white'
+        : 'text-[#A2A2A2]'}`
     }
     >
       {!disabled ? (
@@ -49,12 +50,28 @@ interface SidebarProps {
   disabled?: boolean
 }
 export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
+  const router = useRouter();
   return (
     <nav className="fixed flex bg-[#0F0921] w-80 h-full scroll-auto flex-col items-center overflow-auto">
       <ul className="w-4/5 text-base flex flex-col gap-4 mt-32">
-        <SidebarItem disabled={disabled} icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>} label="NFT Collection" path="/dashboard/nfts" />
-        <SidebarItem disabled={disabled} icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />} label="Configure" path="/dashboard/configure" />
-        <SidebarItem disabled={disabled} icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />} label="Site builder" path="/dashboard/sitebuilder" />
+        <SidebarItem
+          router={router}
+          disabled={disabled}
+          icon={<Image style={{ width: '1.3rem', height: '1.3rem' }} alt="urmom"/>}
+          label="NFT Collection"
+          path={`/dashboard/nfts?project_id=${router.query.project}`} />
+        <SidebarItem
+          router={router}
+          disabled={disabled}
+          icon={<Settings style={{ width: '1.3rem', height: '1.3rem' }} />}
+          label="Configure"
+          path="/dashboard/configure" />
+        <SidebarItem
+          router={router}
+          disabled={disabled}
+          icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />}
+          label="Site builder"
+          path="/dashboard/sitebuilder" />
         {/* <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
       </ul>
     </nav>

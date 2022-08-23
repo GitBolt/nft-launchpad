@@ -8,22 +8,13 @@ import { verifyMethod } from '@/lib/server';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const methodIsAllowed = verifyMethod(req, res, 'GET');
   if (!methodIsAllowed) return;
-  const { public_key } = req.query;
-  if (!public_key) return;
+  const { project_id } = req.query;
+  if (!project_id) return;
   try {
-    const user = await prisma.user.findFirst({
-      where: { public_key: public_key as string },
-    });
-    if (!user) {
-      res.status(400).json({ error: 'User not found' });
-      return;
-    }
     const cache = await prisma.cache.findFirst({
       where: {
         project: {
-          owner: {
-            public_key: public_key as string,
-          },
+          id: Number(project_id),
         },
       },
     });
@@ -31,9 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       where: {
         cache: {
           project: {
-            owner: {
-              public_key: public_key as string,
-            },
+            id: Number(project_id),
           },
         },
         on_chain: true,
@@ -43,9 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       where: {
         cache: {
           project: {
-            owner: {
-              public_key: public_key as string,
-            },
+            id: Number(project_id),
           },
         },
       },

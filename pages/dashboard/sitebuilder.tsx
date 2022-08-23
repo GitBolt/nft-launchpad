@@ -24,6 +24,8 @@ import { CreateSections } from '@/layouts/SiteBuilder/CreateSections';
 import { Sections } from '@/layouts/Sections';
 import { Navbar } from '@/layouts/Navbar';
 import getWallet from '@/components/whichWallet';
+import { useRouter } from 'next/router';
+
 
 export interface Section {
   title: string,
@@ -81,6 +83,10 @@ const defaultSiteData: SiteData = {
 };
 
 const Index: NextPage = function Index() {
+
+  const router = useRouter();
+  const project_id = router.query.project;
+
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [templateChosen, setTemplateChosen] = useState<boolean>(false);
   const [siteData, setSiteData] = useState<SiteData>(defaultSiteData);
@@ -103,7 +109,7 @@ const Index: NextPage = function Index() {
     const fetchData = async () => {
       localStorage.removeItem('previewImages');
       const publicKey = await connectWallet(true, true);
-      const res = await fetch(`/api/project/get/public_key/${publicKey}`, {
+      const res = await fetch(`/api/project/get/public_key/${publicKey}?project_id=${project_id}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -129,7 +135,7 @@ const Index: NextPage = function Index() {
       }
     };
     fetchData();
-  }, [triggerFetch]);
+  }, [project_id, triggerFetch]);
 
   if (!templateChosen) {
     return (

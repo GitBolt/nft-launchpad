@@ -21,7 +21,7 @@ const Index: NextPage = function Index() {
 
   const handleClick = async () => {
     const public_key = await connectWallet(false, true);
-    const res = await fetch(`/api/project/get/public_key/${public_key}`);
+    const res = await fetch(`/api/project/get/public_key/${public_key}?all=true`);
     if (res.ok) {
       router.push('/dashboard');
       return;

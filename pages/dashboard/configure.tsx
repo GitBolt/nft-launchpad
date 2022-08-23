@@ -18,8 +18,13 @@ import { Navbar } from '@/layouts/Navbar';
 import { ConfigureConfigs } from '@/layouts/ConfigureConfigs';
 import { DeployForm } from '@/layouts/DeployForm';
 import getWallet from '@/components/whichWallet';
+import { useRouter } from 'next/router';
 
 const Index: NextPage = function Index() {
+
+  const router = useRouter();
+  const { project } = router.query;
+
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [partiallyDeployed, setPartiallyDeployed] = useState<boolean>(false);
   const [assetsUploaded, setAssetsUploaded] = useState<boolean>(true);
@@ -52,7 +57,7 @@ const Index: NextPage = function Index() {
   useEffect(() => {
     const fetchData = async () => {
       const pubKey = await connectWallet(true, false);
-      const statusRes = await fetch(`/api/candymachine/state/${pubKey.toString()}`, {
+      const statusRes = await fetch(`/api/candymachine/state/${project}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
