@@ -1,33 +1,25 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { connectWallet } from '@/components/wallet';
-import AccountBalanceWallet from '@material-ui/icons/AccountBalanceWallet';
 import toast from 'react-hot-toast';
 import { Menu, MenuItem, Button } from '@material-ui/core';
-import getWallet from '@/components/whichWallet';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { ConnectWallet } from '@/layouts/Wallet';
 
-interface Props {
-  wallet: any
-  setWallet?: any
-  setBool?: React.Dispatch<React.SetStateAction<boolean>>
-}
-export const Navbar = function Navbar({
-  wallet, setWallet, setBool,
-}: Props) {
+export const Navbar = function Navbar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { wallet, connected, publicKey, disconnect } = useWallet();
 
   const open = Boolean(anchorEl);
   const router = useRouter();
 
   const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
-    if (wallet && wallet.isConnected) {
+    if (connected) {
       setAnchorEl(event.currentTarget);
       return;
     }
-    if (!wallet.isConnected) {
+    if (!connected) {
       await connectWallet(false, true);
-      if (setBool) setBool(true);
-      if (setWallet) setWallet(getWallet());
       return;
     }
     setAnchorEl(null);
@@ -38,32 +30,34 @@ export const Navbar = function Navbar({
     }
   };
 
+
   return (
     <div
       className="w-full h-[6rem] bg-transparent fixed z-10"
     >
       <div
-        className="flex px-[3.75rem] h-[6rem] bg-[#0F0921] items-center justify-between"
-        style={{ backdropFilter: 'blur(5px)' }}
+        className="flex px-[3.75rem] h-[4rem] bg-[#0E1228ed] items-center justify-between"
+        style={{ backdropFilter: 'blur(10px)' }}
       >
         <h1 className="text-white text-3xl font-bold">Launchpad</h1>
-        <div className="flex items-center gap-8 text-[1rem]">
-          <div className="flex flex-col gap-6">
-            <div>
+        <div className="flex flex-col gap-6">
+          {connected ?
+            < >
               <Button
                 style={{
-                  borderRadius: '.5rem',
-                  background: 'linear-gradient(270deg, #A526C5 0%, #5022B1 101.88%)',
+                  borderRadius: '2rem',
                   color: 'white',
                   height: '2.5rem',
+                  width: '12rem',
+                  borderWidth: '2px',
                 }}
                 onClick={handleClick}
-                startIcon={<AccountBalanceWallet style={{ width: '1.5rem', height: '1.5rem' }} />}
-                variant="contained"
+                variant="outlined"
+                color="primary"
+                disableRipple
               >
-                {(wallet
-                  && wallet.isConnected
-                  && wallet.publicKey.toString().replace(wallet.publicKey.toString().slice(5, 40), '...'))
+                {(wallet && connected
+                  && publicKey!.toString().replace(publicKey!.toString().slice(7, 38), '...'))
                   || 'Connect'}
               </Button>
               <Menu
@@ -72,43 +66,50 @@ export const Navbar = function Navbar({
                 anchorEl={anchorEl}
                 open={open}
                 onClose={() => setAnchorEl(null)}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'center',
-                }}
                 disableScrollLock
                 style={{ marginTop: '3.5rem' }}
               >
-                <div className="flex flex-col p-1 gap-3">
+                {wallet && publicKey && <div className="flex flex-col p-1 gap-3 bg-[hsl(220, 80%, 65%)]">
                   <MenuItem
+                    disableRipple
                     onClick={async () => {
-                      navigator.clipboard.writeText(wallet.publicKey.toString());
+                      navigator.clipboard.writeText(publicKey.toString());
                       toast.success('Copied address to clipboard');
                       setAnchorEl(null);
                     }}
-                    style={{ background: '#F2F2F2', borderRadius: '.5rem', padding: '.5rem .7rem' }}
+                    style={{ border: '1px solid #7B0FAE', color: 'white', borderRadius: '.5rem', padding: '.5rem .7rem' }}
                   >
                     Copy to clipboard
 
                   </MenuItem>
                   <MenuItem
+                    disableRipple
                     onClick={async () => {
-                      await wallet.disconnect();
+                      await disconnect();
                       setAnchorEl(null);
-                      if (setBool) setBool(false);
                     }}
-                    style={{ background: '#F2F2F2', borderRadius: '.5rem', padding: '.5rem .7rem' }}
+                    style={{ border: '1px solid #7B0FAE', color: 'white', borderRadius: '.5rem', padding: '.5rem .7rem' }}
                   >
                     Disconnect
                   </MenuItem>
-                </div>
+                </div>}
               </Menu>
-            </div>
-          </div>
+            </>
+            : <ConnectWallet>
+              <Button style={{
+                borderRadius: '2rem',
+                borderWidth: '2px',
+                color: 'white',
+                height: '2.5rem',
+                width: '12rem',
+              }}
+                disableRipple
+                variant="outlined"
+                color="primary"
+              >
+                Connect Wallet
+              </Button>
+            </ConnectWallet>}
         </div>
       </div>
     </div>

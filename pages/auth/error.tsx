@@ -6,14 +6,12 @@ import Button from '@material-ui/core/Button';
 import { connectWallet, signNonce } from '@/components/wallet';
 import toast from 'react-hot-toast';
 import { postNetworkRequest } from '@/util/functions';
-import getWallet from '@/components/whichWallet';
 import { useRouter } from 'next/router';
 
 const SignIn = function SignIn() {
   const [newTwitterUsername, setNewTwitterUsername] = useState<string>('');
   const [error, setError] = useState<boolean>(false);
   const [updated, setUpdated] = useState<boolean>(false);
-  const wallet = getWallet();
   const router = useRouter();
   const project_id = router.query.project;
 
@@ -48,7 +46,7 @@ const SignIn = function SignIn() {
 
   return (
     <>
-      <Navbar wallet={wallet} />
+      <Navbar />
       <PageRoot>
         <div className="flex flex-col gap-4 w-[45rem] items-center bg-[#1F1F2B] rounded-2xl p-5">
           <h1 className="text-xl text-center text-red-600">

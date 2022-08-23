@@ -4,14 +4,12 @@ import { connectWallet } from '@/components/wallet';
 import { DefaultHead } from '@/layouts/Head';
 import { PageRoot } from '@/layouts/StyledComponents';
 import { Navbar } from '@/layouts/Navbar';
-import getWallet from '@/components/whichWallet';
 import Link from 'next/link';
 
 
 const Index: NextPage = function Index() {
   const [publicKey, setPublicKey] = useState<string>('');
   const [projects, setProjects] = useState<any>('');
-  const wallet = getWallet();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,23 +32,17 @@ const Index: NextPage = function Index() {
   }, [publicKey]);
   return (
     <>
-      <Navbar wallet={wallet} />
+      <Navbar />
       <DefaultHead />
       <PageRoot style={{ padding: '0 1.5rem', placeItems:'center' }}>
-        <div style={{
-          display: 'flex',
-          alignItems:'center',
-          justifyContent: 'space-between',
-          width: '70vw',
-          transform: 'translate(0, -2rem)',
-        }}>
+        <div className="absolute flex justify-between w-[70%] top-[20%]">
         <h1
           className="text-3xl font-bold text-white"
         >
           Select your NFT collection
         </h1>
         <a href="/new/" target="_blank" style={{
-          width: '15rem',
+          width: '13rem',
           height: '3rem',
           background: 'linear-gradient(270deg, #A526C5 0%, #5022B1 101.88%)',
           color: 'white',
@@ -59,11 +51,11 @@ const Index: NextPage = function Index() {
           alignItems: 'center',
           justifyContent: 'center',
           fontWeight: '500',
-          borderRadius:'1rem',
+          borderRadius:'2rem',
         }}>Create new</a>
         </div>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: ' center', width: '90%', height: '100%', gap:'2rem' }}>
+        <div  className="flex flex-wrap justify-center align-center w-full h-[100%] gap-[2rem]" >
           {projects ? projects.map((project: any) => (
             <div key={project.id} style={{ width: '20rem', height: '10rem', borderRadius: '1rem' }} className="hover:bg-[#3431449e] bg-[#211f2d9e]">
               <Link href={`/dashboard/nfts?project=${project.id}`}>

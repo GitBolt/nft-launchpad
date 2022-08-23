@@ -23,7 +23,6 @@ import { HeaderSection } from '@/layouts/HeaderSection';
 import { CreateSections } from '@/layouts/SiteBuilder/CreateSections';
 import { Sections } from '@/layouts/Sections';
 import { Navbar } from '@/layouts/Navbar';
-import getWallet from '@/components/whichWallet';
 import { useRouter } from 'next/router';
 
 
@@ -103,7 +102,6 @@ const Index: NextPage = function Index() {
 
   const [fullPreview, setFullPreview] = useState<boolean>(false);
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
-  const wallet = getWallet();
   useEffect(() => {
     const projectId = router.query.project;
     if (!projectId) return;
@@ -143,7 +141,7 @@ const Index: NextPage = function Index() {
     return (
       <>
         <DefaultHead />
-        <Navbar wallet={wallet} />
+        <Navbar />
         <PageRoot>
           <div className="w-[100vw]">
             <Sidebar />

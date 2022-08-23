@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Image from '@material-ui/icons/Image';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import PieChart from '@material-ui/icons/PieChart';
-import DesktopWindows from '@material-ui/icons/DesktopWindows';
+import Dvr from '@material-ui/icons/Dvr';
 import Settings from '@material-ui/icons/Settings';
 
 type Props = {
@@ -20,7 +20,7 @@ const SidebarItem = function SidebarItem({
 }: Props) {
   return (
     <div className={
-      `rounded-xl h-14 
+      `h-14 
         duration-200 font-medium flex
         cursor-not-allowed
         ${!disabled && 'hover:bg-[#1B2E60] hover:text-white cursor-pointer'}
@@ -52,13 +52,12 @@ interface SidebarProps {
 export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
   const router = useRouter();
   return (
-    <nav className="fixed flex bg-[#0F0921] w-80 h-full scroll-auto flex-col items-center overflow-auto">
-      <ul className="w-4/5 text-base flex flex-col gap-4 mt-32">
+    <nav className="fixed flex bg-[#0E1228ed] w-72 h-full scroll-auto flex-col items-center overflow-auto">
+      <ul className="w-full text-base flex flex-col gap-4 mt-32">
         <SidebarItem
           router={router}
           disabled={disabled}
-          // eslint-disable-next-line jsx-a11y/alt-text
-          icon={<Image style={{ width: '1.3rem', height: '1.3rem' }}/>}
+          icon={<PhotoCamera style={{ width: '1.3rem', height: '1.3rem' }}/>}
           label="NFT Collection"
           path={`/dashboard/nfts?project=${router.query.project}`} />
         <SidebarItem
@@ -70,8 +69,8 @@ export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
         <SidebarItem
           router={router}
           disabled={disabled}
-          icon={<DesktopWindows style={{ width: '1.3rem', height: '1.3rem' }} />}
-          label="Site builder"
+          icon={<Dvr style={{ width: '1.3rem', height: '1.3rem' }} />}
+          label="Website"
           path={`/dashboard/sitebuilder?project=${router.query.project}`} />
         {/* <SidebarItem disabled={disabled} icon={<PieChart style={{ width: '1.3rem', height: '1.3rem' }} />} label="Analytics" path="/dashboard/analytics" /> */}
       </ul>

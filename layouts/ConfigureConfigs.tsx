@@ -73,7 +73,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
   project_id,
 }: Props) {
 
-  const wallet = useWallet();
+  const { connected, signAllTransactions, signTransaction, publicKey } = useWallet();
   const [network, setNetwork] = useState<string>(defaultNetwork);
   const [mintEndType, setMintEndType] = useState<string | null>(defaultMintEnd);
   const [burn, setBurn] = useState<boolean>(defaultBurn);
@@ -185,13 +185,13 @@ export const ConfigureConfigs = function ConfigureConfigs({
 
       const addDynamicPriceMint = async () => {
         if (showDynamicMint) {
-          if (!wallet || !wallet.publicKey || !wallet.signAllTransactions || !wallet.signTransaction) {
-            return;
+          if (!connected || !publicKey || !signAllTransactions || !signTransaction) {
+            throw new Error('Wallet error, try re-connecting');
           }
           const res = await createLiquidityBootstrapper({
-            publicKey: wallet.publicKey,
-            signAllTransactions: wallet.signAllTransactions,
-            signTransaction: wallet.signTransaction,
+            publicKey: publicKey,
+            signAllTransactions: signAllTransactions,
+            signTransaction: signTransaction,
           } as Wallet,
           await connectWallet(true, false),
           dynamicMintConfig as DynamicMintConfig,
@@ -199,7 +199,6 @@ export const ConfigureConfigs = function ConfigureConfigs({
           return res;
         }
       };
-
       let promise;
       if (!dynamicMintConfig) {
         promise = updateCandyMachine(project_id, config);

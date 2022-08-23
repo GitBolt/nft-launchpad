@@ -6,17 +6,16 @@ import { connectWallet, getMessageToSign, signMessage } from '@/components/walle
 import { postNetworkRequest } from '@/util/functions';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Props {
   setToggleModal: React.Dispatch<React.SetStateAction<boolean>>
-  wallet: any
 }
 export const RegisterUser = function UserCreationModal({
   setToggleModal,
-  wallet,
 }: Props) {
   const router = useRouter();
-
+  const { disconnect } = useWallet();
   const register = async () => {
     const public_key = await connectWallet(true, true);
     const check = await fetch(`/api/user/get/${public_key}`);
@@ -52,8 +51,8 @@ export const RegisterUser = function UserCreationModal({
     }).then(() => router.push('/new/'));
   };
 
-  const disconnect = async () => {
-    await wallet.disconnect();
+  const disconnectWallet = async () => {
+    await disconnect();
     setToggleModal(false);
   };
   return (
@@ -87,7 +86,7 @@ export const RegisterUser = function UserCreationModal({
             Create project
           </Button>
           <Button
-            onClick={disconnect}
+            onClick={disconnectWallet}
             variant="outlined"
             style={{
               borderRadius: '.5rem',

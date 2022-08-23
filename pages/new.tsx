@@ -12,7 +12,6 @@ import { uploadFile } from '@/components/uploadToStorage';
 import { Navbar } from '@/layouts/Navbar';
 import PublishRounded from '@material-ui/icons/PublishRounded';
 import DeleteOutline from '@material-ui/icons/DeleteOutline';
-import getWallet from '@/components/whichWallet';
 import { isAlphaNumeric } from '@/util/validation';
 
 interface Errors {
@@ -42,7 +41,6 @@ const ProjectNew: NextPage = function Index() {
   });
 
   const router = useRouter();
-  const wallet = getWallet();
   const handleLogoFile = async (file: File) => {
     setLogoFile(file);
     const promise = uploadFile(file, 1);
@@ -136,7 +134,7 @@ const ProjectNew: NextPage = function Index() {
 
   return (
     <>
-      <Navbar wallet={wallet} />
+      <Navbar/>
       <DefaultHead />
       <PageRoot>
         <Form

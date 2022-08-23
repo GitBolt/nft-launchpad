@@ -17,7 +17,6 @@ import ArrowForwardIos from '@material-ui/icons/ArrowForwardIos';
 import CircularProgress from '@mui/material/CircularProgress';
 import { FileUploader } from 'react-drag-drop-files';
 import toast from 'react-hot-toast';
-import getWallet from '@/components/whichWallet';
 import { useRouter } from 'next/router';
 
 export interface Item {
@@ -46,7 +45,6 @@ const Index: NextPage = function Index() {
   const [refresh, updateRefresh] = useState<number>(0);
   const [missingIndexes, setMissingIndexes] = useState<string[]>([]);
   const [resumeIndex, setResumeIndex] = useState<number>(0);
-  const wallet = getWallet();
 
   useEffect(() => {
     const { project } = router.query;
@@ -96,7 +94,7 @@ const Index: NextPage = function Index() {
   return (
     <>
       <DefaultHead />
-      <Navbar wallet={wallet} />
+      <Navbar />
       {showDeleteModal && (
       <DeleteNFTModal
         setShowDeleteModal={setShowDeleteModal}

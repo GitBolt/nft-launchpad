@@ -17,7 +17,6 @@ import { toDate } from '@/lib/utils';
 import { Navbar } from '@/layouts/Navbar';
 import { ConfigureConfigs } from '@/layouts/ConfigureConfigs';
 import { DeployForm } from '@/layouts/DeployForm';
-import getWallet from '@/components/whichWallet';
 import { useRouter } from 'next/router';
 
 const Index: NextPage = function Index() {
@@ -53,7 +52,6 @@ const Index: NextPage = function Index() {
       discountPrice: 0,
     },
   });
-  const wallet = getWallet();
   useEffect(() => {
     const projectId = router.query.project;
     if (!projectId) return;
@@ -133,7 +131,7 @@ const Index: NextPage = function Index() {
   return (
     <>
       <DefaultHead />
-      <Navbar wallet={wallet} />
+      <Navbar />
       <PageRoot>
         <div className="w-[100vw]">
           <Sidebar disabled={progressing} />

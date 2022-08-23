@@ -36,8 +36,8 @@ export const Form = function Form(props: Props) {
   return (
     <Container
       style={{
-        background: '#16161F',
-        borderRadius: '1rem',
+        background: 'rgba(22, 22, 31, 0.34) none repeat scroll 0% 0%',
+        borderRadius: '0.5rem',
         textAlign: 'center',
         padding: '2rem',
         position: 'relative',

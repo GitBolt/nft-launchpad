@@ -7,10 +7,12 @@ import { Wallet } from '@/layouts/Wallet';
 import { StrataProviders } from '@strata-foundation/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
-import { ChakraProvider } from '@chakra-ui/react';
 
 const theme = {
   palette: {
+    background: {
+      default: '#0B1F3D',
+    },
     mode: 'dark' as PaletteMode,
     primary: {
       main: '#0E2C97',
@@ -33,18 +35,16 @@ const Launchpad = function Launchpad({
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <ChakraProvider>
-      <Wallet>
-        <SessionProvider session={pageProps.session}>
-          <StrataProviders>
-            <Toaster />
-            <ThemeProvider theme={darkModeTheme}>
-              <Component {...pageProps} />
-            </ThemeProvider>
-          </StrataProviders>
-        </SessionProvider>
-      </Wallet>
-    </ChakraProvider>
+    <Wallet>
+      <SessionProvider session={pageProps.session}>
+        <StrataProviders>
+          <Toaster />
+          <ThemeProvider theme={darkModeTheme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </StrataProviders>
+      </SessionProvider>
+    </Wallet>
   );
 };
 

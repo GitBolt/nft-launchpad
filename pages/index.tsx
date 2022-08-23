@@ -7,17 +7,15 @@ import { PageRoot } from '@/layouts/StyledComponents';
 import { Navbar } from '@/layouts/Navbar';
 import Image from 'next/image';
 import Button from '@material-ui/core/Button';
-import AccountBalanceWallet from '@material-ui/icons/AccountBalanceWallet';
 import { RegisterUser } from '@/layouts/RegisterUser';
-import getWallet from '@/components/whichWallet';
 import Landing from '@/images/Landing.svg';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const Index: NextPage = function Index() {
   const [showModal, setToggleModal] = useState<boolean>(false);
-  const [showDashboardCta, setShowDashboardCta] = useState<boolean>(false);
 
   const router = useRouter();
-  const wallet = getWallet();
+  const { connected } = useWallet();
 
   const handleClick = async () => {
     const public_key = await connectWallet(false, true);
@@ -34,12 +32,11 @@ const Index: NextPage = function Index() {
   };
   return (
     <>
-      <Navbar wallet={wallet} setBool={setShowDashboardCta} />
+      <Navbar />
       <DefaultHead />
       {showModal && (
       <RegisterUser
         setToggleModal={setToggleModal}
-        wallet={wallet}
       />
       )}
       <PageRoot style={{ padding: '0 1.5rem' }}>
@@ -52,17 +49,16 @@ const Index: NextPage = function Index() {
             <Button
               variant="contained"
               style={{
-                borderRadius: '.5rem',
+                borderRadius: '2rem',
                 padding: '.65rem 2rem',
                 fontSize: '1rem',
                 minWidth: '20rem',
                 background: 'linear-gradient(270deg, #A526C5 0%, #5022B1 101.88%);',
                 color: 'white',
               }}
-              startIcon={<AccountBalanceWallet style={{ width: '1.3rem', height: '1.3rem' }} />}
               onClick={handleClick}
             >
-              {showDashboardCta ? 'Go to dashboard' : 'Connect wallet'}
+              {connected ? 'Go to dashboard' : 'Connect wallet'}
               {' '}
             </Button>
           </div>

@@ -37,7 +37,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
     const offsetItems = items.slice(offsetInt, offsetInt + 30);
-    console.log(offsetItems.length);
     res.status(200).json({
       count: offsetItems.length,
       items: offsetItems.sort((a, b) => Number(a.name) - Number(b.name)),
