@@ -31,4 +31,7 @@ export interface DynamicMintConfig {
   minPrice: number, 
   interval: number,
   maxSupply: number,
+  targetMint: string,
+  tokenBonding: string,
+  graveyardAta: string
 }

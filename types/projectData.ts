@@ -1,4 +1,5 @@
 import { web3 } from '@project-serum/anchor';
+import { DynamicMintConfig } from './configurations';
 
 export interface ProjectData {
   id: number,
@@ -63,4 +64,5 @@ export interface Project {
   projectData: ProjectData
   siteData: SiteData
   network: string
+  dynamicMintConfigs: DynamicMintConfig
 }

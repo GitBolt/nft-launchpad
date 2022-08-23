@@ -196,6 +196,13 @@ export const ConfigureConfigs = function ConfigureConfigs({
           await connectWallet(true, false),
           dynamicMintConfig as DynamicMintConfig,
           );
+          // @ts-ignore
+          setDynamicMintConfig({
+            ...dynamicMintConfig,
+            tokenBonding: res.tokenBonding.toBase58(),
+            targetMint: res.targetMint.toBase58(),
+            graveyardAta: res.graveyardAta.toBase58(),
+          });
           return res;
         }
       };
@@ -223,12 +230,8 @@ export const ConfigureConfigs = function ConfigureConfigs({
               public_key,
               signature,
               dynamicMint: true,
-              dmConfigs: JSON.stringify({
-                minPrice: dynamicMintConfig.minPrice,
-                maxSupply: dynamicMintConfig.maxSupply,
-                startPrice: dynamicMintConfig.startPrice,
-                interval: dynamicMintConfig.interval,
-              }),
+              dmConfigs: JSON.stringify(dynamicMintConfig),
+              project_id,
             }, '/api/cache/update');
           });
       }

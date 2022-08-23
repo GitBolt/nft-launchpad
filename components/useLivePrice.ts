@@ -6,12 +6,12 @@ import { useEffect, useState, useCallback } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 
 
-export function useLivePrice() {
+export function useLivePrice(tokenBondingString: string) {
   const { publicKey, signAllTransactions, signTransaction } = useWallet();
   const unixTime = useSolanaUnixTime();
   const [currentPrice, setCurrentPrice] = useState<number | undefined>();
   const fetch = useCallback(async () => {
-    const tokenBonding = new anchor.web3.PublicKey('BbwBi8je1Dy1yZwrTowvizCvUtvFYLpsqmQmAX6JeMFw');
+    const tokenBonding = new anchor.web3.PublicKey(tokenBondingString);
     const connection = new anchor.web3.Connection(getRPC());
     const provider: any = new anchor.Provider(connection,
       {
@@ -22,7 +22,7 @@ export function useLivePrice() {
     const tokenBondingSdk = await SplTokenBonding.init(provider);
     const data = await tokenBondingSdk.getPricing(tokenBonding);
     return data;
-  }, [publicKey, signAllTransactions, signTransaction]);
+  }, [publicKey, signAllTransactions, signTransaction, tokenBondingString]);
     
   useEffect(() => {
     const interval = setInterval(() => {

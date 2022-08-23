@@ -39,7 +39,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       res.status(400).json({ error: 'User not found' });
       return;
     }
-
     const cache_exists = await prisma.cache.findFirst({
       where: {
         project: {

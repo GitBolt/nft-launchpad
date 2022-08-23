@@ -27,11 +27,11 @@ import { postNetworkRequest } from '@/util/functions';
 import { FaqSection } from '@/layouts/FaqSection';
 import { HeaderSection } from '@/layouts/HeaderSection';
 import { Sections } from '@/layouts/Sections';
-import { DynamicPricingCM } from '@/layouts/DynamicMintCM';
+// import { DynamicPricingCM } from '@/layouts/DynamicMintCM';
 import { useLivePrice } from '@/components/useLivePrice';
 
 
-const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, network }: Project) {
+const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, network, dynamicMintConfigs }: Project) {
   const [isUserMinting, setIsUserMinting] = useState(false);
   const [candyMachine, setCandyMachine] = useState<CandyMachineAccount>();
   const [isActive, setIsActive] = useState(false);
@@ -48,7 +48,7 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
 
   const txTimeout = 30000;
   const wallet = useWallet();
-  const livePrice = useLivePrice();
+  const livePrice = useLivePrice(dynamicMintConfigs.tokenBonding);
   const anchorWallet = useMemo(() => {
     if (
       !wallet
@@ -403,7 +403,7 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
             siteData={siteData}
           />
         )}
-        {candyMachine && <DynamicPricingCM candyMachine={candyMachine} />}
+        {/* {candyMachine && candyMachine.state.tokenMint && <DynamicPricingCM candyMachine={candyMachine} tokenBonding={tokenBonding}/>} */}
       </Grid>
     </>
   );
@@ -419,12 +419,12 @@ export async function getServerSideProps(context: any) {
       'Cache-Control': 'no-cache',
     },
   });
-  const cacheRes = await fetch(`${API_URL}/api/cache/get/project_id/${project_slug}`, {
+  const cacheRes = await fetch(`${API_URL}/api/cache/get/${project_slug}`, {
     headers: {
       'Cache-Control': 'no-cache',
     },
   });
-  const { network } = await cacheRes.json();
+  const { network, dmConfigs } = await cacheRes.json();
   const data = await res.json();
   if (!data.projectData) {
     return {
@@ -441,11 +441,13 @@ export async function getServerSideProps(context: any) {
     header: JSON.parse(data.siteData.header),
     sections: JSON.parse(data.siteData.sections),
   };
+  const dynamicMintConfigs = JSON.parse(dmConfigs);
   return {
     props: {
       projectData: data.projectData,
       siteData,
       network,
+      dynamicMintConfigs,
     },
   };
 }

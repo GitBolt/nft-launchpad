@@ -23,14 +23,15 @@ import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Props {
   candyMachine: any;
+  tokenBonding: web3.PublicKey
 }
 
-export const DynamicPricingCM = function ({ candyMachine }: Props) {
+export const DynamicPricingCM = function ({ candyMachine, tokenBonding }: Props) {
 
-  const price = useLivePrice();
+  const price = useLivePrice(tokenBonding.toBase58());
   const cmState = candyMachine.state;
+  console.log(cmState);
   const mintKey = cmState?.tokenMint;
-  const tokenBonding = new web3.PublicKey('BbwBi8je1Dy1yZwrTowvizCvUtvFYLpsqmQmAX6JeMFw');
   const { connected } = useWallet();
 
 
@@ -49,7 +50,7 @@ export const DynamicPricingCM = function ({ candyMachine }: Props) {
         </TabList>
         <TabPanels>
           <TabPanel p={0} pt={4}>
-            {typeof window !== 'undefined' && <LbcStatus tokenBondingKey={new web3.PublicKey('5HCs7cPMKc3tfCupp9PoaCsTawqDr7GWtgzhxuFeHgUT')} />}
+            {typeof window !== 'undefined' && <LbcStatus tokenBondingKey={new web3.PublicKey(tokenBonding)} />}
             <Box
               zIndex={1}
               shadow="xl"
