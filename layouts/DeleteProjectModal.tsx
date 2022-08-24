@@ -71,9 +71,9 @@ export const DeleteProjectModal = function DeleteProjectModal({
           </Button>
          <Button
             onClick={async () => {
-              setRefresh(projectId);
               await handleDelete();
               setShowDeleteModal(false);
+              setRefresh(projectId);
             }}
             style={{
               background: '#D32F2F',
