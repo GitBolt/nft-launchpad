@@ -5,6 +5,7 @@ import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import PieChart from '@material-ui/icons/PieChart';
 import Dvr from '@material-ui/icons/Dvr';
 import Settings from '@material-ui/icons/Settings';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 type Props = {
   icon: any,
@@ -24,7 +25,7 @@ const SidebarItem = function SidebarItem({
         duration-200 font-medium flex
         cursor-not-allowed
         ${!disabled && 'hover:bg-[#1B2E60] hover:text-white cursor-pointer'}
-        ${router.pathname === path
+        ${router.asPath === path
         ? 'bg-[#192B59] text-white'
         : 'text-[#A2A2A2]'}`
     }
@@ -57,7 +58,13 @@ export const Sidebar = function Sidebar({ disabled }: SidebarProps) {
         <SidebarItem
           router={router}
           disabled={disabled}
-          icon={<PhotoCamera style={{ width: '1.3rem', height: '1.3rem' }}/>}
+          icon={<ArrowBack style={{ width: '1.3rem', height: '1.3rem' }} />}
+          label="Select project"
+          path={'/dashboard'} />
+        <SidebarItem
+          router={router}
+          disabled={disabled}
+          icon={<PhotoCamera style={{ width: '1.3rem', height: '1.3rem' }} />}
           label="NFT Collection"
           path={`/dashboard/nfts?project=${router.query.project}`} />
         <SidebarItem

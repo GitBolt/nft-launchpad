@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { connectWallet } from '@/components/wallet';
 import { DefaultHead } from '@/layouts/Head';
 import { PageRoot } from '@/layouts/StyledComponents';
 import { Sidebar } from '@/layouts/Sidebar';
@@ -18,6 +17,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { FileUploader } from 'react-drag-drop-files';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export interface Item {
   id: number,
@@ -30,7 +30,6 @@ const Index: NextPage = function Index() {
   const router = useRouter();
   const [items, setItems] = useState<Item[] | null>(null);
   const [files, setFiles] = useState<FileList | null>(null);
-  const [publicKey, setPublicKey] = useState<string>('');
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [firstTime, setFirstTime] = useState<boolean>(false);
 
@@ -47,18 +46,15 @@ const Index: NextPage = function Index() {
   const [resumeIndex, setResumeIndex] = useState<number>(0);
   const [project_id, setProjectId] = useState<number>(0);
 
+  const { publicKey, connected } = useWallet();
+
   useEffect(() => {
     const { project } = router.query;
-    if (!project) return;
+    if (!project || !publicKey) return;
     setProjectId(Number(project));
     const fetchData = async () => {
-      let pubKey = publicKey;
-      if (!publicKey) {
-        pubKey = await connectWallet(false, false, true);
-        setPublicKey(pubKey);
-      }
       console.log('sending request', project);
-      const res = await fetch(`/api/items/get/${pubKey}?project_id=${project}&&offset=${offset}`, {
+      const res = await fetch(`/api/items/get/${publicKey.toBase58()}?project_id=${project}&&offset=${offset}`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
@@ -93,17 +89,41 @@ const Index: NextPage = function Index() {
     };
     fetchData();
   }, [publicKey, uploadPage, firstTime, refresh, offset, uploadedFileCount, router.query]);
+
+
+  if (!connected) {
+    return (
+      <>
+        <DefaultHead />
+        <Navbar />
+        <PageRoot>
+          <div className="w-[100vw]">
+            <Sidebar />
+            <PageRoot style={{ marginLeft: '21rem', display: 'block' }}>
+              <div className="flex justify-between mt-32">
+                <h1
+                  className="text-3xl font-bold text-gray-500"
+                >
+                  You need to connect your wallet
+                </h1>
+              </div>
+            </PageRoot>
+          </div>
+        </PageRoot>
+      </>
+    );
+  }
   return (
     <>
       <DefaultHead />
       <Navbar />
       {showDeleteModal && (
-      <DeleteNFTModal
-        setShowDeleteModal={setShowDeleteModal}
-        nftId={nftId}
-        nftName={nftName}
-        updateRefresh={updateRefresh}
-      />
+        <DeleteNFTModal
+          setShowDeleteModal={setShowDeleteModal}
+          nftId={nftId}
+          nftName={nftName}
+          updateRefresh={updateRefresh}
+        />
       )}
       <PageRoot>
         <div className="w-[100vw]">
@@ -116,7 +136,7 @@ const Index: NextPage = function Index() {
                 NFT collection
               </h1>
               {((!isDeployed && !uploadedFileCount && !firstTime)
-              || (files && files.length / 2 === uploadedFileCount && totalCount)) ? (
+                || (files && files.length / 2 === uploadedFileCount && totalCount)) ? (
                 <FileUploader
                   multiple
                   handleChange={async (getFiles: FileList) => {
@@ -132,7 +152,7 @@ const Index: NextPage = function Index() {
                       return;
                     }
                     if (!PNGFiles.some((e) => missingIndexes.indexOf(e.name) >= 0)
-                    && !(PNGFiles.map((e) => e.name).includes(`${resumeIndex}.png`))
+                      && !(PNGFiles.map((e) => e.name).includes(`${resumeIndex}.png`))
                     ) {
                       toast.error('Invalid image file number');
                       return;
@@ -159,27 +179,27 @@ const Index: NextPage = function Index() {
             </div>
 
             {firstTime && !files && (
-            <UploadPage
-              setFiles={setFiles}
-              totalCount={totalCount}
-              filesSelected={!!files}
-            />
+              <UploadPage
+                setFiles={setFiles}
+                totalCount={totalCount}
+                filesSelected={!!files}
+              />
             )}
-            {(!isDeployed) && (
-            <UploadCollectionArea
-              totalCount={totalCount}
-              uploadPage={uploadPage}
-              setUploadPage={setUploadPage}
-              setFiles={setFiles}
-              files={files!}
-              missingIndexes={missingIndexes}
-              uploadedFileCount={uploadedFileCount}
-              setUploadedFileCount={setUploadedFileCount}
-              resumeCount={resumeIndex}
-              publicKey={publicKey}
-              hideUploadArea
-              project_id={project_id}
-            />
+            {(!isDeployed && publicKey) && (
+              <UploadCollectionArea
+                totalCount={totalCount}
+                uploadPage={uploadPage}
+                setUploadPage={setUploadPage}
+                setFiles={setFiles}
+                files={files!}
+                missingIndexes={missingIndexes}
+                uploadedFileCount={uploadedFileCount}
+                setUploadedFileCount={setUploadedFileCount}
+                resumeCount={resumeIndex}
+                publicKey={publicKey.toBase58()}
+                hideUploadArea
+                project_id={project_id}
+              />
             )}
             {!totalCount && (uploadedFileCount ? !totalCount : false) && !files
               ? <h1 className="text-3xl mt-2 text-gray-300">Refresh the page to upload assets again</h1> : null}
@@ -207,7 +227,7 @@ const Index: NextPage = function Index() {
                       disabled={!items || offset === offset - 1 || offset === 0}
                       style={{ color: 'white' }}
                     >
-                      <ArrowBackIos color="primary"/>
+                      <ArrowBackIos color="primary" />
                     </Button>
                     <p className="text-[#6B7280] gap-6">
                       Page
@@ -223,7 +243,7 @@ const Index: NextPage = function Index() {
                       onClick={() => { setItems(null); setOffset(offset + 1); }}
                       disabled={!items || offset === offset + 1
                         || (Math.floor(totalCount / 30) + 1 === offset + 1)}
-                        style={{ color: 'white' }}
+                      style={{ color: 'white' }}
                     >
                       <ArrowForwardIos color="primary" />
                     </Button>
@@ -246,7 +266,7 @@ const Index: NextPage = function Index() {
                   to
                   {' '}
                   {items
-                  && Math.floor(totalCount / 30) !== offset ? (offset + 1) * 30 : totalCount}
+                    && Math.floor(totalCount / 30) !== offset ? (offset + 1) * 30 : totalCount}
                   {' '}
                   NFTs
                 </h3>

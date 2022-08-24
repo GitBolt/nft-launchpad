@@ -3,7 +3,6 @@ import type { NextPage } from 'next';
 import { DefaultHead } from '@/layouts/Head';
 import { BuilderSidebar } from '@/layouts/SiteBuilder/BuilderSidebar';
 import { SiteData, ProjectData, FaqData } from '@/types/projectData';
-import { connectWallet } from '@/components/wallet';
 import Grid from '@material-ui/core/Grid';
 import { MintCountdown } from '@/layouts/MintCountdown';
 import { MintArea } from '@/layouts/MintArea';
@@ -24,7 +23,7 @@ import { CreateSections } from '@/layouts/SiteBuilder/CreateSections';
 import { Sections } from '@/layouts/Sections';
 import { Navbar } from '@/layouts/Navbar';
 import { useRouter } from 'next/router';
-
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export interface Section {
   title: string,
@@ -84,7 +83,7 @@ const defaultSiteData: SiteData = {
 const Index: NextPage = function Index() {
 
   const router = useRouter();
-
+  const { connected, publicKey } = useWallet();
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [templateChosen, setTemplateChosen] = useState<boolean>(false);
   const [siteData, setSiteData] = useState<SiteData>(defaultSiteData);
@@ -104,10 +103,9 @@ const Index: NextPage = function Index() {
   const [triggerFetch, setTriggerFetch] = useState<boolean>(false);
   useEffect(() => {
     const projectId = router.query.project;
-    if (!projectId) return;
+    if (!projectId || !publicKey) return;
     const fetchData = async () => {
       localStorage.removeItem('previewImages');
-      const publicKey = await connectWallet(true, true);
       const res = await fetch(`/api/project/get/public_key/${publicKey}?project_id=${projectId}`, {
         headers: {
           'Cache-Control': 'no-cache',
@@ -135,7 +133,31 @@ const Index: NextPage = function Index() {
       }
     };
     fetchData();
-  }, [router.query.project, triggerFetch]);
+  }, [publicKey, router.query.project, triggerFetch]);
+
+  if (!connected) {
+    return (
+      <>
+        <DefaultHead />
+        <Navbar />
+        <PageRoot>
+          <div className="w-[100vw]">
+            <Sidebar />
+            <PageRoot style={{ marginLeft: '21rem', display: 'block' }}>
+              <div className="flex justify-between mt-32">
+                <h1
+                  className="text-3xl font-bold text-gray-500"
+                >
+                  You need to connect your wallet
+                </h1>
+              </div>
+            </PageRoot>
+          </div>
+        </PageRoot>
+      </>
+    );
+  }
+
 
   if (!templateChosen) {
     return (

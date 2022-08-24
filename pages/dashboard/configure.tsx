@@ -6,7 +6,7 @@ import { Sidebar } from '@/layouts/Sidebar';
 import { DefaultHead } from '@/layouts/Head';
 import type { NextPage } from 'next';
 import {
-  getRPC, connectWallet,
+  getRPC,
 } from '@/components/wallet';
 import type { Configurations } from '@/types/configurations';
 import { PageRoot } from '@/layouts/StyledComponents';
@@ -18,11 +18,12 @@ import { Navbar } from '@/layouts/Navbar';
 import { ConfigureConfigs } from '@/layouts/ConfigureConfigs';
 import { DeployForm } from '@/layouts/DeployForm';
 import { useRouter } from 'next/router';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const Index: NextPage = function Index() {
 
   const router = useRouter();
-
+  const { connected, publicKey } = useWallet();
   const [isDeployed, setIsDeployed] = useState<boolean>(true);
   const [partiallyDeployed, setPartiallyDeployed] = useState<boolean>(false);
   const [assetsUploaded, setAssetsUploaded] = useState<boolean>(true);
@@ -52,12 +53,12 @@ const Index: NextPage = function Index() {
       discountPrice: 0,
     },
   });
+  
   useEffect(() => {
     const projectId = router.query.project;
-    if (!projectId) return;
+    if (!projectId || !publicKey) return;
     setProjectId(Number(projectId));
     const fetchData = async () => {
-      const pubKey = await connectWallet(true, false);
       const statusRes = await fetch(`/api/candymachine/state/${projectId}`, {
         headers: {
           'Cache-Control': 'no-cache',
@@ -85,7 +86,7 @@ const Index: NextPage = function Index() {
       });
 
       const anchorProgram = await loadCandyProgramV2(
-        pubKey,
+        publicKey,
         getRPC(),
       );
 
@@ -128,6 +129,30 @@ const Index: NextPage = function Index() {
     }).then(() => setInitialzing(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query.project]);
+
+  if (!connected) {
+    return (
+      <>
+        <DefaultHead />
+        <Navbar />
+        <PageRoot>
+          <div className="w-[100vw]">
+            <Sidebar />
+            <PageRoot style={{ marginLeft: '21rem', display: 'block' }}>
+              <div className="flex justify-between mt-32">
+                <h1
+                  className="text-3xl font-bold text-gray-500"
+                >
+                  You need to connect your wallet
+                </h1>
+              </div>
+            </PageRoot>
+          </div>
+        </PageRoot>
+      </>
+    );
+  }
+
   return (
     <>
       <DefaultHead />
