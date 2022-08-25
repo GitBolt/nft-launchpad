@@ -193,8 +193,8 @@ export const ConfigureConfigs = function ConfigureConfigs({
             signAllTransactions: signAllTransactions,
             signTransaction: signTransaction,
           } as Wallet,
-            await connectWallet(true, false),
-            dynamicMintConfig as DynamicMintConfig,
+          await connectWallet(true, false),
+          dynamicMintConfig as DynamicMintConfig,
           );
           // @ts-ignore
           setDynamicMintConfig({
@@ -495,7 +495,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                   ),
                 }}
               />
-            )}
+          )}
           <Text
             label="Pre-sale Mint-price"
             style={{ width: '34%' }}

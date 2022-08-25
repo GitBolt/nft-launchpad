@@ -332,7 +332,7 @@ export const DeployForm = function DeployForm({
               toast.promise(promise, {
                 loading: 'Depositing SOLs',
                 success: 'Successfully deposited',
-                error: (err) => err.toString()
+                error: (err) => err.toString(),
               })
                 .then((kp) => {
                   setWalletKeypair(kp);

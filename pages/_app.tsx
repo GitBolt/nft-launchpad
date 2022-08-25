@@ -9,6 +9,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { PaletteMode } from '@mui/material';
 
 const theme = {
+
   palette: {
     background: {
       default: '#0B1F3D',
@@ -22,6 +23,18 @@ const theme = {
     },
     error: {
       main: '#FF6262',
+    },
+  },
+  overrides: {
+    MuiPickersBasePicker:{
+      pickerView:{
+        backgroundColor:'black',
+      },
+    },
+  },
+  root: {
+    '& .MuiInputBase-root': {
+      border: '1px solid red',
     },
   },
 };
