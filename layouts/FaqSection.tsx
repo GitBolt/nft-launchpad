@@ -17,6 +17,7 @@ export const FaqSection = function FaqSection({ siteData, faqData }: Props) {
     rowTitleTextSize: '1.875rem',
     rowContentTextSize: '1.5rem',
     rowContentTextColor: siteData.secondaryFontColor,
+    bgColor: siteData.bgColor,
   };
 
   return (
