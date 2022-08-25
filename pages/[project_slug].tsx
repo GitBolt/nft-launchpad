@@ -48,7 +48,9 @@ const ProjectMint: NextPage<Project> = function Index({ projectData, siteData, n
 
   const txTimeout = 30000;
   const wallet = useWallet();
-  const livePrice = useLivePrice(dynamicMintConfigs.tokenBonding);
+    
+  const livePrice = useLivePrice(dynamicMintConfigs?.tokenBonding || 'EL2y3PfD4wNZS8ysaCpksWVJoehmCACwtTh5WRMEGPsD'); // random public
+
   const anchorWallet = useMemo(() => {
     if (
       !wallet

@@ -45,7 +45,7 @@ export const DeployForm = function DeployForm({
   // const requiredInMainWallet = ((config.itemsAvailable * 0.0016804)
   //                             + whitelistTokenCost
   //                             + depAmount);
-  
+
   useEffect(() => {
     const init = async () => {
       setDepositAmount(depAmount);
@@ -328,7 +328,12 @@ export const DeployForm = function DeployForm({
             onClick={async () => {
               setLoadingStep(4);
               setProgressing(true);
-              await transferAuthority(await connectWallet(true, true), project_id)
+              const promise = transferAuthority(await connectWallet(true, true), project_id);
+              toast.promise(promise, {
+                loading: 'Depositing SOLs',
+                success: 'Successfully deposited',
+                error: (err) => err.toString()
+              })
                 .then((kp) => {
                   setWalletKeypair(kp);
                   setStep(5);

@@ -193,8 +193,8 @@ export const ConfigureConfigs = function ConfigureConfigs({
             signAllTransactions: signAllTransactions,
             signTransaction: signTransaction,
           } as Wallet,
-          await connectWallet(true, false),
-          dynamicMintConfig as DynamicMintConfig,
+            await connectWallet(true, false),
+            dynamicMintConfig as DynamicMintConfig,
           );
           // @ts-ignore
           setDynamicMintConfig({
@@ -220,7 +220,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
           }
 
         })
-          .then(() => updateCandyMachine(project_id, { ...config, splToken: graveyardToken, splTokenAccount: graveyardAcc, price: 1 }, graveyardAcc, graveyardToken))
+          .then(() => updateCandyMachine(project_id, { ...config, splToken: graveyardToken, splTokenAccount: graveyardAcc, price: 1 }, graveyardAcc))
           .then(async () => {
             const public_key = await connectWallet(true, true);
             if (!public_key) return;
@@ -495,7 +495,7 @@ export const ConfigureConfigs = function ConfigureConfigs({
                   ),
                 }}
               />
-          )}
+            )}
           <Text
             label="Pre-sale Mint-price"
             style={{ width: '34%' }}

@@ -355,7 +355,6 @@ export const updateCandyMachine = async (
   project_id: number,
   config: Configurations,
   walletAccount?: PublicKey | null,
-  splToken?: PublicKey | null,
 ) => {
   const userPublicKey = await connectWallet(true, false);
   const anchorProgram = await loadCandyProgramV2(
@@ -397,10 +396,8 @@ export const updateCandyMachine = async (
       discountPrice: new BN(Number(config.whitelistMintSettings?.discountPrice) * LAMPORTS_PER_SOL),
     };
   }
-  console.log('Good so far', config);
-  const newSettings = {
-    splToken: new PublicKey(config.splToken as string),
-    splTokenAccount: new PublicKey(config.splToken as string),
+  console.log('Entered config', config);
+  let newSettings = {
     itemsAvailable: candyMachineObj.data.itemsAvailable,
     uuid: candyMachineObj.data.uuid,
     symbol: candyMachineObj.data.symbol,
@@ -420,6 +417,15 @@ export const updateCandyMachine = async (
       share: creator.share,
     })),
   };
+
+  if (config.splToken && config.splTokenAccount) {
+    newSettings = {
+      ...newSettings,
+      // @ts-ignore
+      splToken: new PublicKey(config.splToken as string),
+      splTokenAccount: new PublicKey(config.splToken as string),
+    };
+  }
   console.log('Update configs: ', newSettings);
 
   await anchorProgram.rpc.updateCandyMachine(newSettings, {
@@ -428,8 +434,8 @@ export const updateCandyMachine = async (
       authority: userPublicKey,
       wallet: walletAccount || userPublicKey,
     },
-    remainingAccounts: splToken ? [{
-      pubkey: new PublicKey(splToken),
+    remainingAccounts: config.splToken ? [{
+      pubkey: new PublicKey(config.splToken),
       isSigner: false,
       isWritable: false,
     }] : undefined,
